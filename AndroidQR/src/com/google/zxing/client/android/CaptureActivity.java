@@ -931,14 +931,25 @@ public final class CaptureActivity extends Activity implements
 		}
 
 		protected void onPostExecute(String page) {
+			if (page.contains("unable")) //If it's a invalid user, display error message
+			{
+				Context context = getApplicationContext();
+				 int duration = Toast.LENGTH_LONG;
+				
+				 Toast toast = Toast.makeText(context, page, duration);
+				 toast.show();
+			}
+			else //otherwise continue to pull profile
+			{
 			StringTokenizer tokenizer = new StringTokenizer(page, ",");
 			t.setText(tokenizer.nextToken());
 			
 			urlGlobalImg = tokenizer.nextToken();
 			urlGlobalImg = urlGlobalImg.replaceAll("\\s+","");
-		
-			//imgRequest = new ImgHttpGet();
-			//imgRequest.execute();
+			
+			imgRequest = new ImgHttpGet();
+			imgRequest.execute();
+			}
 		}
 	}
 	
