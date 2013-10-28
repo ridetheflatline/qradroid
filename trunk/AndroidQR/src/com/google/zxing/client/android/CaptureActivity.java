@@ -16,7 +16,11 @@
 
 package com.google.zxing.client.android;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -617,104 +621,133 @@ public final class CaptureActivity extends Activity implements
 		userId=st.nextToken();
 		
 
-		// create Get request
-		Uri url = new Uri.Builder()
-				.scheme("http")
-				.authority("qraproject.appspot.com")
-				.path("name")
-				.appendQueryParameter("id", userId)
-				.build();
-
-		urlGlobalInfo = url.toString();
-		nameRequest = new NameHttpGet();
-		nameRequest.execute(contentsTextView);
 		
-//		 Context context = getApplicationContext();
-//		 CharSequence text = contentsTextView.getText(); //url.toString();
-//		 int duration = Toast.LENGTH_LONG;
-//		
-//		 Toast toast = Toast.makeText(context, text, duration);
-//		 toast.show();
+		
+//		Context context = getApplicationContext();
+//		int duration = Toast.LENGTH_LONG;
+//		Toast toast = Toast.makeText(context, userLog+"test", duration);
+//		toast.show();
+	
+		
+		//check for user auth
+		String filename = "userlog";
+		String userLog = "";
+		File file = getBaseContext().getFileStreamPath(filename);
+		if (file.exists()) {
 
-		// Crudely scale betweeen 22 and 32 -- bigger font for shorter text
-		int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
-		contentsTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
-
-		TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
-		supplementTextView.setText("");
-		supplementTextView.setOnClickListener(null);
-		if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
-				PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
-			SupplementalInfoRetriever.maybeInvokeRetrieval(supplementTextView,
-					resultHandler.getResult(), historyManager, this);
+			FileInputStream in = null;
+			try {
+				in = openFileInput(filename);
+				byte[] input = new byte[in.available()];
+				while (in.read(input) != -1)
+					;
+				userLog = new String(input);
+				in.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
-		
-		ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);
-		buttonView.requestFocus();
-		TextView button = (TextView) buttonView.getChildAt(0);
-		button.setVisibility(View.VISIBLE);
-		button.setText("Valid ID");
-		button.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Calendar cal = Calendar.getInstance();
-				SimpleDateFormat timestamp = new SimpleDateFormat("MM/dd/yyyyHH:mm:ssz");
-				
-				Uri url = new Uri.Builder()
-				.scheme("http")
-				.authority("qraproject.appspot.com")
-				.path("processqr")
-				.appendQueryParameter("conf_code", confId)
-				// Make sure no spaces between comma token
-				.appendQueryParameter("user_id", userId)
-				.appendQueryParameter("timestamp",timestamp.format(cal.getTime()))
-				.build();
+		//run checkin process if user auth
+		if (userLog.equals("valid")) {
+			// create request for user name and pic
+			Uri url = new Uri.Builder().scheme("http")
+					.authority("qraproject.appspot.com").path("name")
+					.appendQueryParameter("id", userId).build();
 
-				urlGlobalQR = url.toString();
-				processQR = new QRHttpGet();
-				processQR.execute();
-				
-				new Thread(new Runnable() {         
-			        @Override
-			        public void run() {
-			            try {
-			            Instrumentation inst = new Instrumentation();
-			                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			                Thread.sleep(2000);
-			            }
-			            catch(InterruptedException e){
-			            }
-			        }   
-			    }).start();
+			urlGlobalInfo = url.toString();
+			nameRequest = new NameHttpGet();
+			nameRequest.execute(contentsTextView);
+
+			// Crudely scale betweeen 22 and 32 -- bigger font for shorter text
+			int scaledSize = Math.max(22, 32 - displayContents.length() / 4);
+			contentsTextView
+					.setTextSize(TypedValue.COMPLEX_UNIT_SP, scaledSize);
+
+			TextView supplementTextView = (TextView) findViewById(R.id.contents_supplement_text_view);
+			supplementTextView.setText("");
+			supplementTextView.setOnClickListener(null);
+			if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(
+					PreferencesActivity.KEY_SUPPLEMENTAL, true)) {
+				SupplementalInfoRetriever.maybeInvokeRetrieval(
+						supplementTextView, resultHandler.getResult(),
+						historyManager, this);
 			}
-		});
-		TextView button2 = (TextView) buttonView.getChildAt(1);
-		button2.setVisibility(View.VISIBLE);
-		button2.setText("Invalid ID");
-		button2.setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				new Thread(new Runnable() {         
-			        @Override
-			        public void run() {
-			            try {
-			            Instrumentation inst = new Instrumentation();
-			                inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
-			                Thread.sleep(2000);
-			            }
-			            catch(InterruptedException e){
-			            }
-			        }   
-			    }).start();
-			}});
+
+			//buttons to validate or invalidate a checkin
+			ViewGroup buttonView = (ViewGroup) findViewById(R.id.result_button_view);
+			buttonView.requestFocus();
+			//validate
+			TextView button = (TextView) buttonView.getChildAt(0);
+			button.setVisibility(View.VISIBLE);
+			button.setText("Valid ID");
+			button.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Calendar cal = Calendar.getInstance();
+					SimpleDateFormat timestamp = new SimpleDateFormat(
+							"MM/dd/yyyyHH:mm:ssz");
+
+					Uri url = new Uri.Builder().scheme("http")
+							.authority("qraproject.appspot.com")
+							.path("processqr")
+							.appendQueryParameter("conf_code", confId)
+							// Make sure no spaces between comma token
+							.appendQueryParameter("user_id", userId)
+							.appendQueryParameter("timestamp",
+									timestamp.format(cal.getTime())).build();
+
+					urlGlobalQR = url.toString();
+					processQR = new QRHttpGet();
+					processQR.execute();
+					
+					goBack();
+				}
+			});
+			//invalidate
+			TextView button2 = (TextView) buttonView.getChildAt(1);
+			button2.setVisibility(View.VISIBLE);
+			button2.setText("Invalid ID");
+			button2.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					goBack();
+				}
+			});
+		}
+		else{ //user not verified
+			Context context = getApplicationContext();
+			int duration = Toast.LENGTH_LONG;
+			Toast toast = Toast.makeText(context, "You must log in to check people in!", duration);
+			toast.show();
+			goBack();
+		}
 
 		if (copyToClipboard && !resultHandler.areContentsSecure()) {
 			ClipboardInterface.setText(displayContents, this);
 		}
 	}
 
+	//sends a back key command - couldn't find right method to "reset" the activity
+	private void goBack(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Instrumentation inst = new Instrumentation();
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+			}
+		}).start();
+	}
+	
+	
+	
+	
+	
+	
 	// Briefly show the contents of the barcode, then handle the result outside
 	// Barcode Scanner.
 	private void handleDecodeExternally(Result rawResult,
@@ -886,6 +919,7 @@ public final class CaptureActivity extends Activity implements
 		viewfinderView.drawViewfinder();
 	}
 
+	//asynchronous task to retrieve user namd and pic url
 	public class NameHttpGet extends AsyncTask<TextView, Void, String> {
 		TextView t;
 		String result = "fail";
@@ -929,7 +963,6 @@ public final class CaptureActivity extends Activity implements
 			
 			return result;
 		}
-
 		protected void onPostExecute(String page) {
 			if (page.contains("unable")) //If it's a invalid user, display error message
 			{
@@ -953,7 +986,7 @@ public final class CaptureActivity extends Activity implements
 		}
 	}
 	
-	
+	//asynchronous task to download and display profile pic
 	public class ImgHttpGet extends AsyncTask<Void, Void, Bitmap> {
 		Bitmap result = null;
 
@@ -999,7 +1032,7 @@ public final class CaptureActivity extends Activity implements
 		}
 	}
 	
-	
+	//asynchronous task to submit attendance record
 	public class QRHttpGet extends AsyncTask<Void, Void, String> {
 		String result = "fail";
 
@@ -1042,6 +1075,10 @@ public final class CaptureActivity extends Activity implements
 		}
 
 		protected void onPostExecute(String page) {
+			Context context = getApplicationContext();
+			int duration = Toast.LENGTH_LONG;
+			Toast toast = Toast.makeText(context, "Attendee Checked In", duration);
+			toast.show();
 		}
 	}
 

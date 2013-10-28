@@ -1,21 +1,35 @@
 package com.google.zxing.client.android;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -177,12 +191,39 @@ public class LoginActivity extends Activity {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			showProgress(true);
+			//showProgress(true);
+			
+			//query database with username and password
+			Uri url = new Uri.Builder()
+			.scheme("http")
+			.authority("qraproject.appspot.com")
+			.path("hostlogin")
+			.appendQueryParameter("username", mEmail)
+			.appendQueryParameter("password", mPassword)
+			.build();
+
 			mAuthTask = new UserLoginTask();
-			mAuthTask.execute((Void) null);
+			mAuthTask.execute(url.toString());
 		}
 	}
 
+	//sends a back key command - couldn't find right method to "reset" the activity
+	private void goBack(){
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Instrumentation inst = new Instrumentation();
+					inst.sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+				}
+			}
+		}).start();
+	}
+	
+	
+	
 	/**
 	 * Shows the progress UI and hides the login form.
 	 */
@@ -228,48 +269,79 @@ public class LoginActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<String, Void, String> {
+		String result = "fail";
+
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
+		protected String doInBackground(String...params) {
+			return GetSomething(params[0]);
+		}
 
+		final String GetSomething(String url) {
+			//String url = urlGlobalQR;
+			BufferedReader inStream = null;
 			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet httpRequest = new HttpGet(url);
+				HttpResponse response = httpClient.execute(httpRequest);
+				inStream = new BufferedReader(new InputStreamReader(response
+						.getEntity().getContent()));
 
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
+				StringBuffer buffer = new StringBuffer("");
+				String line = "";
+				String NL = System.getProperty("line.separator");
+				while ((line = inStream.readLine()) != null) {
+					buffer.append(line + NL);
+				}
+				inStream.close();
+
+				result = buffer.toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (inStream != null) {
+					try {
+						inStream.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-
-			// TODO: register the new account here.
-			return true;
+			return result;
 		}
 
-		@Override
-		protected void onPostExecute(final Boolean success) {
-			mAuthTask = null;
-			showProgress(false);
-
-			if (success) {
-				finish();
-			} else {
-				mPasswordView
-						.setError(getString(R.string.error_incorrect_password));
-				mPasswordView.requestFocus();
+		//write to text file the login auth
+		protected void onPostExecute(String page) {
+			
+			Context context = getApplicationContext();
+			int duration = Toast.LENGTH_LONG;
+			String filename = "userlog";
+			String userLog = "";
+			String status="";
+			FileOutputStream outputStream;
+			
+			if(page.contains("true")){
+				userLog="valid";
+				status="Logged In";
 			}
-		}
+			else{
+				userLog="invalid";
+				status="Invalid Log In";
+			}
+			try {
+				outputStream = openFileOutput(filename,
+						Context.MODE_PRIVATE);
+				outputStream.write(userLog.getBytes());
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Toast toast = Toast.makeText(context, status, duration);
+			toast.show();
 
-		@Override
-		protected void onCancelled() {
-			mAuthTask = null;
-			showProgress(false);
+			goBack();
+
 		}
 	}
+
 }
