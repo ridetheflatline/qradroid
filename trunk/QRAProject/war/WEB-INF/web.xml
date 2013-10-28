@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  
+  <servlet>
+    <servlet-name>exampleServlet</servlet-name>
+    <servlet-class>com.qra.project.ExampleServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>exampleServlet</servlet-name>
+    <url-pattern>/example</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>mobileLogInServlet</servlet-name>
+    <servlet-class>com.qra.project.MobileLogInServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>mobileLogInServlet</servlet-name>
+    <url-pattern>/mobileLogIn</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>checkinAttendentServlet</servlet-name>
+    <servlet-class>com.qra.project.CheckinAttendentServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>checkinAttendentServlet</servlet-name>
+    <url-pattern>/checkinAttentdent</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>processQRData</servlet-name>
+    <servlet-class>com.qra.project.ProcessQRDataServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>processQRData</servlet-name>
+    <url-pattern>/processqr</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>AttendeeNameServlet</servlet-name>
+    <servlet-class>com.qra.project.AttendeeNameServlet</servlet-class>
+  	</servlet>
+  
+  <servlet-mapping>
+    <servlet-name>AttendeeNameServlet</servlet-name>
+    <url-pattern>/name</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AttendeeImageServlet</servlet-name>
+    <servlet-class>com.qra.project.AttendeeImageServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>AttendeeImageServlet</servlet-name>
+    <url-pattern>/image</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>UserInsertTestServlet</servlet-name>
+    <servlet-class>com.qra.project.UserInsertTestServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>UserInsertTestServlet</servlet-name>
+    <url-pattern>/userinserttest</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>com.qra.project.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/hostlogin</url-pattern>
+  </servlet-mapping>
+  
+ 
+  <welcome-file-list>
+  	<welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  
+</web-app>
