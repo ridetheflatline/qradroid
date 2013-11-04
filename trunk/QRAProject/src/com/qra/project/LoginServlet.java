@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +50,7 @@ public class LoginServlet extends HttpServlet {
 					
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
+					
 					
 					//Response in JSON Format
 					String contentString = "{\"valid\": \"true\"}";

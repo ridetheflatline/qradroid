@@ -15,6 +15,7 @@ public class MobileLogInServlet extends HttpServlet{
 				throws IOException 
 		{
 		 
+		 	//Doesn't do anything?
 		 	//Extrat the parameters and find the conference creator
 		    String username = req.getParameter("username");
 		    String password = req.getParameter("password");
