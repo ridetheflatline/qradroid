@@ -12,23 +12,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginServlet extends HttpServlet {
-
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+public class WebLoginServlet extends HttpServlet {
+	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
-		resp.setContentType("text/plain");
+		resp.setContentType("text/HTML");
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		
 		if(username == null || password == null){
 			resp.getWriter().print("The username or password must contain an id parameter");
+			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else if(username.equalsIgnoreCase("") || password.equalsIgnoreCase("")){
 			resp.getWriter().print("Please do not leave the username or password blank");
+			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else{
 			username = username.trim();
@@ -53,10 +54,20 @@ public class LoginServlet extends HttpServlet {
 					//Response in JSON Format
 					String contentString = "{\"valid\": \"true\"}";
 					resp.getWriter().print(contentString);
+					
+					//this is web portion
+					Cookie userIDCookie = new Cookie("userIDCookie", username);
+					userIDCookie.setMaxAge(60*60*24); //24 hours
+					userIDCookie.setPath("/"); //allow access by the entire application?
+					resp.addCookie(userIDCookie);
+					
+					resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
+					//they would like to do
 				}
 			}
 			catch(JDOObjectNotFoundException e){
 				resp.getWriter().print("unable to find the user with the given username and password");
+				resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 			}
 		}
 		resp.getWriter().flush();

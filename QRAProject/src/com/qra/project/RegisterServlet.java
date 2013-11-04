@@ -28,6 +28,7 @@ public class RegisterServlet extends HttpServlet {
 		String profile_img = req.getParameter("profile_img");
 		String birthdate = req.getParameter("birthdate");
 		
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		if(first_name == null || middle_name == null || last_name == null || email == null || 
@@ -47,7 +48,10 @@ public class RegisterServlet extends HttpServlet {
 		else if(username.equalsIgnoreCase("") || password.equalsIgnoreCase("") || first_name.equalsIgnoreCase("")
 				|| middle_name.equalsIgnoreCase("") || last_name.equalsIgnoreCase("") || email.equalsIgnoreCase("") ||
 				profile_img.equalsIgnoreCase("") || birthdate.equalsIgnoreCase("")){
+			resp.setContentType("text/HTML");
 			resp.getWriter().print("You must fill in all the information.");
+			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
+			
 		}
 		else{
 			User u = new User(first_name, middle_name, last_name, email, username, password, profile_img, birthdate);
@@ -62,10 +66,11 @@ public class RegisterServlet extends HttpServlet {
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("text/plain");
 					resp.getWriter().println("Success");
+					resp.sendRedirect("login.jsp");
 				}
 			}
 		}
 		
 	}
-
+	
 }

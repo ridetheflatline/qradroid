@@ -84,6 +84,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/hostlogin</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>WebLoginServlet</servlet-name>
+    <servlet-class>com.qra.project.WebLoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>WebLoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
     
   <servlet>
     <servlet-name>ConferenceCreationServlet</servlet-name>
