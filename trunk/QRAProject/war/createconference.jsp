@@ -31,26 +31,48 @@
   }
 %>
 
-
-
 <h2>Create Conference</h2>
 <div>
 
 <form method="post" action="">
-<label>Conference Name: </label>
-<br>
-<input type="text" name="conf_name">
-<br>
-<label>Conference Description: </label>
-<br>
-<input type="text" name="conf_description">
-<br>
-<h3>Add Sessions (TODO)</h3>
-<input type="submit" name="submit" value="Create Conference"/>
+	<label>Conference Name: </label>
+	<br>
+	<input type="text" name="conf_name">
+	<br>
+	<label>Conference Description: </label>
+	<br>
+	<input type="text" name="conf_description">
+	<br>
+	<h3>Add Sessions (TODO)</h3>
+	<button type="button" id="createSessionBtn">Create Session</button>
+	<div id="sessionFields">
+		<h2>Create Sessions</h2>
+		<textarea rows="10" cols="50"></textarea>
+	</div>
+	
+	<br>
+	<input type="submit" name="submit" value="Create Conference"/>
 </form>
+
 </div>
 </body>
 
-<script type="text/javascript" src="<c:url value='/js/test.js'/>"> </script>
+<div id="dialog-form" title="Create new user">
+  <p class="validateTips">All form fields are required.</p>
+  <form>
+  <fieldset>
+    <label for="name">Session Description</label>
+    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
+  </fieldset>
+  </form>
+</div>
 
+<script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>"> </script>
+<script type="text/javascript" src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
+<link rel="stylesheet" type="text/css" href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
+<script type="text/javascript" src="<c:url value='/js/createconference.js'/>"> </script>
 </html>
