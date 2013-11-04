@@ -66,13 +66,13 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>UserInsertTestServlet</servlet-name>
-    <servlet-class>com.qra.project.UserInsertTestServlet</servlet-class>
+    <servlet-name>RegisterServlet</servlet-name>
+    <servlet-class>com.qra.project.RegisterServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
-    <servlet-name>UserInsertTestServlet</servlet-name>
-    <url-pattern>/userinserttest</url-pattern>
+    <servlet-name>RegisterServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -84,7 +84,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/hostlogin</url-pattern>
   </servlet-mapping>
+    
+  <servlet>
+    <servlet-name>ConferenceCreationServlet</servlet-name>
+    <servlet-class>com.qra.project.ConferenceCreationServlet</servlet-class>
+  </servlet>
   
+  <servlet-mapping>
+    <servlet-name>ConferenceCreationServlet</servlet-name>
+    <url-pattern>/createconference</url-pattern>
+  </servlet-mapping>
  
   <welcome-file-list>
   	<welcome-file>index.html</welcome-file>
