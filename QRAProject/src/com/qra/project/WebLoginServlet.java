@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class WebLoginServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
@@ -39,34 +40,43 @@ public class WebLoginServlet extends HttpServlet {
 				
 				Query q = pm.newQuery(User.class, "username == '"  + username + "' && "
 						+ "password == '" + password + "'");
-			
+				
+				
 				List<User> results = (List<User>) q.execute();
+				
 				
 				if(results.size() == 0){
 					resp.getWriter().print("The entered username or password is incorrect");
+					resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 				}
 				else{
 					
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
 					
-					
 					//Response in JSON Format
-					String contentString = "{\"valid\": \"true\"}";
-					resp.getWriter().print(contentString);
+					//String contentString = "{\"valid\": \"true\"}";
+					//resp.getWriter().print(contentString);
 					
-					//this is web portion
+					//Cookie creation
 					Cookie userIDCookie = new Cookie("userIDCookie", username);
 					userIDCookie.setMaxAge(60*60*24); //24 hours
 					userIDCookie.setPath("/"); //allow access by the entire application?
 					resp.addCookie(userIDCookie);
 					
-					resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
+					//Session creation
+					HttpSession session = req.getSession();
+					session.setAttribute("userSess", username);
+					
+				
+					//resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
 					//they would like to do
+					
+					resp.sendRedirect("sessiontest.jsp");
 				}
 			}
 			catch(JDOObjectNotFoundException e){
-				resp.getWriter().print("unable to find the user with the given username and password");
+				resp.getWriter().print("We are unable to find the user with the given username and password");
 				resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 			}
 		}
