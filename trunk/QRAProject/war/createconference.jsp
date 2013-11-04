@@ -5,12 +5,36 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Insert title here</title>
+<title>Create Conference</title>
 </head>
 
 <body>
+<%
+   Cookie[] cookies = request.getCookies();
+   String cookieName = "userIDCookie";
+   String cookieValue = "";
+   // Get an array of Cookies associated with this domain
+   if( cookies != null ){
+      for (int i = 0; i < cookies.length; i++)
+      {
+    	 Cookie cookie = cookies[i];
+    	 if(cookieName.equals(cookie.getName()))
+    	 {
+    		 cookieValue = cookie.getValue();
+	         out.print("Hello " + cookieValue + "!");
+    	 }
+      }
+  }
+   else{
+	  out.println("You are not logged in.");
+	  out.println("<br> <a href=\"login.jsp\">Go to Log In page.</a>");
+  }
+%>
+
+
+
 <h2>Create Conference</h2>
-<div id="conferenceFormDiv">
+<div>
 
 <form method="post" action="">
 <label>Conference Name: </label>
@@ -27,7 +51,6 @@
 </div>
 </body>
 
-<script type="text/javascript" src="<c:url value='/js/jquery-1.10.2.min.js'/>"> </script>
-<script type="text/javascript" src="<c:url value='/js/createconference.js'/>"> </script>
+<script type="text/javascript" src="<c:url value='/js/test.js'/>"> </script>
 
 </html>

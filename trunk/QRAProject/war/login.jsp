@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-	<form method="get" style="text-align:left" action="/hostlogin">
+	<form method="get" style="text-align:left" action="/login">
 	<fieldset name = "log in">
 	<Legend>Log In</Legend>
 	<table>
