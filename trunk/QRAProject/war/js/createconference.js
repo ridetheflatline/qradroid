@@ -4,16 +4,22 @@ var startDate = $("#startDate");
 var startHour = $("#startHour");
 var startMinute = $("#startMinute");
 var startAmOrPm = $("#startAmOrPm");
-
 var endDate = $("#endDate");
 var endHour = $("#endHour");
 var endMinute = $("#endMinute");
 var endAmOrPm = $("#endAmOrPm");
-
 var sessionsDescrip = $("#sessionDescrip");
-
 var conf_name = $("#conf_name");
 var conf_description = $("#conf_description");
+
+
+function reformattedTimeString(myTime){
+	var formattedTimeStr = "";
+	var splittedVals = myTime.split("at");
+	formattedTimeStr =
+		splittedVals[0].trim() + splittedVals[1];
+	return formattedTimeStr;
+}
 
 $(function() {
     $("#dialog-form").dialog({
@@ -23,7 +29,6 @@ $(function() {
       modal: true,
       buttons: {
         "Create": function() {
-        	
         	//TODO
         	//if everything valid
         	var startTime = startDate.val() + " at " + startHour.val() + ":" 
@@ -67,7 +72,6 @@ $(function() {
         		});
         	});
         	
-        	
         	appendingValues.append($("<td>").append(editBtn));
         	appendingValues.append($("<td>").append(removeBtn));
      
@@ -81,7 +85,7 @@ $(function() {
         	$(this).dialog("close");
         },
         Cancel: function() {
-          $( this ).dialog( "close" );
+          $( this ).dialog("close");
         }
       },
       close: function() {
@@ -136,10 +140,10 @@ $("#createConferenceBtn").button().click(function(){
 						//console.log("children index: " + index);
 						//console.log("text: " + $(this).text());
 						if (index == 0){
-							sessionObjectValues["start_time"] = $(this).text();
+							sessionObjectValues["start_time"] = reformattedTimeString($(this).text());
 						}
 						else if(index == 1){
-							sessionObjectValues["end_time"] = $(this).text();
+							sessionObjectValues["end_time"] = reformattedTimeString($(this).text());
 						}
 						else if(index == 2){
 							sessionObjectValues["session_description"]  = $(this).text();
@@ -155,10 +159,72 @@ $("#createConferenceBtn").button().click(function(){
 				"sessions":sessionArray
 				};
 		
-		console.log(JSON.stringify(jsonObject));
+		var jsonAsString = JSON.stringify(jsonObject);
+		console.log(jsonAsString);
+		
+		$.ajax({
+			url : "/createconference",
+		    type: "POST",
+		    data : jsonAsString,
+		    success: function(data, textStatus, jqXHR)
+		    {
+		        //data - response from server
+		    	//alert("success");
+		    },
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		 
+		    }
+		});
 	}
 });
 
 $("#sessions").hide();
-$("#startDate").datepicker();
-$("#endDate").datepicker();
+$("#startDate").datepicker({minDate:0});
+$("#endDate").datepicker({minDate:0});
+
+$(function(){
+	$("#startMinute").append($("<option>").attr("value", ""));
+	$("#endMinute").append($("<option>").attr("value", ""));
+	
+	for(var i = 0; i < 60; i++){
+		var optionTag = $("<option>");
+		var optionTag2 = $("<option>");
+		
+		if(i < 10){
+			optionTag.attr("value", i).text("0"+i);
+			optionTag2.attr("value", i).text("0"+i);
+		}
+		else{
+			optionTag.attr("value",i).text(i);
+			optionTag2.attr("value", i).text(i);
+		}
+		$("#startMinute").append(optionTag);
+		$("#endMinute").append(optionTag2);
+	}
+	
+	$("#startHour").append($("<option>").attr("value", ""));
+	$("#endHour").append($("<option>").attr("value", ""));
+	
+	for(var i = 1; i <= 12; i++){
+		var optionTag = $("<option>");
+		var optionTag2 = $("<option>");
+		if(i < 10){
+			optionTag.attr("value", i).text("0"+i);
+			optionTag2.attr("value", i).text("0"+i);
+		}
+		else{
+			optionTag.attr("value",i).text(i);
+			optionTag2.attr("value", i).text(i);
+		}
+		$("#startHour").append(optionTag);
+		$("#endHour").append(optionTag2);
+	}
+	
+});
+
+/*
+$("#startAmOrPm").combobox();
+$("#endAmOrPm").combobox();
+*/
+  

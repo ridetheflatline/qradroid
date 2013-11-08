@@ -33,7 +33,7 @@
 
 <div id="sessions-contain" class="ui-widget">
 <h2>Create Conference</h2>
-<form method="post" action="">
+<form>
 	<label>Conference Name: </label>
 	<br>
 	<input id="conf_name" type="text" name="conf_name" class="text ui-widget-content ui-corner-all" >
@@ -81,14 +81,21 @@
 				<td><input size="20" type="text" name="startDate"
 					id="startDate" value=""
 					class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="startHour" id="startHour"
-					value="" class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="startMinute"
-					id="startMinute" value=""
-					class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="startAmOrPm"
-					id="startAmOrPm" value=""
-					class="text ui-widget-content ui-corner-all" /></td>
+				<td>
+					<select id="startHour">
+					</select>
+				</td>
+				<td>
+					<select id="startMinute">
+					</select>
+				</td>
+				<td>
+					<select id="startAmOrPm" class="ui-widget">
+						<option value=""></option>
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+					</select>
+				</td>
 			</tr>
 
 			<tr>
@@ -101,13 +108,21 @@
 			<tr>
 				<td><input size="20" type="text" name="endDate" id="endDate"
 					value="" class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="endHour" id="endHour"
-					value="" class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="endMinute" id="endMinute"
-					value="" class="text ui-widget-content ui-corner-all" /></td>
-				<td><input size="5" type="text" name="endAmOrPm"
-					id="endAmOrPm" value=""
-					class="text ui-widget-content ui-corner-all" /></td>
+				<td>
+					<select id="endHour">
+					</select>
+				</td>
+				<td>
+					<select id="endMinute">
+					</select>
+				</td>
+				<td>
+					<select id="endAmOrPm" class="ui-widget">
+						<option value=""></option>
+						<option value="AM">AM</option>
+						<option value="PM">PM</option>
+					</select>
+				</td>
 			</tr>
 
 			<tr>
