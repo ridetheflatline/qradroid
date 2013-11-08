@@ -31,48 +31,104 @@
   }
 %>
 
+<div id="sessions-contain" class="ui-widget">
 <h2>Create Conference</h2>
-<div>
-
 <form method="post" action="">
 	<label>Conference Name: </label>
 	<br>
-	<input type="text" name="conf_name">
+	<input id="conf_name" type="text" name="conf_name" class="text ui-widget-content ui-corner-all" >
 	<br>
 	<label>Conference Description: </label>
 	<br>
-	<input type="text" name="conf_description">
+	<textarea id="conf_description" rows="8" cols="40" class="text ui-widget-content ui-corner-all"></textarea>
 	<br>
-	<h3>Add Sessions (TODO)</h3>
-	<button type="button" id="createSessionBtn">Create Session</button>
-	<div id="sessionFields">
-		<h2>Create Sessions</h2>
-		<textarea rows="10" cols="50"></textarea>
-	</div>
-	
+
+	<h3>Sessions</h3>
+	<p>You have no sessions</p>
+	<table id="sessions" class="ui-widget ui-widget-content">
+		<thead>
+			<tr class="ui-widget-header ">
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Description</th>
+				<th>Remove Session</th>
+				<th>Edit Session</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
 	<br>
-	<input type="submit" name="submit" value="Create Conference"/>
+    <button type="button" id="createSessionBtn">Add Session</button>
+    <button type="button" id="createConferenceBtn">Create Conference</button>
 </form>
 
 </div>
 </body>
 
-<div id="dialog-form" title="Create new user">
+<div id="dialog-form" title="Create Session">
   <p class="validateTips">All form fields are required.</p>
   <form>
-  <fieldset>
-    <label for="name">Session Description</label>
-    <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-    <label for="email">Email</label>
-    <input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" />
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" value="" class="text ui-widget-content ui-corner-all" />
-  </fieldset>
-  </form>
+		<table>
+			<tr>
+				<td><label for="startDate">Start Date</label></td>
+				<td><label for="startHour">Hour</label></td>
+				<td><label for="startMinute">Minute</label></td>
+				<td><label for="startAmOrPm">AM/PM</label></td>
+			</tr>
+			<tr>
+				<td><input size="20" type="text" name="startDate"
+					id="startDate" value=""
+					class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="startHour" id="startHour"
+					value="" class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="startMinute"
+					id="startMinute" value=""
+					class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="startAmOrPm"
+					id="startAmOrPm" value=""
+					class="text ui-widget-content ui-corner-all" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="endDate">End Date</label></td>
+				<td><label for="endHour">Hour</label></td>
+				<td><label for="endMinute">Minute</label></td>
+				<td><label for="endAmOrPm">AM/PM</label></td>
+			</tr>
+
+			<tr>
+				<td><input size="20" type="text" name="endDate" id="endDate"
+					value="" class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="endHour" id="endHour"
+					value="" class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="endMinute" id="endMinute"
+					value="" class="text ui-widget-content ui-corner-all" /></td>
+				<td><input size="5" type="text" name="endAmOrPm"
+					id="endAmOrPm" value=""
+					class="text ui-widget-content ui-corner-all" /></td>
+			</tr>
+
+			<tr>
+		</table>
+
+		<label for="name">Session Description</label>
+		<textarea id="sessionDescrip" rows="8" cols="40"
+			class="text ui-widget-content ui-corner-all"></textarea>
+
+	</form>
+</div>
+
+<div id="noSessionMessage" title="No Sessions">
+	<p>
+		Conference needs to have at least one session.
+	</p>
 </div>
 
 <script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>"> </script>
 <script type="text/javascript" src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
 <script type="text/javascript" src="<c:url value='/js/createconference.js'/>"> </script>
+
 </html>

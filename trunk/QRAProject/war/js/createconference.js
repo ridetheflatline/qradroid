@@ -1,94 +1,164 @@
-$("#sessionFields").hide();
+//Hide the sessions table header until there are elements
+
+var startDate = $("#startDate");
+var startHour = $("#startHour");
+var startMinute = $("#startMinute");
+var startAmOrPm = $("#startAmOrPm");
+
+var endDate = $("#endDate");
+var endHour = $("#endHour");
+var endMinute = $("#endMinute");
+var endAmOrPm = $("#endAmOrPm");
+
+var sessionsDescrip = $("#sessionDescrip");
+
+var conf_name = $("#conf_name");
+var conf_description = $("#conf_description");
 
 $(function() {
-    var name = $( "#name" ),
-      email = $( "#email" ),
-      password = $( "#password" ),
-      allFields = $( [] ).add( name ).add( email ).add( password ),
-      tips = $( ".validateTips" );
- 
-    function updateTips( t ) {
-      tips
-        .text( t )
-        .addClass( "ui-state-highlight" );
-      setTimeout(function() {
-        tips.removeClass( "ui-state-highlight", 1500 );
-      }, 500 );
-    }
- 
-    function checkLength( o, n, min, max ) {
-      if ( o.val().length > max || o.val().length < min ) {
-        o.addClass( "ui-state-error" );
-        updateTips( "Length of " + n + " must be between " +
-          min + " and " + max + "." );
-        return false;
-      } else {
-        return true;
-      }
-    }
- 
-    function checkRegexp( o, regexp, n ) {
-      if ( !( regexp.test( o.val() ) ) ) {
-        o.addClass( "ui-state-error" );
-        updateTips( n );
-        return false;
-      } else {
-        return true;
-      }
-    }
- 
-    $( "#dialog-form" ).dialog({
+    $("#dialog-form").dialog({
       autoOpen: false,
-      height: 300,
-      width: 350,
+      height: 580,
+      width: 550,
       modal: true,
       buttons: {
-        "Create an account": function() {
-          var bValid = true;
-          allFields.removeClass( "ui-state-error" );
- 
-          bValid = bValid && checkLength( name, "username", 3, 16 );
-          bValid = bValid && checkLength( email, "email", 6, 80 );
-          bValid = bValid && checkLength( password, "password", 5, 16 );
- 
-          bValid = bValid && checkRegexp( name, /^[a-z]([0-9a-z_])+$/i, "Username may consist of a-z, 0-9, underscores, begin with a letter." );
-          // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
-          bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
-          bValid = bValid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
- 
-          if ( bValid ) {
-            $( "#users tbody" ).append( "<tr>" +
-              "<td>" + name.val() + "</td>" +
-              "<td>" + email.val() + "</td>" +
-              "<td>" + password.val() + "</td>" +
-            "</tr>" );
-            $( this ).dialog( "close" );
-          }
+        "Create": function() {
+        	
+        	//TODO
+        	//if everything valid
+        	var startTime = startDate.val() + " at " + startHour.val() + ":" 
+        		+ startMinute.val() + " " + startAmOrPm.val();
+        	
+        	var endTime = endDate.val() + " at " + endHour.val() + ":" 
+        		+ endMinute.val() + " " + endAmOrPm.val();
+        	
+        	
+        	var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+        	
+        	var appendingValues = $("<tr>").append("<td>" + startTime + "</td>");
+        	appendingValues.append("<td>" + endTime+ "</td>");
+        	appendingValues.append("<td>"+sessionsDescrip.val() + "</td>");
+        	
+        	var editBtn = $("<button>").attr("type", "button").text("Edit").button().click(function(){
+        		$(this).parent().parent().each(function(){
+        			//This is kind of hard to do may have to skip this
+        			
+        			//loop through the td's		
+        			$(this).children().each(function(index){
+        				//console.log($(this).text());
+        			})
+        		});
+        		
+        	});
+        	
+        	var removeBtn = $("<button>").attr("type", "button").text("Remove").button().click(function(){
+        		//TODO
+        		
+        		//Get the tr and remove it self
+        		$(this).parent().parent().fadeOut(200, function(){
+        			$(this).remove();
+        			
+        			var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+        			
+        			if(tbodyRowsSize == 0){
+        				$("#sessions").hide();
+        			}
+        			
+        		});
+        	});
+        	
+        	
+        	appendingValues.append($("<td>").append(editBtn));
+        	appendingValues.append($("<td>").append(removeBtn));
+     
+        	if(tbodyRowsSize == 0){
+        		$("#sessions tbody").append(appendingValues);
+        		$("#sessions").show("slow");
+        	}
+        	else{
+        		$("#sessions tbody").append(appendingValues);
+        	}
+        	$(this).dialog("close");
         },
         Cancel: function() {
           $( this ).dialog( "close" );
         }
       },
       close: function() {
-        allFields.val( "" ).removeClass( "ui-state-error" );
+       
       }
     });
 });
- 
 
-$("#createSessionBtn").click(function(){
-	
-	$( "#dialog-form" ).dialog("open");
-	
-	/*
-		if($("#createSessionBtn").text()=="Create Session"){
-			$("#sessionFields").show("medium");
-			$("#createSessionBtn").text("Cancel");
+$(function(){
+	$("#noSessionMessage").dialog({
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			Ok: function(){
+				$(this).dialog("close");
+			},
+			"Add Session": function(){
+				$(this).dialog("close");
+				$( "#dialog-form" ).dialog("open");
+			}
 		}
-		else{
-			$("#sessionFields").hide();
-			$("#createSessionBtn").text("Create Session");
-		}
-	*/
-	
+	});
 });
+
+$("#createSessionBtn").button().click(function(){
+	$( "#dialog-form" ).dialog("open");
+});
+
+$("#createConferenceBtn").button().click(function(){
+	var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+	if(tbodyRowsSize == 0){
+		$("#noSessionMessage").dialog("open");
+	}
+	else{
+		alert("Creating Conference...");
+		//Create a JSON string from all the rows
+		//EX: {"conference_name" : "my conference", "conference_description" : "blah blah blah",
+		//		"sessions":[ 
+		//  {"start_time":"11/22/2013 12:30 PM","end_time":"11/22/2013 1:30 PM", "session_description":"blah blah"}
+		//, {"start_time":"11/22/2013 1:30 PM","end_time":"11/22/2013 2:30 PM", "session_description":"blah blah"}
+		//]}
+		
+		var sessionArray = new Array();
+
+		$("#sessions").find("tbody").children("tr").each(
+				function(index){
+					//console.log("row index: " + index);
+
+					var sessionObjectValues = {};
+
+					$(this).children("td").each(function(index){
+						//console.log("children index: " + index);
+						//console.log("text: " + $(this).text());
+						if (index == 0){
+							sessionObjectValues["start_time"] = $(this).text();
+						}
+						else if(index == 1){
+							sessionObjectValues["end_time"] = $(this).text();
+						}
+						else if(index == 2){
+							sessionObjectValues["session_description"]  = $(this).text();
+						}
+					});
+
+					sessionArray[index] = sessionObjectValues;
+		});
+				
+		var jsonObject = 
+			{"conference_name" : conf_name.val(),
+				"conference_description": conf_description.val(),
+				"sessions":sessionArray
+				};
+		
+		console.log(JSON.stringify(jsonObject));
+	}
+});
+
+$("#sessions").hide();
+$("#startDate").datepicker();
+$("#endDate").datepicker();
