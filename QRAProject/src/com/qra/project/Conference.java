@@ -23,18 +23,31 @@ public class Conference {
 	private String host_ID;
 	
 	@Persistent
-	private ArrayList<Date> dates;
+	private Date startTime;
+	
+	@Persistent
+	private Date endTime;
 	
 	@Persistent
 	private String conference_description;
 
-	public Conference(String conf_name, String host_ID, ArrayList<Date> dates, String conference_description)
-	{
+	public Conference(Key conf_code, String conf_name, String host_ID,
+			Date startTime, Date endTime, String conference_description) {
+		super();
+		this.conf_code = conf_code;
 		this.conf_name = conf_name;
 		this.host_ID = host_ID;
-		this.dates = dates;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.conference_description = conference_description;
-		
+	}
+
+	public Key getConf_code() {
+		return conf_code;
+	}
+
+	public void setConf_code(Key conf_code) {
+		this.conf_code = conf_code;
 	}
 
 	public String getConf_name() {
@@ -53,12 +66,20 @@ public class Conference {
 		this.host_ID = host_ID;
 	}
 
-	public ArrayList<Date> getDates() {
-		return dates;
+	public Date getStartTime() {
+		return startTime;
 	}
 
-	public void setDates(ArrayList<Date> dates) {
-		this.dates = dates;
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getConference_description() {
@@ -68,9 +89,4 @@ public class Conference {
 	public void setConference_description(String conference_description) {
 		this.conference_description = conference_description;
 	}
-
-	public Key getConf_code() {
-		return conf_code;
-	}
-
 }
