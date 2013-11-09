@@ -1,6 +1,7 @@
 package com.qra.project;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import java.util.Date;
 
@@ -135,8 +136,8 @@ public class User {
 	}
 
 
-	public Key getID() {
-		return ID;
+	public String getID() {
+		return KeyFactory.keyToString(ID);
 	}
 
 }
