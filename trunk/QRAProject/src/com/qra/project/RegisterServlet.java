@@ -1,9 +1,11 @@
 package com.qra.project;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +32,7 @@ public class RegisterServlet extends HttpServlet {
 		
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		resp.setContentType("text/HTML");
 		
 		if(first_name == null || middle_name == null || last_name == null || email == null || 
 				username == null || password == null || profile_img == null || birthdate == null){
@@ -47,13 +50,69 @@ public class RegisterServlet extends HttpServlet {
 		}
 		else if(username.equalsIgnoreCase("") || password.equalsIgnoreCase("") || first_name.equalsIgnoreCase("")
 				|| middle_name.equalsIgnoreCase("") || last_name.equalsIgnoreCase("") || email.equalsIgnoreCase("") ||
-				profile_img.equalsIgnoreCase("") || birthdate.equalsIgnoreCase("")){
-			resp.setContentType("text/HTML");
-			resp.getWriter().print("You must fill in all the information.");
-			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
+				profile_img.equalsIgnoreCase("") || birthdate.equalsIgnoreCase("") || password.length()<5 || birthdate.length()!=10){
 			
+			resp.getWriter().print("You must fill in all the information.<br>");
+			if(username.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a username.<br>");
+			}
+			if(password.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a password.<br>");
+			}
+			if(first_name.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a first name.<br>");
+			}
+			if(middle_name.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a middle name. If you don't have one, please enter N/A.<br>");
+			}
+			if(last_name.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a last name.<br>");
+			}
+			if(email.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered an email.<br>");
+			}
+			if(profile_img.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a profile image link. If you would not like one, please enter N/A<br>");
+			}
+			if(birthdate.equalsIgnoreCase(""))
+			{
+				resp.getWriter().print("You have not entered a birth date.<br>");
+			}
+			if(password.length()<=5)
+			{
+				resp.getWriter().print("Please enter a password at least 5 characters long.<br>");
+			}
+			if(birthdate.length()!=10)
+			{
+				resp.getWriter().print("Please enter a valid date in the correct format.<br>");
+			}
+			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
 		}
 		else{
+			
+			Query q = pm.newQuery(User.class, "username == '"  + username + "'");
+			List<User> results = (List<User>) q.execute();
+			Query q2 = pm.newQuery(User.class, "email == '"  + email + "'");
+			List<User> results2 = (List<User>) q2.execute();
+			//Check for username that already exists
+			if(!(results.size() == 0)){
+				resp.getWriter().print("That username already exists");
+				resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
+			}
+			//Check for if the email is already used
+			else if(!(results2.size() == 0)){
+				resp.getWriter().print("That email is already used");
+				resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
+			}
+			else{
+			resp.getWriter().print(results.toString());
 			User u = new User(first_name, middle_name, last_name, email, username, password, profile_img, birthdate);
 			Object o = null;
 			try{
@@ -64,13 +123,14 @@ public class RegisterServlet extends HttpServlet {
 				
 				if(o != null){
 					resp.setStatus(HttpServletResponse.SC_OK);
-					resp.setContentType("text/plain");
-					resp.getWriter().println("Success");
+					//resp.setContentType("text/plain");
+					//resp.getWriter().println("Success");
 					resp.sendRedirect("login.jsp");
-				}
-			}
-		}
+					}//if
+				}//finally
+			}//else
+		}//else
 		
-	}
+	}//doget
 	
 }

@@ -28,8 +28,12 @@ public class WebLoginServlet extends HttpServlet {
 			resp.getWriter().print("The username or password must contain an id parameter");
 			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
-		else if(username.equalsIgnoreCase("") || password.equalsIgnoreCase("")){
-			resp.getWriter().print("Please do not leave the username or password blank");
+		else if(username.equalsIgnoreCase("")){
+			resp.getWriter().print("Please do not leave the username blank");
+			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
+		}
+		else if(password.equalsIgnoreCase("")){
+			resp.getWriter().print("Please do not leave the password blank");
 			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else{
