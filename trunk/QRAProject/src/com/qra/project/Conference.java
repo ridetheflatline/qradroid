@@ -31,6 +31,16 @@ public class Conference {
 	@Persistent
 	private String conference_description;
 
+	public Conference(String conf_name, String host_ID, Date startTime,
+			Date endTime, String conference_description) {
+		super();
+		this.conf_name = conf_name;
+		this.host_ID = host_ID;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.conference_description = conference_description;
+	}
+
 	public Conference(Key conf_code, String conf_name, String host_ID,
 			Date startTime, Date endTime, String conference_description) {
 		super();
