@@ -28,6 +28,15 @@ public class Session {
     @Persistent
     private Date endTime;
 
+	public Session(String confCode, String description, Date startTime,
+			Date endTime) {
+		super();
+		this.confCode = confCode;
+		this.description = description;
+		this.startTime = startTime;
+		this.endTime = endTime;
+	}
+
 	public Session(Key sessionKey, String confCode, String description,
 			Date startTime, Date endTime) {
 		super();

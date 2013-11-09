@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.logging.Logger;
 
@@ -41,7 +44,8 @@ public class ConferenceCreationServlet extends HttpServlet {
 		log("body: " + bodyContent);
 		
 		//Parse JSON body string and insert into datastore
-		//Dates should be: 11/08/13 12:30PM
+		//Dates should be: 11/08/13 12:30 PM
+		//or 11/08/13 1:12 PM
 		JSONObject jsonObject =  (JSONObject) JSONValue.parse(bodyContent);
 		String conferenceName = (String) jsonObject.get("conference_name");
 		String conferenceDescription = (String) jsonObject.get("conference_description");
@@ -52,13 +56,49 @@ public class ConferenceCreationServlet extends HttpServlet {
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
 		ArrayList<Date> myDates = new ArrayList<Date>();
 		
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
+		
 		for(int i = 0; i < sessions.size(); i++){
-			log.info("session " + i + ": ");
+			//log.info("session " + i + ": ");
 			JSONObject sessionObj = (JSONObject)sessions.get(i);
+			
+			String sesStartTime = (String) sessionObj.get("start_time");
 			log.info("\tstart_time: " + sessionObj.get("start_time"));
+			
+			String sesEndTime = (String)sessionObj.get("end_time");
 			log.info("\tend_time: " + sessionObj.get("end_time") );
+			
 			log.info("\tsession_description: " + sessionObj.get("session_description") );
+			try {
+				Date startDtFormatted = formatter.parse(sesStartTime);
+				myDates.add(startDtFormatted);
+				
+				Date endDtFormatted = formatter.parse(sesEndTime);
+				myDates.add(endDtFormatted);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
+		//Sort the dates to get the startTime and endTime
+		Collections.sort(myDates, new Comparator<Date>() {
+		    @Override
+		    public int compare(Date lhs, Date rhs) {
+		        if (lhs.getTime() < rhs.getTime())
+		            return -1;
+		        else if (lhs.getTime() == rhs.getTime())
+		            return 0;
+		        else
+		            return 1;
+		    }
+		});
+		
+		
+		Date conf_start_time = myDates.get(0);
+		Date conf_end_time = myDates.get(myDates.size() - 1);
+		
+		
 		
 	}
 	public static String getBody(HttpServletRequest request) throws IOException {
