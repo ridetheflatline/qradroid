@@ -7,22 +7,33 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>QR Attendance</title>
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
 </head>
+<header>
+<ul id="nav">
+	<%  
+   Cookie[] cookies = request.getCookies();
+   String cookieName = "userIDCookie";
+   String cookieValue = "";
+   out.println("<li><a href=\"index.jsp\">Home</a></li>");
+   if( cookies != null ){
+	   out.println("<li><a href=\"createconference.jsp\">Create Conference</a></li>");
+	   out.println("<li><a href=\"/logout\">Log Out</a></li>");
+   }
+   else{
+	   out.println("<li><a href=\"register.jsp\">Register</a></li>");
+	   out.println("<li><a href=\"login.jsp\">Log In</a></li>");
+   }
+      
+    
+%>
+</ul>
+</header>
 <body>
 <div class="ui-widget">
 <h1>QR Attendance</h1>
 <p>Welcome to QR attendance.</p>
 
-
-<form name = "Login" action="login.jsp" style="text-align:left">
-<input type="submit" value="Login" id="loginBtn" />
-</form>
-
-<br>
-
-<form name = "Register" action="register.jsp" style="text-align:left">
-<input type="submit" value="Register" id="registerBtn" />
-</form>
 </div>
 
 </body>
