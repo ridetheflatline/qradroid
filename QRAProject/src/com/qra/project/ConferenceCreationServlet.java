@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.logging.Logger;
 
+import javax.jdo.PersistenceManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -98,7 +99,26 @@ public class ConferenceCreationServlet extends HttpServlet {
 		Date conf_start_time = myDates.get(0);
 		Date conf_end_time = myDates.get(myDates.size() - 1);
 		
+		//For testing purposes...
+		String tempHostId = "";
 		
+		//Insert conference
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		boolean insertConfSuccessful = true;
+		
+		Conference c = new Conference
+				(conferenceName, tempHostId, conf_start_time, conf_end_time, conferenceDescription);
+		Object o = null;
+		try{
+			 o = pm.makePersistent(c);
+		}
+		finally{
+			pm.close();
+			
+			if(o == null){
+				insertConfSuccessful = false;
+			}
+		}
 		
 	}
 	public static String getBody(HttpServletRequest request) throws IOException {
