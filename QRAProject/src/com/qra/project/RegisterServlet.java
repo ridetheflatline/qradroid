@@ -125,7 +125,7 @@ public class RegisterServlet extends HttpServlet {
 					resp.setStatus(HttpServletResponse.SC_OK);
 					//resp.setContentType("text/plain");
 					//resp.getWriter().println("Success");
-					resp.sendRedirect("login.jsp");
+					resp.sendRedirect("index.jsp");
 					}//if
 				}//finally
 			}//else
