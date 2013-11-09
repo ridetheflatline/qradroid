@@ -21,12 +21,14 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
+import com.google.appengine.api.datastore.KeyFactory;
+
 
 //Test data
 /*
- * {"conference_name":"Test Conference","conference_description":"This is test conference description","sessions":[{"start_time":"11/08/2013 at 12:30 PM","end_time":"11/08/2013 at 1:30 PM","session_description":"This is session"},{"start_time":"11/09/2013 at 12:30 PM","end_time":"11/09/2013 at 1:30 PM","session_description":"This is another session"}]}
+ * {"userId": "kdfd", "conference_name":"Test Conference","conference_description":"This is test conference description","sessions":[{"start_time":"11/08/2013 at 12:30 PM","end_time":"11/08/2013 at 1:30 PM","session_description":"This is session"},{"start_time":"11/09/2013 at 12:30 PM","end_time":"11/09/2013 at 1:30 PM","session_description":"This is another session"}]}
  *
- * {"conference_name":"My conference","conference_description":"fdafjdla;dfj","sessions":[{"start_time":"11/08/2013 at 2:12 PM","end_time":"11/08/2013 at 3:12 PM","session_description":"jdlakjfda"}]}
+ * {"userId": "kdfk", "conference_name":"My conference","conference_description":"fdafjdla;dfj","sessions":[{"start_time":"11/08/2013 at 2:12 PM","end_time":"11/08/2013 at 3:12 PM","session_description":"jdlakjfda"}]}
  * 
  */
 
@@ -50,11 +52,13 @@ public class ConferenceCreationServlet extends HttpServlet {
 		JSONObject jsonObject =  (JSONObject) JSONValue.parse(bodyContent);
 		String conferenceName = (String) jsonObject.get("conference_name");
 		String conferenceDescription = (String) jsonObject.get("conference_description");
+		String hostId = (String)jsonObject.get("userId");
 		
 		log.info("conferenceName: " + conferenceName);
 		log.info("conferenceDescription: " + conferenceDescription);
 		
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
+		ArrayList <Session> mySessions = new ArrayList <Session>();
 		ArrayList<Date> myDates = new ArrayList<Date>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
@@ -69,13 +73,16 @@ public class ConferenceCreationServlet extends HttpServlet {
 			String sesEndTime = (String)sessionObj.get("end_time");
 			log.info("\tend_time: " + sessionObj.get("end_time") );
 			
-			log.info("\tsession_description: " + sessionObj.get("session_description") );
+			String sesDescription = (String)sessionObj.get("session_description");
+			log.info("\tsession_description: " + sesDescription);
 			try {
 				Date startDtFormatted = formatter.parse(sesStartTime);
 				myDates.add(startDtFormatted);
 				
 				Date endDtFormatted = formatter.parse(sesEndTime);
 				myDates.add(endDtFormatted);
+				
+				mySessions.add(new Session(sesDescription, startDtFormatted, endDtFormatted));
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -95,29 +102,53 @@ public class ConferenceCreationServlet extends HttpServlet {
 		    }
 		});
 		
-		
 		Date conf_start_time = myDates.get(0);
 		Date conf_end_time = myDates.get(myDates.size() - 1);
 		
-		//For testing purposes...
-		String tempHostId = "";
-		
 		//Insert conference
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Object o = null;
 		boolean insertConfSuccessful = true;
 		
-		Conference c = new Conference
-				(conferenceName, tempHostId, conf_start_time, conf_end_time, conferenceDescription);
-		Object o = null;
+		Conference c = new Conference(conferenceName,
+				hostId, conf_start_time, conf_end_time, conferenceDescription);
+		
+		
+		String confCodeString = "";
 		try{
 			 o = pm.makePersistent(c);
+			 confCodeString = KeyFactory.createKeyString( "Conference", c.getConf_code().getId());
 		}
 		finally{
-			pm.close();
-			
 			if(o == null){
 				insertConfSuccessful = false;
 			}
+		}
+		
+		if(!insertConfSuccessful){
+			log.info("Unable to insert the conference");
+		}
+		
+		o = null;
+		boolean insertSessionSuccessful = true;
+		
+		//Set all the session with the correct conference code
+		for(Session s : mySessions){
+			s.setConfCode(confCodeString);
+		}
+		
+		try{
+			o = pm.makePersistentAll(mySessions);
+		}
+		finally{
+			pm.close();
+			if(o == null){
+				insertSessionSuccessful = false;
+			}
+		}
+		
+		if(!insertSessionSuccessful){
+			log.info("Unable to insert the sessions.");
 		}
 		
 	}

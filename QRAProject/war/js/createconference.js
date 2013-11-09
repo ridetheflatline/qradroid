@@ -12,6 +12,8 @@ var sessionsDescrip = $("#sessionDescrip");
 var conf_name = $("#conf_name");
 var conf_description = $("#conf_description");
 
+var userId = "";
+
 
 function reformattedTimeString(myTime){
 	var formattedTimeStr = "";
@@ -154,7 +156,8 @@ $("#createConferenceBtn").button().click(function(){
 		});
 				
 		var jsonObject = 
-			{"conference_name" : conf_name.val(),
+			{"userId" : userId,
+				"conference_name" : conf_name.val(),
 				"conference_description": conf_description.val(),
 				"sessions":sessionArray
 				};
