@@ -76,7 +76,7 @@ public class WebLoginServlet extends HttpServlet {
 					//resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
 					//they would like to do
 					
-					resp.sendRedirect("sessiontest.jsp");
+					resp.sendRedirect("index.jsp");
 				}
 			}
 			catch(JDOObjectNotFoundException e){
