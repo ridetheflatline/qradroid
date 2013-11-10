@@ -7,30 +7,34 @@
 <title>Cookie Testing</title>
 </head>
 <body>
-<%
-   //Copy this whole thing to the body of the html or elsewhere
-   
-   Cookie[] cookies = request.getCookies();
-   String cookieName = "userIDCookie";
-   String cookieValue = "";
-   // Get an array of cookies associated with this domain
-   if( cookies != null ){
-      out.println("<h2> Found Cookies Name and Value</h2>");
-      for (int i = 0; i < cookies.length; i++)
-      {
-    	 Cookie cookie = cookies[i];
-    	 if(cookieName.equals(cookie.getName()))
-    	 {
-    		 cookieValue = cookie.getValue(); //cookieValue is username
-	         out.print("Name : " + cookie.getName( ) + ",  "); //delete this
-	         out.print("Value: " + cookie.getValue( )+" <br/>"); //delete this
-    	 }
-      }
-  }else{
-      out.println("You are not logged in.");
-      out.println("<br> <a href=\"login.jsp\">Go to Log In page.</a>");
-  }
-%>
 
+	<%
+		Cookie[] cookies = request.getCookies();
+		String cookieName = "userIDCookie";
+		String cookieValue = "";
+		if (cookies != null)//if there are cookies
+		{
+			for (int i = 0; i < cookies.length; i++) //search through the cookies
+			{
+				Cookie cookie = cookies[i]; //take one cookie
+
+				if (cookieName.equals(cookie.getName()))// is it the cookie we are looking for?
+				{
+					cookieValue = cookie.getValue(); //cookieValue is username 
+				}
+				else
+				{
+					if(i == cookies.length-1 && cookieValue != null) //If it's the last cookie and the userIdCookie is still null
+					{
+					 out.println("You're not logged in.<br>");
+					}
+				}
+			}
+		}
+		else {
+			out.println("<br>You're not logged in.<br>");
+		}
+		%>
+		
 </body>
 </html>
