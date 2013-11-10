@@ -17,6 +17,7 @@
    String cookieValue = "";
    out.println("<li><a href=\"index.jsp\">Home</a></li>");
    if( cookies != null ){
+	   out.println("<li><a href=\"/editprofile.jsp\">Edit Profile</a></li>");
 	   out.println("<li><a href=\"createconference.jsp\">Create Conference</a></li>");
 	   out.println("<li><a href=\"/logout\">Log Out</a></li>");
    }

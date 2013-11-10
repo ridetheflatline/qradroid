@@ -129,5 +129,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/logout</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>EditProfileServlet</servlet-name>
+    <servlet-class>com.qra.project.EditProfileServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>EditProfileServlet</servlet-name>
+    <url-pattern>/edit</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
