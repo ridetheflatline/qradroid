@@ -150,6 +150,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>FindConferencesServlet</servlet-name>
+  	<servlet-class>com.qra.project.FindConferencesServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>FindConferencesServlet</servlet-name>
+  	<url-pattern>/findconferences</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
   	<servlet-name>JoinConferenceServlet</servlet-name>
   	<servlet-class>com.qra.project.JoinConferenceServlet</servlet-class>
   </servlet>

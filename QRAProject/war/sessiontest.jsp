@@ -8,7 +8,6 @@
 </head>
 <body>
 	Hello, <%= session.getAttribute( "userSess" ) %>
-	
 
 </body>
 </html>
