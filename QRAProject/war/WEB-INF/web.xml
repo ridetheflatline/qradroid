@@ -149,4 +149,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/searchconferences</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>JoinConferenceServlet</servlet-name>
+  	<servlet-class>com.qra.project.JoinConferenceServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>JoinConferenceServlet</servlet-name>
+  	<url-pattern>/joinconference</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
