@@ -113,11 +113,6 @@
 				</div>
 		</form>
 
-		<br>
-
-		<form name="home" action="index.jsp" style="text-align: left">
-			<input type="submit" value="Return to Home" id="homeBtn" />
-		</form>
 
 	</div>
 

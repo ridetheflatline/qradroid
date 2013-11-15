@@ -25,15 +25,24 @@ public class WebLoginServlet extends HttpServlet {
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		
 		if(username == null || password == null){
+			resp.setHeader("Refresh", "5; URL=login.jsp");
 			resp.getWriter().print("The username or password must contain an id parameter");
+			resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
+			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else if(username.equalsIgnoreCase("")){
+			resp.setHeader("Refresh", "5; URL=login.jsp");
 			resp.getWriter().print("Please do not leave the username blank");
+			resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
+			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else if(password.equalsIgnoreCase("")){
+			resp.setHeader("Refresh", "5; URL=login.jsp");
 			resp.getWriter().print("Please do not leave the password blank");
+			resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
+			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 			resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 		}
 		else{
@@ -50,7 +59,10 @@ public class WebLoginServlet extends HttpServlet {
 				
 				
 				if(results.size() == 0){
+					resp.setHeader("Refresh", "5; URL=login.jsp");
 					resp.getWriter().print("The entered username or password is incorrect");
+					resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
+					resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 					resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 				}
 				else{
@@ -80,8 +92,13 @@ public class WebLoginServlet extends HttpServlet {
 				}
 			}
 			catch(JDOObjectNotFoundException e){
+				resp.setHeader("Refresh", "5; URL=login.jsp");
 				resp.getWriter().print("We are unable to find the user with the given username and password");
+				resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
+				resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 				resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
+				
+				
 			}
 		}
 		resp.getWriter().flush();

@@ -51,7 +51,7 @@ public class RegisterServlet extends HttpServlet {
 		else if(username.equalsIgnoreCase("") || password.equalsIgnoreCase("") || first_name.equalsIgnoreCase("")
 				|| middle_name.equalsIgnoreCase("") || last_name.equalsIgnoreCase("") || email.equalsIgnoreCase("") ||
 				profile_img.equalsIgnoreCase("") || birthdate.equalsIgnoreCase("") || password.length()<5 || birthdate.length()!=10){
-			
+			resp.setHeader("Refresh", "5; URL=register.jsp");
 			resp.getWriter().print("You must fill in all the information.<br>");
 			if(username.equalsIgnoreCase(""))
 			{
@@ -93,6 +93,8 @@ public class RegisterServlet extends HttpServlet {
 			{
 				resp.getWriter().print("Please enter a valid date in the correct format.<br>");
 			}
+			resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
+			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
 		}
 		else{
@@ -103,12 +105,18 @@ public class RegisterServlet extends HttpServlet {
 			List<User> results2 = (List<User>) q2.execute();
 			//Check for username that already exists
 			if(!(results.size() == 0)){
+				resp.setHeader("Refresh", "5; URL=register.jsp");
 				resp.getWriter().print("That username already exists");
+				resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
+				resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 				resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
 			}
 			//Check for if the email is already used
 			else if(!(results2.size() == 0)){
+				resp.setHeader("Refresh", "5; URL=register.jsp");
 				resp.getWriter().print("That email is already used");
+				resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
+				resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 				resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
 			}
 			else{
