@@ -139,5 +139,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
     <url-pattern>/edit</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>SearchConferencesServlet</servlet-name>
+    <servlet-class>com.qra.project.SearchConferencesServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>SearchConferencesServlet</servlet-name>
+    <url-pattern>/searchconferences</url-pattern>
+  </servlet-mapping>
   
 </web-app>
