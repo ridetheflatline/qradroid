@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 			
 			try{
 				
-				Query q = pm.newQuery(User.class, "username == '"  + username + "' && "
+				Query q = pm.newQuery(User.class, "email == '"  + username + "' && "
 						+ "password == '" + password + "'");
 			
 				List<User> results = (List<User>) q.execute();

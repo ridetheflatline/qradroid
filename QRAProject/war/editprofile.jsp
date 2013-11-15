@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import = "java.util.List"%>
+<%@ page import = "javax.jdo.PersistenceManager"%>
+<%@ page import = "javax.jdo.Query"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -77,6 +80,20 @@
 					<td><label id="Label1">Last Name</label></td>
 					<td><input type="text" name="last_name" /></td>
 				</tr>
+				
+				<tr>
+						<td><label id="Label1">Old Password</label></td>
+						<td><input type="password" name="oldpassword" /></td>
+				</tr>
+				<tr>
+						<td><label id="Label1">New Password</label></td>
+						<td><input type="password" name="newpassword1" /></td>
+				</tr>
+				
+				<tr>
+						<td><label id="Label1">Confirm New Password</label></td>
+						<td><input type="password" name="newpassword2" /></td>
+				</tr>
 
 				<tr>
 					<td><label>Birthday</label></td>
@@ -111,7 +128,11 @@
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
 <script type="text/javascript" src="<c:url value='/js/editprofile.js'/>">
-	
+</script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker();
+	});
 </script>
 </html>
 
