@@ -14,7 +14,6 @@ var conf_description = $("#conf_description");
 
 var userId = "";
 
-
 function reformattedTimeString(myTime){
 	var formattedTimeStr = "";
 	var splittedVals = myTime.split("at");
