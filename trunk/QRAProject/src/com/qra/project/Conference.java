@@ -1,6 +1,7 @@
 package com.qra.project;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,12 +53,8 @@ public class Conference {
 		this.conference_description = conference_description;
 	}
 
-	public Key getConf_code() {
-		return conf_code;
-	}
-
-	public void setConf_code(Key conf_code) {
-		this.conf_code = conf_code;
+	public String getConf_code() {
+		return KeyFactory.keyToString(conf_code);
 	}
 
 	public String getConf_name() {
