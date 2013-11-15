@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
-<%@page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.qra.project.QRData" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,8 +13,6 @@
 
 <body>
 <%
-
-/*
    Cookie[] cookies = request.getCookies();
    String cookieName = "userIDCookie";
    String cookieValue = "";
@@ -38,7 +38,6 @@
 	   out.println("<table border='1'><tr><td><h3>"+qrData.get(i).getConfName()+"</h3></br>Name: "+qrData.get(i).getAttName()+"</br>ID: "+qrData.get(i).getUserID()+"</br>Dates: "+qrData.get(i).getDates()+"</td><td><img src=https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl="+qrData.get(i).getConfID()+","+qrData.get(i).getUserID()+"</td></tr></table>");
    }
    
-  */
    
    
 %>

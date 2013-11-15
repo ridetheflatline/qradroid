@@ -117,7 +117,7 @@ public class ConferenceCreationServlet extends HttpServlet {
 		String confCodeString = "";
 		try{
 			 o = pm.makePersistent(c);
-			 confCodeString = KeyFactory.createKeyString( "Conference", c.getConf_code().getId());
+			 confCodeString = c.getConf_code();
 		}
 		finally{
 			if(o == null){
