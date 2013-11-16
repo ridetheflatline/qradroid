@@ -28,31 +28,32 @@ public class EditProfileServlet extends HttpServlet {
 			
 			
 			
-			Cookie[] cookies = req.getCookies();
-			String cookieName = "userIDCookie";
+//			Cookie[] cookies = req.getCookies();
+//			String cookieName = "userIDCookie";
 			String cookieValue = "";
-			if (cookies != null)//if there are cookies
-			{
-				for (int i = 0; i < cookies.length; i++) //search through the cookies
-				{
-					Cookie cookie = cookies[i]; //take one cookie
-
-					if (cookieName.equals(cookie.getName()))// is it the cookie we are looking for?
-					{
-						cookieValue = cookie.getValue(); //cookieValue is username 
-					}
-					else
-					{
-						if(i == cookies.length-1 && cookieValue != null) //If it's the last cookie and the userIdCookie is still null
-						{
-							resp.getWriter().print("You're not logged in.<br>");
-						}
-					}
-				}
-			}
-			else {
-				resp.getWriter().print("<br>You're not logged in.<br>");
-			}
+			cookieValue=CookieCheck.check(req, resp);
+//			if (cookies != null)//if there are cookies
+//			{
+//				for (int i = 0; i < cookies.length; i++) //search through the cookies
+//				{
+//					Cookie cookie = cookies[i]; //take one cookie
+//
+//					if (cookieName.equals(cookie.getName()))// is it the cookie we are looking for?
+//					{
+//						cookieValue = cookie.getValue(); //cookieValue is username 
+//					}
+//					else
+//					{
+//						if(i == cookies.length-1 && cookieValue != null) //If it's the last cookie and the userIdCookie is still null
+//						{
+//							resp.getWriter().print("You're not logged in.<br>");
+//						}
+//					}
+//				}
+//			}
+//			else {
+//				resp.getWriter().print("<br>You're not logged in.<br>");
+//			}
 			
 			
 
