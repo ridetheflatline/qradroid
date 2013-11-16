@@ -9,33 +9,27 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.mortbay.log.Log;
 
+/***
+ * Servlet that retrieves all the conferences a user is either attending or hosting
+ * and passes those to a jsp to allow the user to choose what to print.
+ * @author Joel Friberg
+ *
+ */
 public class CreateQRServlet extends HttpServlet {
 
 	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-
-//		HttpSession session = req.getSession();
-//		String userName = (String) session.getAttribute("userSess");
-		
-		
-		
-		
-		
-		
-		 String userName;
+		String userName;
 		userName=CookieCheck.check(req, resp);
 		String userID = null;
-		log.info("test user " + userName);
+//		log.info("test user " + userName);
 
 		if (userName != null) {
 			Query q = pm.newQuery(User.class, "username == '" + userName + "'");
