@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jdo.JDOObjectNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.servlet.RequestDispatcher;
@@ -13,6 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+/***
+ * Servlet that creates ID card data for all attendees of a conference.
+ * @author Joel Friberg
+ *
+ */
 public class CreateBatchQRServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -21,8 +26,6 @@ public class CreateBatchQRServlet extends HttpServlet {
 		String confID = req.getParameter("conf_id");
 		String fullName = null;
 		String userID = null;
-//		String confID=null;
-		String confName=null;
 		Conference tempConf=null;
 		User tempUser=null;
 		ArrayList<QRData> qrData = new ArrayList<QRData>();
@@ -43,7 +46,12 @@ public class CreateBatchQRServlet extends HttpServlet {
 		req.setAttribute("qrarray", qrData);
 		String url = "/createmyqr.jsp";
 		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher(url);
-		dispatcher.forward(req, resp);
+		try {
+			dispatcher.forward(req, resp);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

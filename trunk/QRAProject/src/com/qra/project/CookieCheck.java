@@ -3,10 +3,15 @@ package com.qra.project;
 import java.io.IOException;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+/***
+ * Class that will retrieve the cookie username from a request.
+ * @author Joel Friberg
+ *
+ */
 public class CookieCheck {
 
 	public static String check(HttpServletRequest req, HttpServletResponse resp){
