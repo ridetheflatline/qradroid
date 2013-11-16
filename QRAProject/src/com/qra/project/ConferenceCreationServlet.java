@@ -40,16 +40,25 @@ public class ConferenceCreationServlet extends HttpServlet {
 			throws IOException 
 	{
 		HttpSession session = req.getSession();
-		String userId = (String) session.getAttribute("userSess");
+		String userIdFromSess = (String) session.getAttribute("userSess");
+		String userIdFromCookie = CookieCheck.check(req, res);
 		
-		log.info("userId: " + userId);
-		
-		Cookie userKeyIdCookie = new Cookie("userKeyId", getUserKeyId(userId));
-		//Set for 10 minutes
-		userKeyIdCookie.setMaxAge(60*10);
-		userKeyIdCookie.setPath("/createconference");
-		
-		if(userId != null){
+		if(userIdFromSess != null ||
+				userIdFromCookie != null){
+			
+			String userId = "";
+			
+			if(userIdFromSess != null)
+				userId = userIdFromSess;
+			else
+				userId = userIdFromCookie;
+			
+			//log.info(getUserKeyId(userId));
+			Cookie userKeyIdCookie = 
+					new Cookie("userKeyId", getUserKeyId(userId));
+			//Set for 10 minutes
+			userKeyIdCookie.setMaxAge(60*10);
+			userKeyIdCookie.setPath("/");
 			res.addCookie(userKeyIdCookie);
 			res.sendRedirect("/createconference.jsp");
 		}
