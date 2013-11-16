@@ -8,8 +8,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>QR Attendance - Log In</title>
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen" />
 </head>
 
 

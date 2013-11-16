@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+	<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen" />
 	</head>
 	<header>
 <ul id="nav">
