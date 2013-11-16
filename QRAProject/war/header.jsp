@@ -28,7 +28,7 @@
 					{
 						out.println("<li><a href=\"/editprofile.jsp\">Edit Profile</a></li>");
 						out.println("<li><a href=\"/createconference\">Create Conference</a></li>");
-						out.println("<li><a href=\"LINKHERE\">NAMEHERE</a></li>");
+						out.println("<li><a href=\"/findconferences\">Search Conference</a></li>");
 						out.println("<li><a href=\"LINKHERE\">NAMEHERE</a></li>");
 						out.println("<li><a href=\"/logout\">Log Out</a></li>");
 						break;
