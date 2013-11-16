@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,17 +39,22 @@ public class ConferenceCreationServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		
 		HttpSession session = req.getSession();
 		String userId = (String) session.getAttribute("userSess");
 		
 		log.info("userId: " + userId);
 		
+		Cookie userKeyIdCookie = new Cookie("userKeyId", getUserKeyId(userId));
+		//Set for 10 minutes
+		userKeyIdCookie.setMaxAge(60*10);
+		userKeyIdCookie.setPath("/createconference");
+		
 		if(userId != null){
-			res.sendRedirect("createconference.jsp");
+			res.addCookie(userKeyIdCookie);
+			res.sendRedirect("/createconference.jsp");
 		}
 		else{
-			res.sendRedirect("index.jsp");
+			res.sendRedirect("/index.jsp");
 		}
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
@@ -96,6 +104,25 @@ public class ConferenceCreationServlet extends HttpServlet {
 		}
 		
 	}
+	
+	public static String getUserKeyId(String username){
+		String result = "";
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(User.class);
+		
+		q.setFilter("username == usernameParam");
+		q.declareParameters("String usernameParam");
+		
+		List<User> myUser = (List<User>)q.execute(username);
+		
+		if(myUser.size() > 0){
+			log.info("key id: " + myUser.get(0).getID());
+			result = myUser.get(0).getID();
+		}
+		
+		return result;
+	}
+	
 	public static boolean insertConference(String conferenceName,
 			String conferenceDescription, String conferenceStreet, String conferenceCity,
 			String conferenceState, String hostId, JSONArray sessions){
