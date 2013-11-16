@@ -16,8 +16,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>QR Attendance</title>
-<link rel="stylesheet" type="text/css" href="/css/default.css"
-	media="screen" />
+
 </head>
 <body>
 	<div class="ui-widget">
