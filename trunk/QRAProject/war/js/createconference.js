@@ -15,6 +15,8 @@ var conf_street = $("#street");
 var conf_city = $("#city");
 var conf_state = $("#state");
 
+var userKeyId;
+
 function getCookie(c_name)
 {
 	var c_value = document.cookie;
@@ -39,6 +41,12 @@ function getCookie(c_name)
 	 }
 	return c_value;
 }
+
+$(function(){
+	userKeyId = getCookie("userKeyId");
+	//console.log(userKeyId);
+	//console.log(getCookie("testCookie"));
+});
 
 function reformattedTimeString(myTime){
 	var formattedTimeStr = "";
@@ -122,6 +130,18 @@ $(function() {
 });
 
 $(function(){
+	$("#addConfSuccess").dialog({
+		autoOpen: false,
+		modal: true,
+		buttons: {
+			Ok: function(){
+				$(this).dialog("close");
+			}
+		}
+	});
+});
+
+$(function(){
 	$("#noSessionMessage").dialog({
 		autoOpen: false,
 		modal: true,
@@ -147,7 +167,7 @@ $("#createConferenceBtn").button().click(function(){
 		$("#noSessionMessage").dialog("open");
 	}
 	else{
-		alert("Creating Conference...");
+		//alert("Creating Conference...");
 		//Create a JSON string from all the rows
 		//EX: {"conference_name" : "my conference", "conference_description" : "blah blah blah",
 		//		"sessions":[ 
@@ -180,7 +200,9 @@ $("#createConferenceBtn").button().click(function(){
 					sessionArray[index] = sessionObjectValues;
 		});
 		
-		var userKeyId = getCookie("userKeyId");
+		
+		console.log("userKeyId")
+		console.log(userKeyId);
 				
 		var jsonObject = 
 			{"userId" : userKeyId,
@@ -200,7 +222,7 @@ $("#createConferenceBtn").button().click(function(){
 		    success: function(data, textStatus, jqXHR)
 		    {
 		        //data - response from server
-		    	//alert("success");
+		    	$("#addConfSuccess").dialog("open");
 		    },
 		    error: function (jqXHR, textStatus, errorThrown)
 		    {
