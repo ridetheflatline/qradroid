@@ -4,43 +4,32 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.qra.project.QRData" %>
+<jsp:include page="header.jsp" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Create Conference</title>
+<title>Print QR Codes</title>
 </head>
 
 <body>
+
+<div class="ui-widget">
 <%
-   Cookie[] cookies = request.getCookies();
-   String cookieName = "userIDCookie";
-   String cookieValue = "";
-   // Get an array of Cookies associated with this domain
-   if( cookies != null ){
-      for (int i = 0; i < cookies.length; i++)
-      {
-    	 Cookie cookie = cookies[i];
-    	 if(cookieName.equals(cookie.getName()))
-    	 {
-    		 cookieValue = cookie.getValue();
-	         out.print("Hello " + cookieValue + "!");
-    	 }
-      }
-  }
-   else{
-	  out.println("You are not logged in.");
-	  out.println("<br> <a href=\"login.jsp\">Go to Log In page.</a>");
-  }
+   
    ArrayList<QRData> qrData=(ArrayList<QRData>) request.getAttribute("qrarray");
    
    for (int i=0;i<qrData.size();i++){
-	   out.println("<table border='1'><tr><td><h3>"+qrData.get(i).getConfName()+"</h3></br>Name: "+qrData.get(i).getAttName()+"</br>ID: "+qrData.get(i).getUserID()+"</br>Dates: "+qrData.get(i).getDates()+"</td><td><img src=https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl="+qrData.get(i).getConfID()+","+qrData.get(i).getUserID()+"</td></tr></table>");
+	   out.println("<table border='1'><tr><td><h3>"+qrData.get(i).getConfName()+
+			   "</h3></br>Name: "+qrData.get(i).getAttName()+"</br>Dates: "+qrData.get(i).getDates()+
+			   "</td><td><img src=https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl="+qrData.get(i).getConfID()+
+			   ","+qrData.get(i).getUserID()+"></td></tr></table>");
    }
    
    
    
 %>
+</div>
 
 </body>
 

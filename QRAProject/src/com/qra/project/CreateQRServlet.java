@@ -53,11 +53,11 @@ public class CreateQRServlet extends HttpServlet {
 				Conference tempConf = null;
 				ArrayList<Conference> attQRData = new ArrayList<Conference>();
 
-				// for (int j=0;j<attResults.size();j++){
-				// confID=attResults.get(j).getConf_code();
-				// tempConf = pm.getObjectById(Conference.class, confID);
-				// attQRData.add(tempConf);
-				// }
+				 for (int j=0;j<attResults.size();j++){
+				 confID=attResults.get(j).getConf_code();
+				 tempConf = pm.getObjectById(Conference.class, confID);
+				 attQRData.add(tempConf);
+				 }
 				req.setAttribute("attqrarray", attQRData);
 
 				resp.getWriter().print("attResults.size() is greater than 0 <br>");
@@ -73,9 +73,9 @@ public class CreateQRServlet extends HttpServlet {
 
 				ArrayList<Conference> hostQRData = new ArrayList<Conference>();
 
-				// for(int j=0;j<confResults.size();j++){
-				// hostQRData.add(confResults.get(j));
-				// }
+				 for(int j=0;j<confResults.size();j++){
+				 hostQRData.add(confResults.get(j));
+				 }
 				req.setAttribute("hostqrarray", hostQRData);
 
 				resp.getWriter().print("confResults.size()>0\"<br>");
