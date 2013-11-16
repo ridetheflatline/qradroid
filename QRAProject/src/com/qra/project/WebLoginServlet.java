@@ -53,9 +53,9 @@ public class WebLoginServlet extends HttpServlet {
 				Query q = pm.newQuery(User.class, "username == '"  + username + "' && "
 						+ "password == '" + password + "'");
 				
-				List<User> results = (List<User>) q.execute();
+				List<User> results = (List<User>) q.execute(); //query for user with the same username and password
 				
-				if(results.size() == 0){
+				if(results.size() == 0){//if there are no matches
 					resp.setHeader("Refresh", "5; URL=login.jsp");
 					resp.getWriter().print("The entered username or password is incorrect");
 					resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
@@ -67,10 +67,6 @@ public class WebLoginServlet extends HttpServlet {
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
 					
-					//Response in JSON Format
-					//String contentString = "{\"valid\": \"true\"}";
-					//resp.getWriter().print(contentString);
-					
 					//Cookie creation
 					Cookie userIDCookie = new Cookie("userIDCookie", username);
 					userIDCookie.setMaxAge(60*60*24); //24 hours
@@ -81,9 +77,6 @@ public class WebLoginServlet extends HttpServlet {
 					HttpSession session = req.getSession();
 					session.setAttribute("userSess", username);
 					
-					
-					//resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
-					//they would like to do
 					
 					resp.sendRedirect("index.jsp");
 				}

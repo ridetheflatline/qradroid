@@ -20,7 +20,6 @@
 </head>
 <body>
 	<div class="ui-widget">
-		<h1>QR Attendance</h1>
 		<p>Welcome to QR attendance.</p>
 
 	</div>
