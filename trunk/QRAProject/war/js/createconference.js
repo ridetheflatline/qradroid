@@ -15,7 +15,30 @@ var conf_street = $("#street");
 var conf_city = $("#city");
 var conf_state = $("#state");
 
-var userId = "";
+function getCookie(c_name)
+{
+	var c_value = document.cookie;
+	var c_start = c_value.indexOf(" " + c_name + "=");
+	if (c_start == -1)
+	{
+		c_start = c_value.indexOf(c_name + "=");
+	}
+	if (c_start == -1)
+	{
+		c_value = null;
+	}
+	else
+	{
+		c_start = c_value.indexOf("=", c_start) + 1;
+		var c_end = c_value.indexOf(";", c_start);
+		if (c_end == -1)
+		{
+			c_end = c_value.length;
+		}
+		c_value = unescape(c_value.substring(c_start,c_end));
+	 }
+	return c_value;
+}
 
 function reformattedTimeString(myTime){
 	var formattedTimeStr = "";
@@ -156,9 +179,11 @@ $("#createConferenceBtn").button().click(function(){
 
 					sessionArray[index] = sessionObjectValues;
 		});
+		
+		var userKeyId = getCookie("userKeyId");
 				
 		var jsonObject = 
-			{"userId" : userId,
+			{"userId" : userKeyId,
 				"conference_name" : conf_name.val(),
 				"conference_description": conf_description.val(),
 				"conf_street":conf_street.val(),
@@ -166,10 +191,8 @@ $("#createConferenceBtn").button().click(function(){
 				"conf_state":conf_state.val(),
 				"sessions":sessionArray
 				};
-		
 		var jsonAsString = JSON.stringify(jsonObject);
 		console.log(jsonAsString);
-		
 		$.ajax({
 			url : "/createconference",
 		    type: "POST",
@@ -231,8 +254,5 @@ $(function(){
 	
 });
 
-/*
-$("#startAmOrPm").combobox();
-$("#endAmOrPm").combobox();
-*/
+
   
