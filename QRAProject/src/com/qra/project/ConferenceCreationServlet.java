@@ -30,13 +30,17 @@ import org.json.simple.JSONValue;
  * 
  */
 public class ConferenceCreationServlet extends HttpServlet {
+	
     private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
 		
 		HttpSession session = req.getSession();
 		String userId = (String) session.getAttribute("userSess");
+		
+		log.info("userId: " + userId);
 		
 		if(userId != null){
 			res.sendRedirect("createconference.jsp");

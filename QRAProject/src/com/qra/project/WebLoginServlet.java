@@ -50,13 +50,10 @@ public class WebLoginServlet extends HttpServlet {
 			password = password.trim();
 			
 			try{
-				
 				Query q = pm.newQuery(User.class, "username == '"  + username + "' && "
 						+ "password == '" + password + "'");
 				
-				
 				List<User> results = (List<User>) q.execute();
-				
 				
 				if(results.size() == 0){
 					resp.setHeader("Refresh", "5; URL=login.jsp");
@@ -84,7 +81,7 @@ public class WebLoginServlet extends HttpServlet {
 					HttpSession session = req.getSession();
 					session.setAttribute("userSess", username);
 					
-				
+					
 					//resp.sendRedirect("createconference.jsp"); //temporary, change to a page that allows user to pick
 					//they would like to do
 					
