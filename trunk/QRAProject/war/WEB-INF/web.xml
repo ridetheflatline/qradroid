@@ -117,7 +117,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   
   <servlet>
     <servlet-name>CreateBatchQRServlet</servlet-name>
-    <servlet-class>com.qra.project.Create/BatchQRServlet</servlet-class>
+    <servlet-class>com.qra.project.CreateBatchQRServlet</servlet-class>
   </servlet>
   
   <servlet-mapping>
