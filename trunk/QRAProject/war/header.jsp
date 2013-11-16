@@ -7,8 +7,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 	<link rel="stylesheet" type="text/css" href="/css/default.css"
 	media="screen" />
+	<link rel="icon" 
+      type="image/png" 
+      href="favicon.png">
 	</head>
 	<header>
+	<img src="qrbanner.png">
 <ul id="nav">
 	<%
 		Cookie[] cookies = request.getCookies();
