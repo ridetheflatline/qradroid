@@ -189,4 +189,24 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   	<url-pattern>/joinconference</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>MoreConfInformationServlet</servlet-name>
+  	<servlet-class>com.qra.project.MoreConfInformationServlet</servlet-class>
+  </servlet>
+ 
+  <servlet-mapping>
+  	<servlet-name>MoreConfInformationServlet</servlet-name>
+  	<url-pattern>/moreconfinfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>RetrieveProfileImageServlet</servlet-name>
+  	<servlet-class>com.qra.project.RetrieveProfileImageServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>RetrieveProfileImageServlet</servlet-name>
+  	<url-pattern>/profileimg</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

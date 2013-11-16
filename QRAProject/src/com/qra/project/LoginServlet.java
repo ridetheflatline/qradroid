@@ -45,10 +45,8 @@ public class LoginServlet extends HttpServlet {
 					resp.getWriter().print("The entered username or password is incorrect");
 				}
 				else{
-					
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
-					
 					
 					//Response in JSON Format
 					String contentString = "{\"valid\": \"true\"}";

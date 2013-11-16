@@ -23,7 +23,6 @@ import org.json.simple.JSONValue;
 
 import com.google.appengine.api.datastore.KeyFactory;
 
-
 //Test data
 /*
  * {"userId": "kdfd", "conference_name":"Test Conference","conference_description":"This is test conference description","sessions":[{"start_time":"11/08/2013 at 12:30 PM","end_time":"11/08/2013 at 1:30 PM","session_description":"This is session"},{"start_time":"11/09/2013 at 12:30 PM","end_time":"11/09/2013 at 1:30 PM","session_description":"This is another session"}]}
@@ -31,7 +30,6 @@ import com.google.appengine.api.datastore.KeyFactory;
  * {"userId": "kdfk", "conference_name":"My conference","conference_description":"fdafjdla;dfj","sessions":[{"start_time":"11/08/2013 at 2:12 PM","end_time":"11/08/2013 at 3:12 PM","session_description":"jdlakjfda"}]}
  * 
  */
-
 public class ConferenceCreationServlet extends HttpServlet {
     private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -52,12 +50,46 @@ public class ConferenceCreationServlet extends HttpServlet {
 		JSONObject jsonObject =  (JSONObject) JSONValue.parse(bodyContent);
 		String conferenceName = (String) jsonObject.get("conference_name");
 		String conferenceDescription = (String) jsonObject.get("conference_description");
+		String conferenceStreet = (String)jsonObject.get("conf_street");
+		String conferenceCity = (String)jsonObject.get("conf_city");
+		String conferenceState = (String)jsonObject.get("conf_city");
 		String hostId = (String)jsonObject.get("userId");
-		
-		log.info("conferenceName: " + conferenceName);
-		log.info("conferenceDescription: " + conferenceDescription);
-		
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
+		
+		if(conferenceName != null && conferenceDescription != null 
+				&& conferenceStreet != null && conferenceCity != null &&
+				conferenceState != null && hostId != null && sessions != null &&
+				sessions.size() > 0){
+			
+			if(insertConference(conferenceName,conferenceDescription,conferenceStreet,
+					conferenceCity,conferenceState, hostId, sessions))
+			{
+				//return successful code
+				res.setStatus(HttpServletResponse.SC_OK);
+				res.setContentType("text/plain");
+				res.getWriter().println("Success");
+			}
+			else{
+				//return error
+				res.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+				res.setContentType("text/plain");
+				res.getWriter().println("Insert failed. Please try again later.");
+			}
+		}
+		else{
+			//return parameters not good
+			res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			res.setContentType("text/plain");
+			res.getWriter().println("Invalid Parameters.");
+		}
+		
+	}
+	public static boolean insertConference(String conferenceName,
+			String conferenceDescription, String conferenceStreet, String conferenceCity,
+			String conferenceState, String hostId, JSONArray sessions){
+		
+		boolean insertSuccess = true;
+		
 		ArrayList <Session> mySessions = new ArrayList <Session>();
 		ArrayList<Date> myDates = new ArrayList<Date>();
 		
@@ -111,8 +143,8 @@ public class ConferenceCreationServlet extends HttpServlet {
 		boolean insertConfSuccessful = true;
 		
 		Conference c = new Conference(conferenceName,
-				hostId, conf_start_time, conf_end_time, conferenceDescription);
-		
+				hostId, conf_start_time, conf_end_time, conferenceDescription,
+				conferenceStreet, conferenceCity,conferenceState);
 		
 		String confCodeString = "";
 		try{
@@ -127,30 +159,35 @@ public class ConferenceCreationServlet extends HttpServlet {
 		
 		if(!insertConfSuccessful){
 			log.info("Unable to insert the conference");
+			insertSuccess = false;
 		}
 		
-		o = null;
-		boolean insertSessionSuccessful = true;
-		
-		//Set all the session with the correct conference code
-		for(Session s : mySessions){
-			s.setConfCode(confCodeString);
-		}
-		
-		try{
-			o = pm.makePersistentAll(mySessions);
-		}
-		finally{
-			pm.close();
-			if(o == null){
-				insertSessionSuccessful = false;
+		if(insertConfSuccessful){
+			o = null;
+			boolean insertSessionSuccessful = true;
+			
+			//Set all the session with the correct conference code
+			for(Session s : mySessions){
+				s.setConfCode(confCodeString);
+			}
+			
+			try{
+				o = pm.makePersistentAll(mySessions);
+			}
+			finally{
+				pm.close();
+				if(o == null){
+					insertSessionSuccessful = false;
+				}
+			}
+			
+			if(!insertSessionSuccessful){
+				log.info("Unable to insert the sessions.");
+				insertSuccess = false;
 			}
 		}
 		
-		if(!insertSessionSuccessful){
-			log.info("Unable to insert the sessions.");
-		}
-		
+		return insertSuccess;
 	}
 	public static String getBody(HttpServletRequest request) throws IOException {
 
