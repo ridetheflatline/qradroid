@@ -16,12 +16,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
-import com.google.appengine.api.datastore.KeyFactory;
 
 //Test data
 /*
@@ -35,7 +34,16 @@ public class ConferenceCreationServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		res.sendRedirect("createconference.jsp");
+		
+		HttpSession session = req.getSession();
+		String userId = (String) session.getAttribute("userSess");
+		
+		if(userId != null){
+			res.sendRedirect("createconference.jsp");
+		}
+		else{
+			res.sendRedirect("index.jsp");
+		}
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException 
