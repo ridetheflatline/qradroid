@@ -30,7 +30,7 @@ public class CreateQRServlet extends HttpServlet {
 		Query q2 = pm.newQuery(ConferenceAttendee.class, "user_id == '" +userID+ "'");
 		
 		List<ConferenceAttendee> attResults = (List<ConferenceAttendee>) q2.execute();
-		if (attResults!=null){
+		if (attResults.size()>0){
 			String confID=null;
 			Conference tempConf=null;
 			ArrayList<Conference> attQRData = new ArrayList<Conference>();
@@ -49,7 +49,7 @@ public class CreateQRServlet extends HttpServlet {
 
 		List<Conference> confResults = (List<Conference>) q3.execute();
 		
-		if(confResults!=null){
+		if(confResults.size()>0){
 			ArrayList<Conference> hostQRData = new ArrayList<Conference>();
 			
 			for(int j=0;j<confResults.size();j++){
