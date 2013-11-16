@@ -42,6 +42,18 @@
 	<br>
 	<textarea id="conf_description" rows="8" cols="40" class="text ui-widget-content ui-corner-all"></textarea>
 	<br>
+	<label>Street</label>
+	<br>
+	<input id="street" type="text" name="street" class="text ui-widget-content ui-corner-all" >
+	<br>
+	<label>City</label>
+	<br>
+	<input id="city" type="text" name="city" class="text ui-widget-content ui-corner-all" >
+	<br>
+	<label>State</label>
+	<br>
+	<input id="state" type="text" name="state" class="text ui-widget-content ui-corner-all" >
+	
 
 	<h3>Sessions</h3>
 	<p>You have no sessions</p>

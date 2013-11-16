@@ -1,0 +1,5 @@
+$("#joinConf").button();
+
+$(function(){
+
+});

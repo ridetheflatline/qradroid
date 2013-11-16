@@ -11,6 +11,9 @@ var endAmOrPm = $("#endAmOrPm");
 var sessionsDescrip = $("#sessionDescrip");
 var conf_name = $("#conf_name");
 var conf_description = $("#conf_description");
+var conf_street = $("#street");
+var conf_city = $("#city");
+var conf_state = $("#state");
 
 var userId = "";
 
@@ -158,6 +161,9 @@ $("#createConferenceBtn").button().click(function(){
 			{"userId" : userId,
 				"conference_name" : conf_name.val(),
 				"conference_description": conf_description.val(),
+				"conf_street":conf_street.val(),
+				"conf_city":conf_city.val(),
+				"conf_state":conf_state.val(),
 				"sessions":sessionArray
 				};
 		

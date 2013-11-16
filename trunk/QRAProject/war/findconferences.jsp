@@ -11,23 +11,32 @@
 
 <h3>Search for Conferences</h3>
 
-<form>
-<label for="search">Search</label>
-<input type="text" name="search" id="search"></input>
+<div>
+	<label for="search">Search</label>
+	<input type="text" name="search" id="search"></input>
+	
+	<label for="state">State</label>
+	<input type="text" name="state" id="state"></input>
+	
+	<label for="city">City</label>
+	<input type="text" name="city" id="city"></input>
+	
+	<button type="button" id="findBtn">Find Conferences</button>
+</div>
 
-<label for="state">State</label>
-<input type="text" name="state" id="state"></input>
 
-<label for="city">City</label>
-<input type="text" name="city" id="city"></input>
-
-<input type="submit" id="findBtn" name="submit" value="Submit">
-</form>
-
-
-<div id="searchResultsDiv">
+<div id="searchResultsDiv" class="ui-widget">
+<h3>Results</h3>
 	<table id="searchResultsTable">
-		
+		<tr>
+			<th>Conference Name</th>
+			<th>Conference Description</th>
+			<th>Number of Sessions</th>
+			<th>Join Conference</th>
+			<th>More Information</th>
+		</tr>
+		<tbody id="searchResultsTableBody">
+		</tbody>
 	</table>
 </div>
 
