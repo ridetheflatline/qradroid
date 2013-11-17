@@ -29,6 +29,7 @@ public class CreateQRServlet extends HttpServlet {
 		String userName;
 		userName=CookieCheck.check(req, resp);
 		String userID = null;
+		boolean attEmpty=false;
 //		log.info("test user " + userName);
 
 		if (userName != null) {
@@ -54,9 +55,11 @@ public class CreateQRServlet extends HttpServlet {
 				 }
 				req.setAttribute("attqrarray", attQRData);
 
-				resp.getWriter().print("attResults.size() is greater than 0 <br>");
-			} else
-				resp.getWriter().print("No results for attResults.size()");
+//				resp.getWriter().print("attResults.size() is greater than 0 <br>");
+			} else{
+				attEmpty=true;
+			}
+//				resp.getWriter().print("No results for attResults.size()");
 
 			// Get Conferences user is hosting
 			Query q3 = pm.newQuery(Conference.class, "host_ID == '" + userID+ "'");
@@ -73,8 +76,15 @@ public class CreateQRServlet extends HttpServlet {
 				req.setAttribute("hostqrarray", hostQRData);
 
 				resp.getWriter().print("confResults.size()>0\"<br>");
-			} else
-				resp.getWriter().print("No results for confResults.size()>0");
+			} else{
+				if(attEmpty){
+					resp.setHeader("Refresh", "5; URL=index.jsp");
+					resp.getWriter().print("You are not attending or hosting any conferences");
+					resp.getWriter().print("<br>You will be redirected to home in 5 seconds.");
+					resp.getWriter().print("<br><a href=\"index.jsp\">Return to home</a>");
+				}
+			}
+//				resp.getWriter().print("No results for confResults.size()>0");
 			
 			
 			String url = "/createqr.jsp";
