@@ -5,7 +5,7 @@
 
 
 
-<jsp:include page="header.jsp" />
+
 
 
 
@@ -18,6 +18,7 @@
 <title>QR Attendance</title>
 
 </head>
+<jsp:include page="header.jsp" />
 <body>
 	<div class="ui-widget">
 		<p>Welcome to QR attendance.</p>
