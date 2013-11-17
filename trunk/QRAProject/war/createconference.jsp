@@ -34,6 +34,10 @@
 <div id="sessions-contain" class="ui-widget">
 <h2>Create Conference</h2>
 <form>
+
+	<div id="conferenceErrors">
+	</div>
+	
 	<label>Conference Name: </label>
 	<br>
 	<input id="conf_name" type="text" name="conf_name" class="text ui-widget-content ui-corner-all" >
@@ -81,6 +85,7 @@
 
 <div id="dialog-form" title="Create Session">
   <p class="validateTips">All form fields are required.</p>
+  <div id="sessionFormErrors"></div>
   <form>
 		<table>
 			<tr>
@@ -159,6 +164,7 @@
 	</p>
 </div> 
 
+<script type="text/javascript" src="<c:url value='/js/moment.min.js'/>"> </script>
 <script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>"> </script>
 <script type="text/javascript" src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
