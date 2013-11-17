@@ -8,11 +8,12 @@ $("#findBtn").button().click(function(){
 	console.log("city: " + city.val());
 	
 	var urlStr = "/searchconferences?search="+search.val()+"&state="+state.val()
-	+"&city="+city.val();
+	+"&city="+city.val() + "&user_id";
 	console.log("urlStr: "+urlStr);
 	
 	 $.get(urlStr,function(data,status){
 		 //console.log("data: "+data);
+		 $("#searchResultsTableBody").empty();
 		 generateHTMLResults(data);
 	 });
 	
@@ -26,7 +27,7 @@ function generateHTMLResults(data){
 		appendValues.append("<td>"+dataArray[i]["numSessions"]+"</td>");
 		var joinHref = "google.com";
 		appendValues.append($("<td>").append($("<a>").text("Join").attr("href",joinHref)));
-		var moreInfoHref = "yahoo.com";
+		var moreInfoHref = "/moreconfinfo?conf_id=" + dataArray[i]["conf_id"] + "&page_output=true";
 		appendValues.append($("<td>").append($("<a>").text("More Information").attr("href",moreInfoHref)));
 	}
 	$("#searchResultsTableBody").append(appendValues);

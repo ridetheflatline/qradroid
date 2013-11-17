@@ -35,6 +35,8 @@ public class SearchConferencesServlet extends HttpServlet {
 		String jsonString = "";
 		if(user_id != null){
 			//Search for the conferences for the user
+			log.info("search conferences user_id not null");
+			jsonString = testReturnConferences();
 		}
 		else{
 			//generate pages for joining conferences
@@ -63,9 +65,9 @@ public class SearchConferencesServlet extends HttpServlet {
 			q.setFilter("confCode == confCodeParam");
 			q.declareParameters("String confCodeParam");
 			
-			String confCodeStr = 
-					KeyFactory.createKeyString("Conference",c.getConf_code());
-			
+			String confCodeStr = c.getConf_code();
+					//KeyFactory.createKeyString("Conference",c.getConf_code());
+			log.info("conference code str: " + confCodeStr);
 			List<Session> myConferenceSessions = 
 					(List<Session>) q.execute(confCodeStr);
 						
