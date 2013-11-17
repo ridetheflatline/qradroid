@@ -40,7 +40,7 @@ public class CalculateAttServlet extends HttpServlet {
 				String[] presence=new String[sessions.size()];
 				for(int j=0;j<sessions.size();j++){
 					List<Attendance_Records> records=getRecords(pm,confID,userID);
-					boolean inRange=false;
+
 					presence[j]="Absent";
 					for(int k=0;k<records.size();k++){
 						if(isWithinRange(records.get(k).getDate(),sessions.get(j).getStartTime(),sessions.get(j).getEndTime())){

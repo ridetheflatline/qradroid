@@ -21,10 +21,12 @@
 	   for (int i=0;i<attData.size();i++){
 		   out.println("<li><a href='/createmyqr?conf_id="+attData.get(i).getConf_code()+"'>"+attData.get(i).getConf_name()+"</a></li>");
 	   }
-	out.println("<h2>Batch print for a conference you are hosting:</h2></br>");
+	out.println("<h2>Look at conferences that you are hosting:</h2></br>");
 	ArrayList<Conference> hostData=(ArrayList<Conference>) request.getAttribute("hostqrarray");
-	for (int i=0;i<attData.size();i++){
-		   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+hostData.get(i).getConf_name()+"</a></li>");
+	for (int i=0;i<hostData.size();i++){
+			out.println(""+hostData.get(i).getConf_name());
+		   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+"Batch Create QR Codes"+"</a></li>");
+		   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendnace Records"+"</a></li>");
 	   }
 	
 	%>
