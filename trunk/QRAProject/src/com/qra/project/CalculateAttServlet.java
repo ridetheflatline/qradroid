@@ -22,7 +22,6 @@ public class CalculateAttServlet extends HttpServlet {
 		String fullName = null;
 		String userID = null;
 		String userName=CookieCheck.check(req, resp);
-		Conference tempConf=null;
 		
 		
 		if(userName!=null){
@@ -33,13 +32,22 @@ public class CalculateAttServlet extends HttpServlet {
 			
 			ArrayList<AttCalc> attData = new ArrayList<AttCalc>();
 			
+			String[] colNames=new String[sessions.size()];
+			for(int l=0;l<sessions.size();l++){
+				colNames[l]=sessions.get(l).getDescription().toUpperCase();
+			}
+			attData.add(new AttCalc("ATTENDEES",colNames,sessions.size()));
+			
+			
 			for(int i=0;i<attendees.size();i++){
-				userID=attendees.get(i).getID();
+				userID=attendees.get(i).getUser_id();
 				User tempUser=pm.getObjectById(User.class, userID);
 				fullName=tempUser.getFirst_name()+" "+tempUser.getLast_name();
 				String[] presence=new String[sessions.size()];
 				for(int j=0;j<sessions.size();j++){
-					List<Attendance_Records> records=getRecords(pm,confID,userID);
+					Query q = pm.newQuery(Attendance_Records.class, "conf_code == '"  + confID + "' && "
+							+ "user_id == '" + userID + "'");
+					List<Attendance_Records> records=(List<Attendance_Records>) q.execute();
 
 					presence[j]="Absent";
 					for(int k=0;k<records.size();k++){
@@ -93,19 +101,7 @@ public class CalculateAttServlet extends HttpServlet {
 		result = myConferenceSessions;
 		return result;
 	}
-	public static List<Attendance_Records> getRecords(PersistenceManager pm, String conf_id, String user_id){
-		List<Attendance_Records> result;
-		Query q = pm.newQuery(Attendance_Records.class);
-		q.setFilter("conf_code == confCodeParam");
-		q.declareParameters("String confCodeParam");
-		q.setFilter("user_id == userParam");
-		q.declareParameters("String userParam");
-		
-		List<Attendance_Records> myConferenceSessions = 
-				(List<Attendance_Records>) q.execute(conf_id,user_id);
-		result = myConferenceSessions;
-		return result;
-	}
+	
 	
 	
 	boolean isWithinRange(Date testDate, Date startDate, Date endDate){
