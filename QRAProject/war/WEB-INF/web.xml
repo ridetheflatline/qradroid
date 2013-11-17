@@ -16,16 +16,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>mobileLogInServlet</servlet-name>
-    <servlet-class>com.qra.project.MobileLogInServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>mobileLogInServlet</servlet-name>
-    <url-pattern>/mobileLogIn</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
     <servlet-name>checkinAttendentServlet</servlet-name>
     <servlet-class>com.qra.project.CheckinAttendentServlet</servlet-class>
   </servlet>
@@ -207,6 +197,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   <servlet-mapping>
   	<servlet-name>RetrieveProfileImageServlet</servlet-name>
   	<url-pattern>/profileimg</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>CalculateAttServlet</servlet-name>
+  	<servlet-class>com.qra.project.CalculateAttServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>CalculateAttServlet</servlet-name>
+  	<url-pattern>/calcattendnace</url-pattern>
   </servlet-mapping>
   
 </web-app>
