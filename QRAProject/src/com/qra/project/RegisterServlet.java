@@ -97,6 +97,12 @@ public class RegisterServlet extends HttpServlet {
 			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
 		}
+		else if(!(email.contains("@") && email.contains("."))){
+			resp.getWriter().print("Please enter a valid email address.<br>");
+			resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
+			resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
+			resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
+		}
 		else{
 			
 			Query q = pm.newQuery(User.class, "username == '"  + username + "'");
@@ -131,8 +137,6 @@ public class RegisterServlet extends HttpServlet {
 				
 				if(o != null){
 					resp.setStatus(HttpServletResponse.SC_OK);
-					//resp.setContentType("text/plain");
-					//resp.getWriter().println("Success");
 					resp.sendRedirect("index.jsp");
 					}//if
 				}//finally
