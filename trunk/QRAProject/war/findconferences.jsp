@@ -7,10 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Find Conferences</title>
 </head>
+<jsp:include page="header.jsp" />
+
 <body>
-
 <h3>Search for Conferences</h3>
-
 <div>
 	<table>
 	<tr>
