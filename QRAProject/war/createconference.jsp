@@ -8,29 +8,9 @@
 <title>Create Conference</title>
 </head>
 
-<body>
-<%
-   Cookie[] cookies = request.getCookies();
-   String cookieName = "userIDCookie";
-   String cookieValue = "";
-   // Get an array of Cookies associated with this domain
-   if( cookies != null ){
-      for (int i = 0; i < cookies.length; i++)
-      {
-    	 Cookie cookie = cookies[i];
-    	 if(cookieName.equals(cookie.getName()))
-    	 {
-    		 cookieValue = cookie.getValue();
-	         out.print("Hello " + cookieValue + "!");
-    	 }
-      }
-  }
-   else{
-	  out.println("You are not logged in.");
-	  out.println("<br> <a href=\"login.jsp\">Go to Log In page.</a>");
-  }
-%>
+<jsp:include page="header.jsp" />
 
+<body>
 <div id="sessions-contain" class="ui-widget">
 <h2>Create Conference</h2>
 <form>
