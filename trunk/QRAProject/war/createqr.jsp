@@ -10,7 +10,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create QR Codes</title>
+<title>My Conferences</title>
 </head>
 <body>
 	<div class="ui-widget">
@@ -26,7 +26,7 @@
 	for (int i=0;i<hostData.size();i++){
 			out.println(""+hostData.get(i).getConf_name());
 		   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+"Batch Create QR Codes"+"</a></li>");
-		   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendnace Records"+"</a></li>");
+		   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendance Records"+"</a></li>");
 	   }
 	
 	%>
