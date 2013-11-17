@@ -31,7 +31,6 @@ public class MoreConfInformationServlet extends HttpServlet {
 			Conference c = pm.getObjectById(Conference.class, conf_id);
 			log.info("conference name: " + c.getConf_name());
 			
-			
 			JSONObject results = new JSONObject();
 			results.put("conf_name", c.getConf_code());
 			results.put("conf_descrip", c.getConference_description());
@@ -53,7 +52,8 @@ public class MoreConfInformationServlet extends HttpServlet {
 		}
 		else if (conf_id != null && page_output.equals("true")){
 			PersistenceManager pm = PMF.get().getPersistenceManager();
-			//Find all the conferences and the sessions			
+			//Find all the conferences and the sessions		
+			log.info("conf_id: " + conf_id);
 			Conference c = pm.getObjectById(Conference.class, conf_id);
 			req.setAttribute("conference", c);
 			req.setAttribute("sessions", getConfSessions(pm,conf_id));
