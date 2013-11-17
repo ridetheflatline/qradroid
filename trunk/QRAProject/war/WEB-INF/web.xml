@@ -206,7 +206,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   
   <servlet-mapping>
   	<servlet-name>CalculateAttServlet</servlet-name>
-  	<url-pattern>/calcattendnace</url-pattern>
+  	<url-pattern>/calcattendance</url-pattern>
   </servlet-mapping>
   
 </web-app>
