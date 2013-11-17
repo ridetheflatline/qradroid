@@ -12,16 +12,42 @@
 <h3>Search for Conferences</h3>
 
 <div>
-	<label for="search">Search</label>
-	<input type="text" name="search" id="search"></input>
+	<table>
+	<tr>
+		<td>
+			<label for="search">Search</label>
+		</td>
+		<td>
+			<input type="text" name="search" id="search"></input>
+		</td>
+	</tr>
 	
-	<label for="state">State</label>
-	<input type="text" name="state" id="state"></input>
+	<tr>
+		<td>
+			<label for="state">State</label>
+		</td>
+		<td>
+			<input type="text" name="state" id="state"></input>
+		</td>
+	</tr>
 	
-	<label for="city">City</label>
-	<input type="text" name="city" id="city"></input>
+	<tr>
+		<td>
+			<label for="city">City</label>
+		</td>
+		<td>
+			<input type="text" name="city" id="city"></input>
+		</td>
+	</tr>
 	
-	<button type="button" id="findBtn">Find Conferences</button>
+	<tr>
+		<td>
+			<button type="button" id="findBtn">Find Conferences</button>
+		</td>
+		<td>
+		</td>
+	</tr>
+	</table>
 </div>
 
 

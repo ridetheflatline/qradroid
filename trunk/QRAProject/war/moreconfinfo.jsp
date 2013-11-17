@@ -18,6 +18,18 @@
 			<td><%= c.getConference_description() %></td>
 		</tr>
 		<tr>
+			<td>Conference Address</td>
+			<td><%= c.getAddress() %></td>
+		</tr>
+		<tr>
+			<td>Conference City</td>
+			<td><%= c.getCity() %></td>
+		</tr>
+		<tr>
+			<td>Conference State</td>
+			<td><%= c.getState() %></td>
+		</tr>
+		<tr>
 			<td>Conference Start Date </td>
 			<td><%= c.getStartTime() %></td>
 		</tr>

@@ -62,6 +62,7 @@ function generateHTMLResults(data){
 		appendValues.append($("<td>").append($("<a>").text("Join").attr("href",joinHref)));
 		var moreInfoHref = "/moreconfinfo?conf_id=" + dataArray[i]["conf_id"] + "&page_output=true";
 		appendValues.append($("<td>").append($("<a>").text("More Information").attr("href",moreInfoHref)));
+		$("#searchResultsTableBody").append(appendValues);
 	}
-	$("#searchResultsTableBody").append(appendValues);
+
 }
