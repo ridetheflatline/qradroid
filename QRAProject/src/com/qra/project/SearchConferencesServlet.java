@@ -28,19 +28,40 @@ public class SearchConferencesServlet extends HttpServlet {
 		String city = req.getParameter("city");
 		String state = req.getParameter("state");
 		
+		boolean validSearchString = false;
+		boolean validCityString = false;
+		boolean validStateString = false;
+		
 		//Or search of user_id
 		//if this is not null then only use this
 		String user_id = req.getParameter("user_id");
 		
 		String jsonString = "";
-		if(user_id != null){
-			//Search for the conferences for the user
-			log.info("search conferences user_id not null");
-			jsonString = testReturnConferences();
+		
+		if(searchString != null && searchString != ""){
+			validSearchString=true;
+		}
+		
+		if(city != null && city != ""){
+			validCityString=true;
+		}
+		
+		if(state != null && state != ""){
+			validStateString=true;
+		}
+		
+		//search by searchstring
+		//search by city
+		//search by state
+		//search by searchstring and city
+		//search by searchstring and state
+		//search by city and state
+		if(validSearchString && !validCityString && !validStateString){
+			
 		}
 		else{
 			//generate pages for joining conferences
-			jsonString = testReturnConferences();
+			jsonString = returnAllConferences();
 		}
 		
 		res.getWriter().println(jsonString);
@@ -50,8 +71,8 @@ public class SearchConferencesServlet extends HttpServlet {
 	{
 		
 	}
-	//Temporary placeholder to return some conferences
-	public static String testReturnConferences(){
+	
+	public static String returnAllConferences(){
 		String result = "";
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Query q = pm.newQuery(Conference.class);

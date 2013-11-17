@@ -17,6 +17,67 @@ var conf_state = $("#state");
 
 var userKeyId;
 
+function fieldsInputChecker(whichForm){
+	
+	var errors = $("<table>");
+	//The popup session form
+	if(whichForm == "session"){
+		var startTimeGood = true;
+		var endTimeGood = true;
+		if( startDate.val() == null || startDate.val() == "" ||
+			startHour.val() == null || startHour.val() == "" ||
+			startMinute.val() == null || startMinute.val() == "" ||
+			startAmOrPm.val() == null || startAmOrPm.val() == "")
+		{
+			errors.append($("<tr>").append($("<td>").text("Please fill out the start date")));
+			startTimeGood = false;
+		}
+		
+		if( endDate.val() == null || endDate.val() == "" ||
+			endHour.val() == null || endHour.val() == "" ||
+			endMinute.val() == null || endMinute.val() == "" ||
+			endAmOrPm.val() == null || endAmOrPm.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out the end date")));
+			endTimeGood = false;
+		}
+		
+		if(sessionsDescrip.val() == null || sessionsDescrip.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out the session description")));
+		}
+		
+		var sesStartTime = startDate.val() + " " + startHour.val() + ":" + startMinute.val() + " " + startAmOrPm.val();
+		var sesEndTime = endDate.val() + " " + endHour.val() + ":" + endMinute.val() + " " + endAmOrPm.val();
+
+		if(startTimeGood && endTimeGood){
+			if(moment(sesStartTime).isAfter(sesEndTime)){
+				errors.append($("<tr>").append($("<td>").text
+						("Session start time is after end time")));
+			}else{
+				
+			}
+		}
+	}
+	else{
+		if(conf_name.val() == null || conf_name.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out conference name")));
+		}
+		if(conf_description.val() == null || conf_description.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out conference description")));
+		}
+		if(conf_street.val() == null || conf_street.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out conference street")));
+		}
+		if(conf_city.val() == null || conf_city.val() == ""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out conference city")));
+		}
+		if(conf_state.val() == null || conf_state.val() ==""){
+			errors.append($("<tr>").append($("<td>").text("Please fill out conference state")));
+		}
+	}
+	
+	return errors;
+}
+
 function getCookie(c_name)
 {
 	var c_value = document.cookie;
@@ -64,60 +125,64 @@ $(function() {
       modal: true,
       buttons: {
         "Create": function() {
-        	//TODO
-        	//if everything valid
-        	var startTime = startDate.val() + " at " + startHour.val() + ":" 
-        		+ startMinute.val() + " " + startAmOrPm.val();
         	
-        	var endTime = endDate.val() + " at " + endHour.val() + ":" 
-        		+ endMinute.val() + " " + endAmOrPm.val();
-        	
-        	
-        	var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
-        	
-        	var appendingValues = $("<tr>").append("<td>" + startTime + "</td>");
-        	appendingValues.append("<td>" + endTime+ "</td>");
-        	appendingValues.append("<td>"+sessionsDescrip.val() + "</td>");
-        	
-        	var editBtn = $("<button>").attr("type", "button").text("Edit").button().click(function(){
-        		$(this).parent().parent().each(function(){
-        			//This is kind of hard to do may have to skip this
-        			
-        			//loop through the td's		
-        			$(this).children().each(function(index){
-        				//console.log($(this).text());
-        			})
-        		});
-        		
-        	});
-        	
-        	var removeBtn = $("<button>").attr("type", "button").text("Remove").button().click(function(){
-        		//TODO
-        		
-        		//Get the tr and remove it self
-        		$(this).parent().parent().fadeOut(200, function(){
-        			$(this).remove();
-        			
-        			var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
-        			
-        			if(tbodyRowsSize == 0){
-        				$("#sessions").hide();
-        			}
-        			
-        		});
-        	});
-        	
-        	appendingValues.append($("<td>").append(editBtn));
-        	appendingValues.append($("<td>").append(removeBtn));
-     
-        	if(tbodyRowsSize == 0){
-        		$("#sessions tbody").append(appendingValues);
-        		$("#sessions").show("slow");
+        	var sessionErrorsTable = fieldsInputChecker("session");
+        	if( sessionErrorsTable.children().size() == 0){
+	        	//TODO
+	        	//if everything valid
+	        	var startTime = startDate.val() + " at " + startHour.val() + ":" 
+	        		+ startMinute.val() + " " + startAmOrPm.val();
+	        	var endTime = endDate.val() + " at " + endHour.val() + ":" 
+	        		+ endMinute.val() + " " + endAmOrPm.val();
+	        	var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+	        	var appendingValues = $("<tr>").append("<td>" + startTime + "</td>");
+	        	appendingValues.append("<td>" + endTime+ "</td>");
+	        	appendingValues.append("<td>"+sessionsDescrip.val() + "</td>");
+	        	var editBtn = $("<button>").attr("type", "button").text("Edit").button().click(function(){
+	        		$(this).parent().parent().each(function(){
+	        			//This is kind of hard to do may have to skip this
+	        			//loop through the td's		
+	        			$(this).children().each(function(index){
+	        				//console.log($(this).text());
+	        			})
+	        		});
+	        	});
+	        	
+	        	var removeBtn = $("<button>").attr("type", "button").text("Remove").button().click(function(){
+	        		//TODO
+	        		
+	        		//Get the tr and remove it self
+	        		$(this).parent().parent().fadeOut(200, function(){
+	        			$(this).remove();
+	        			
+	        			var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+	        			
+	        			if(tbodyRowsSize == 0){
+	        				$("#sessions").hide();
+	        			}
+	        			
+	        		});
+	        	});
+	        	
+	        	appendingValues.append($("<td>").append(editBtn));
+	        	appendingValues.append($("<td>").append(removeBtn));
+	     
+	        	if(tbodyRowsSize == 0){
+	        		$("#sessions tbody").append(appendingValues);
+	        		$("#sessions").show("slow");
+	        	}
+	        	else{
+	        		
+	        		$("#sessions tbody").append(appendingValues);
+	        	}
+	        	
+	        	$(this).dialog("close");
         	}
         	else{
-        		$("#sessions tbody").append(appendingValues);
+        		console.log("unfilled inputs");
+        		$("#sessionFormErrors").empty();
+        		$("#sessionFormErrors").append(sessionErrorsTable);
         	}
-        	$(this).dialog("close");
         },
         Cancel: function() {
           $( this ).dialog("close");
@@ -162,9 +227,17 @@ $("#createSessionBtn").button().click(function(){
 });
 
 $("#createConferenceBtn").button().click(function(){
+	
 	var tbodyRowsSize = $("#sessions").find("tbody").find("tr").size();
+	var confErrorTable = fieldsInputChecker("conference");
+	console.log("size: " + confErrorTable.children().size());
+	
 	if(tbodyRowsSize == 0){
 		$("#noSessionMessage").dialog("open");
+	}
+	else if(confErrorTable.children().size() > 0){
+		$("#conferenceErrors").empty();
+		$("#conferenceErrors").append(confErrorTable);
 	}
 	else{
 		//alert("Creating Conference...");
@@ -199,10 +272,6 @@ $("#createConferenceBtn").button().click(function(){
 
 					sessionArray[index] = sessionObjectValues;
 		});
-		
-		
-		console.log("userKeyId")
-		console.log(userKeyId);
 				
 		var jsonObject = 
 			{"userId" : userKeyId,
@@ -275,6 +344,3 @@ $(function(){
 	}
 	
 });
-
-
-  
