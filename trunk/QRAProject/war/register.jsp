@@ -11,62 +11,63 @@
 
 <jsp:include page="header.jsp" />
 
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
+
+<%
+  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+%>
 
 <body>
 	<div class="ui-widget">
-		<form name="register" method="get" action="/register"
-			style="text-align: left">
+		<form method="post" action="<%= blobstoreService.createUploadUrl("/register") %>" 
+			style="text-align: left" enctype="multipart/form-data" id="registration_form">
 				<legend>
 					<h2>Registration</h2>
 				</legend>
-
-
+				
 				<table>
-
 					<tr>
 						<td><label id="Label1">Username</label></td>
-						<td><input type="text" name="username" /></td>
+						<td><input type="text" name="username" id="username" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Email Address</label></td>
-						<td><input type="text" name="email" /></td>
+						<td><input type="text" name="email" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Password</label></td>
-						<td><input type="password" name="password" /></td>
+						<td><input type="password" name="password" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">First Name</label></td>
-						<td><input type="text" name="first_name" /></td>
+						<td><input type="text" name="first_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Middle Name</label></td>
-						<td><input type="text" name="middle_name" /></td>
+						<td><input type="text" name="middle_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Last Name</label></td>
-						<td><input type="text" name="last_name" /></td>
+						<td><input type="text" name="last_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label>Birthday</label></td>
-						<td><input type="text" name="birthdate" id="datepicker" /></td>
+						<td><input type="text" name="birthdate" id="datepicker" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Profile Image</label></td>
-						<td><input type="text" name="profile_img" /></td>
+						<td><input type="file" name="profile_img" ></td>
 					</tr>
 
 				</table>
-
-
-
 				<div id="submit">
 					<input type="submit" value="Register" id="submitBtn" />
 				</div>
@@ -76,20 +77,12 @@
 	</div>
 
 </body>
-<script type="text/javascript"
-	src="<c:url value='/js/jquery-1.9.1.js'/>">
-	
-</script>
-<script type="text/javascript"
-	src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
+
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
-<script type="text/javascript" src="<c:url value='/js/register.js'/>">
-	
+<script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>">	
 </script>
-<script>
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-</script>
+<script type="text/javascript" src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/register.js'/>">	</script>
+
 </html>

@@ -36,7 +36,8 @@
 	<br>
 	<label>State</label>
 	<br>
-	<input id="state" type="text" name="state" class="text ui-widget-content ui-corner-all" >
+	<select id="state" class="ui-widget ui-widget-content ui-corner-all">
+	</select>
 	
 
 	<h3>Sessions</h3>
@@ -79,15 +80,15 @@
 					id="startDate" value=""
 					class="text ui-widget-content ui-corner-all" /></td>
 				<td>
-					<select id="startHour">
+					<select id="startHour" class="ui-widget ui-widget-content ui-corner-all">
 					</select>
 				</td>
 				<td>
-					<select id="startMinute">
+					<select id="startMinute" class="ui-widget ui-widget-content ui-corner-all">
 					</select>
 				</td>
 				<td>
-					<select id="startAmOrPm" class="ui-widget">
+					<select id="startAmOrPm" class="ui-widget ui-widget-content ui-corner-all">
 						<option value=""></option>
 						<option value="AM">AM</option>
 						<option value="PM">PM</option>
@@ -106,15 +107,15 @@
 				<td><input size="20" type="text" name="endDate" id="endDate"
 					value="" class="text ui-widget-content ui-corner-all" /></td>
 				<td>
-					<select id="endHour">
+					<select id="endHour" class="ui-widget ui-widget-content ui-corner-all">
 					</select>
 				</td>
 				<td>
-					<select id="endMinute">
+					<select id="endMinute" class="ui-widget ui-widget-content ui-corner-all">
 					</select>
 				</td>
 				<td>
-					<select id="endAmOrPm" class="ui-widget">
+					<select id="endAmOrPm" class="ui-widget ui-widget-content ui-corner-all">
 						<option value=""></option>
 						<option value="AM">AM</option>
 						<option value="PM">PM</option>
