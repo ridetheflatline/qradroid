@@ -81,7 +81,7 @@ public class ConferenceCreationServlet extends HttpServlet {
 		String conferenceDescription = (String) jsonObject.get("conference_description");
 		String conferenceStreet = (String)jsonObject.get("conf_street");
 		String conferenceCity = (String)jsonObject.get("conf_city");
-		String conferenceState = (String)jsonObject.get("conf_city");
+		String conferenceState = (String)jsonObject.get("conf_state");
 		String hostId = (String)jsonObject.get("userId");
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
 		

@@ -33,7 +33,7 @@ $("#findBtn").button().click(function(){
 	console.log("city: " + city.val());
 	
 	var urlStr = "/searchconferences?search="+search.val()+"&state="+state.val()
-	+"&city="+city.val() + "&user_id";
+	+"&city="+city.val();
 	console.log("urlStr: "+urlStr);
 	
 	 $.get(urlStr,function(data,status){
