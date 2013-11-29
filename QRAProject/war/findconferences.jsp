@@ -18,7 +18,7 @@
 			<label for="search">Search</label>
 		</td>
 		<td>
-			<input type="text" name="search" id="search"></input>
+			<input type="text" name="search" id="search" class="ui-widget ui-widget-content ui-corner-all"></input>
 		</td>
 	</tr>
 	
@@ -27,7 +27,8 @@
 			<label for="state">State</label>
 		</td>
 		<td>
-			<input type="text" name="state" id="state"></input>
+			<select id="state" class="ui-widget ui-widget-content ui-corner-all">
+			</select>
 		</td>
 	</tr>
 	
@@ -36,7 +37,7 @@
 			<label for="city">City</label>
 		</td>
 		<td>
-			<input type="text" name="city" id="city"></input>
+			<input type="text" name="city" id="city" class="ui-widget ui-widget-content ui-corner-all"></input>
 		</td>
 	</tr>
 	

@@ -116,18 +116,9 @@ public class ConferenceCreationServlet extends HttpServlet {
 	
 	public static String getUserKeyId(String username){
 		String result = "";
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Query q = pm.newQuery(User.class);
 		
-		q.setFilter("username == usernameParam");
-		q.declareParameters("String usernameParam");
-		
-		List<User> myUser = (List<User>)q.execute(username);
-		
-		if(myUser.size() > 0){
-			log.info("key id: " + myUser.get(0).getID());
-			result = myUser.get(0).getID();
-		}
+		User myUser = GetUserFromId.getUser(username, username);
+		result = myUser.getID();
 		
 		return result;
 	}

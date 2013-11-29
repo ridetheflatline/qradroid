@@ -66,3 +66,20 @@ function generateHTMLResults(data){
 	}
 
 }
+
+function stateOptions(){
+	var states =
+		["AL","AK","AZ","AR","CA","CO","CT","DE","FL",
+		 "GA","HI","ID","IL","IN","IA","KS","KY","LA",
+		 "ME","MT","NE","NV","NH","NJ","NM","NY","NC",
+		 "ND","OH","OK","OR","MD","MA","MI","MN","MS",
+		 "MO","PA","RI","SC","SD","TN","TX","UT","VT",
+		 "VA","WA","WV","WI","WY"];
+	var stateSelectList = $("#state");
+	for(var i = 0; i < states.length; i++){
+		var anOption = $("<option>").attr("value", states[i]).text(states[i]);
+		stateSelectList.append(anOption);
+	}
+}
+
+stateOptions();

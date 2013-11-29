@@ -30,7 +30,7 @@
 					cookieValue = cookie.getValue(); //cookieValue is username
 					if (cookieValue != null) //if it has a username
 					{
-						out.println("<li><a href=\"/editprofile.jsp\">Edit Profile</a></li>");
+						out.println("<li><a href=\"/edit\">Edit Profile</a></li>");
 						out.println("<li><a href=\"/createconference\">Create Conference</a></li>");
 						out.println("<li><a href=\"/findconferences\">Search Conference</a></li>");
 						out.println("<li><a href=\"/createqr\">My Conferences</a></li>");
