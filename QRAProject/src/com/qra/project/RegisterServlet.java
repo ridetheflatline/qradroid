@@ -131,8 +131,11 @@ public class RegisterServlet extends HttpServlet {
 						resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
 					}
 					else{
-					resp.getWriter().print(results.toString());
-					User u = new User(first_name, middle_name, last_name, email, username, password, profile_img, birthdate);
+					//resp.getWriter().print(results.toString());
+					
+					User u = new User
+							(first_name, middle_name, last_name, 
+									email, username, password, profile_img, birthdate);
 					Object o = null;
 					try{
 						 o = pm.makePersistent(u);
@@ -149,6 +152,8 @@ public class RegisterServlet extends HttpServlet {
 						}//finally
 					}//else
 				}//else
+				
+				
 	}
 	
 }

@@ -38,9 +38,6 @@ public class SearchConferencesServlet extends HttpServlet {
 		log.info("serachString: " + searchString);
 		log.info("city: " + city);
 		log.info("state: " + state);
-		//Or search of user_id
-		//if this is not null then only use this
-		String user_id = req.getParameter("user_id");
 		
 		String jsonString = "";
 		
@@ -276,7 +273,7 @@ public class SearchConferencesServlet extends HttpServlet {
 				jsonConferences.add(obj);
 			}
 		}
-		q.closeAll();
+		//q.closeAll();
 		return jsonToString(jsonConferences);
 	}
 	public static String jsonToString(JSONArray jsonConferences){
