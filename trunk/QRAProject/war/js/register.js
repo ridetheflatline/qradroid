@@ -15,7 +15,7 @@ $(function() {
 });
 
 $("#registration_form").submit(function(event){
-	var allInputsValid = false;
+	var allInputsValid = true;
 	var errors = $("<table>");
 	
 	if(username.val() == "" || username.val() == null )
@@ -53,7 +53,7 @@ $("#registration_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("You have not entered a birth date.")));
 	}
-	if(!(password.val() == "" || password.val() == null) && password.val().length<5)
+	if(password.val().length<5)
 	{
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("Please enter a password at least 5 characters long.")));
@@ -65,12 +65,14 @@ $("#registration_form").submit(function(event){
 	}
 	if(!allInputsValid)
 	{
+		$("#errors").html(errors);
 		console.log("fail");
 		event.preventDefault();
 		$("#errors").html(errors);
 	}
 	else
 		{
+		allInputsValid = true;
 		console.log("success");
 		}
 });

@@ -96,7 +96,7 @@ public class RegisterServlet extends HttpServlet {
 					{
 						resp.getWriter().print("You have not entered a birth date.<br>");
 					}
-					if(password.length()<=5)
+					if(password.length()<5)
 					{
 						resp.getWriter().print("Please enter a password at least 5 characters long.<br>");
 					}
