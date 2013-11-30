@@ -45,7 +45,7 @@ public class CreateBatchQRServlet extends HttpServlet {
 			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
 			String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
 			
-			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates));
+			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates,null));
 		}
 		req.setAttribute("qrarray", qrData);
 		String url = "/createmyqr.jsp";

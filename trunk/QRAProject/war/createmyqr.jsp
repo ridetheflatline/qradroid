@@ -20,8 +20,11 @@
    ArrayList<QRData> qrData=(ArrayList<QRData>) request.getAttribute("qrarray");
    
    for (int i=0;i<qrData.size();i++){
-	   out.println("<table border='1'><tr><td><h3>"+qrData.get(i).getConfName()+
-			   "</h3></br>Name: "+qrData.get(i).getAttName()+"</br>Dates: "+qrData.get(i).getDates()+
+	   out.print("<table border='1'><tr><td><h3>"+qrData.get(i).getConfName()+
+			   "</h3></br>Name: "+qrData.get(i).getAttName()+"</br>");
+	   if(qrData.get(i).getUserName()!=null)
+		   out.print("UserName: "+qrData.get(i).getUserName()+"</br>");
+	   out.print("Dates: "+qrData.get(i).getDates()+
 			   "</td><td><img src=https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl="+qrData.get(i).getConfID()+
 			   ","+qrData.get(i).getUserID()+"></td></tr></table>");
    }
