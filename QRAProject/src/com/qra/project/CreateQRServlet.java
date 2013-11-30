@@ -3,7 +3,6 @@ package com.qra.project;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
@@ -22,15 +21,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CreateQRServlet extends HttpServlet {
 
-	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
-
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		String userName;
 		userName=CookieCheck.check(req, resp);
 		String userID = null;
 		boolean attEmpty=false;
-//		log.info("test user " + userName);
 
 		if (userName != null) {
 			Query q = pm.newQuery(User.class, "username == '" + userName + "'");
@@ -49,17 +45,14 @@ public class CreateQRServlet extends HttpServlet {
 				ArrayList<Conference> attQRData = new ArrayList<Conference>();
 
 				 for (int j=0;j<attResults.size();j++){
-				 confID=attResults.get(j).getConf_code();
-				 tempConf = pm.getObjectById(Conference.class, confID);
-				 attQRData.add(tempConf);
+					 confID=attResults.get(j).getConf_code();
+					 tempConf = pm.getObjectById(Conference.class, confID);
+					 attQRData.add(tempConf);
 				 }
 				req.setAttribute("attqrarray", attQRData);
-
-//				resp.getWriter().print("attResults.size() is greater than 0 <br>");
 			} else{
 				attEmpty=true;
 			}
-//				resp.getWriter().print("No results for attResults.size()");
 
 			// Get Conferences user is hosting
 			Query q3 = pm.newQuery(Conference.class, "host_ID == '" + userID+ "'");
@@ -74,8 +67,6 @@ public class CreateQRServlet extends HttpServlet {
 				 hostQRData.add(confResults.get(j));
 				 }
 				req.setAttribute("hostqrarray", hostQRData);
-
-//				resp.getWriter().print("confResults.size()>0\"<br>");
 			} else{
 				if(attEmpty){
 					resp.setHeader("Refresh", "5; URL=index.jsp");
@@ -84,7 +75,6 @@ public class CreateQRServlet extends HttpServlet {
 					resp.getWriter().print("<br><a href=\"index.jsp\">Return to home</a>");
 				}
 			}
-//				resp.getWriter().print("No results for confResults.size()>0");
 			
 			
 			String url = "/createqr.jsp";

@@ -7,6 +7,7 @@ public class QRData {
 	private String userID;
 	private String confID;
 	private String dates;
+	private String userName;
 	
 	/***
 	 * Initialize an object that has all data needed for a QR ID to be printed.
@@ -16,12 +17,13 @@ public class QRData {
 	 * @param cID
 	 * @param d
 	 */
-	public QRData(String cName, String aName, String uID, String cID, String d){
+	public QRData(String cName, String aName, String uID, String cID, String d, String u){
 		confName=cName;
 		attName=aName;
 		userID=uID;
 		confID=cID;
 		dates=d;
+		userName=u;
 	}
 	
 	/**
@@ -83,6 +85,20 @@ public class QRData {
 	 */
 	public void setDates(String dates) {
 		this.dates = dates;
+	}
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+	/**
+	 * @param userName the userName to set
+	 */
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
