@@ -75,7 +75,7 @@ public class CreateQRServlet extends HttpServlet {
 				 }
 				req.setAttribute("hostqrarray", hostQRData);
 
-				resp.getWriter().print("confResults.size()>0\"<br>");
+//				resp.getWriter().print("confResults.size()>0\"<br>");
 			} else{
 				if(attEmpty){
 					resp.setHeader("Refresh", "5; URL=index.jsp");

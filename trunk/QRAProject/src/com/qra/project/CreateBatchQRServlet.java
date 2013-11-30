@@ -1,6 +1,7 @@
 package com.qra.project;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,10 @@ public class CreateBatchQRServlet extends HttpServlet {
 			userID=attResults.get(j).getUser_id();
 			tempUser=pm.getObjectById(User.class, userID);
 			fullName=tempUser.getFirst_name()+" "+tempUser.getLast_name();
-			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,"test"));
+			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
+			String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
+			
+			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates));
 		}
 		req.setAttribute("qrarray", qrData);
 		String url = "/createmyqr.jsp";
