@@ -25,7 +25,7 @@
 				<legend>
 					<h2>Registration</h2>
 				</legend>
-				
+				<p id="errors"></p>
 				<table>
 					<tr>
 						<td><label id="Label1">Username</label></td>
@@ -34,27 +34,27 @@
 
 					<tr>
 						<td><label id="Label1">Email Address</label></td>
-						<td><input type="text" name="email" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="text" name="email" id="email" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Password</label></td>
-						<td><input type="password" name="password" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="password" name="password" id="password" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">First Name</label></td>
-						<td><input type="text" name="first_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="text" name="first_name" id="first_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Middle Name</label></td>
-						<td><input type="text" name="middle_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="text" name="middle_name" id="middle_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Last Name</label></td>
-						<td><input type="text" name="last_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="text" name="last_name" id="last_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
