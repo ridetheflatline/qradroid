@@ -1,6 +1,7 @@
 package com.qra.project;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,10 @@ public class CreateMyQRServlet extends HttpServlet {
 			fullName=results.get(0).getFirst_name()+" "+results.get(0).getLast_name();
 			userID=results.get(0).getID();
 			tempConf=pm.getObjectById(Conference.class, confID);
-			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,"test"));
+			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
+			String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
+			
+			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates));
 			
 			
 			req.setAttribute("qrarray", qrData);

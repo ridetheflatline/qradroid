@@ -16,18 +16,31 @@
 	<div class="ui-widget">
 
 	<%
-	out.println("<h2>Print an ID for a conference you are attending:</h2></br>");
+	
+	
 	ArrayList<Conference> attData=(ArrayList<Conference>) request.getAttribute("attqrarray");
+	if(attData!=null){
+		out.println("<h2>Print an ID for a conference you are attending:</h2></br>");
 	   for (int i=0;i<attData.size();i++){
 		   out.println("<li><a href='/createmyqr?conf_id="+attData.get(i).getConf_code()+"'>"+attData.get(i).getConf_name()+"</a></li>");
 	   }
-	out.println("<h2>Look at conferences that you are hosting:</h2></br>");
+	}
+	
 	ArrayList<Conference> hostData=(ArrayList<Conference>) request.getAttribute("hostqrarray");
-	for (int i=0;i<hostData.size();i++){
-			out.println(""+hostData.get(i).getConf_name());
-		   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+"Batch Create QR Codes"+"</a></li>");
-		   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendance Records"+"</a></li>");
-	   }
+	if(hostData!=null){
+		out.println("<h2>Look at conferences that you are hosting:</h2></br>");
+		for (int i=0;i<hostData.size();i++){
+				out.println("<h3>"+hostData.get(i).getConf_name()+"</h3>");
+			   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+"Batch Create QR Codes"+"</a></li>");
+			   
+			   out.print("<li><form method=\"get\" action=\"/createblankqr\" style=\"text-align: left\" enctype=\"multipart/form-data\">");
+			   out.print("Number of blank IDs to create: <input type=\"text\" name=\"blanknum\" class=\"ui-widget ui-widget-content ui-corner-all\"/>");
+			   out.print("<input type=\"hidden\" name=\"conf_id\" value=\""+hostData.get(i).getConf_code()+"\"/>");
+			   out.print("<input type=\"submit\" value=\"Create Blank QR ID Cards\" id=\"submitBtn\" /></form></li>");
+			   
+			   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendance Records"+"</a></li>");
+		   }
+	}
 	
 	%>
 	</div>
