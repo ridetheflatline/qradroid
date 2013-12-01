@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 public class WebLoginServlet extends HttpServlet {
 	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
 
@@ -48,14 +50,14 @@ public class WebLoginServlet extends HttpServlet {
 		else{
 			username = username.trim();
 			password = password.trim();
+			BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 			
 			try{
-				Query q = pm.newQuery(User.class, "username == '"  + username + "' && "
-						+ "password == '" + password + "'");
+				Query q = pm.newQuery(User.class, "username == '"  + username + "'");
 				
 				List<User> results = (List<User>) q.execute(); //query for user with the same username and password
 				
-				if(results.size() == 0){//if there are no matches
+				if(results.size() == 0 || (results.size()>0? !passwordEncryptor.checkPassword(password, results.get(0).getPassword()):true)){//if there are no matches
 					resp.setHeader("Refresh", "5; URL=login.jsp");
 					resp.getWriter().print("The entered username or password is incorrect");
 					resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
@@ -63,7 +65,6 @@ public class WebLoginServlet extends HttpServlet {
 					resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
 				}
 				else{
-					
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
 					

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
@@ -132,10 +134,11 @@ public class RegisterServlet extends HttpServlet {
 					}
 					else{
 					//resp.getWriter().print(results.toString());
-					
+					BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+					String encryptedPassword = passwordEncryptor.encryptPassword(password);
 					User u = new User
 							(first_name, middle_name, last_name, 
-									email, username, password, profile_img, birthdate);
+									email, username, encryptedPassword, profile_img, birthdate);
 					Object o = null;
 					try{
 						 o = pm.makePersistent(u);

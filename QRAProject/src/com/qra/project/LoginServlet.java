@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
+
 public class LoginServlet extends HttpServlet {
 
     private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
@@ -33,15 +35,15 @@ public class LoginServlet extends HttpServlet {
 		else{
 			username = username.trim();
 			password = password.trim();
+			BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 			
 			try{
 				
-				Query q = pm.newQuery(User.class, "email == '"  + username + "' && "
-						+ "password == '" + password + "'");
+				Query q = pm.newQuery(User.class, "email == '"  + username + "'");
 			
 				List<User> results = (List<User>) q.execute();
 				
-				if(results.size() == 0){
+				if(results.size() == 0 || (results.size()>0? !passwordEncryptor.checkPassword(password, results.get(0).getPassword()):true)){
 					resp.getWriter().print("The entered username or password is incorrect");
 				}
 				else{

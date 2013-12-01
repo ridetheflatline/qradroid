@@ -33,22 +33,10 @@ public class QRData {
 		return confName;
 	}
 	/**
-	 * @param confName the confName to set
-	 */
-	public void setConfName(String confName) {
-		this.confName = confName;
-	}
-	/**
 	 * @return the attName
 	 */
 	public String getAttName() {
 		return attName;
-	}
-	/**
-	 * @param attName the attName to set
-	 */
-	public void setAttName(String attName) {
-		this.attName = attName;
 	}
 	/**
 	 * @return the userID
@@ -57,22 +45,10 @@ public class QRData {
 		return userID;
 	}
 	/**
-	 * @param userID the userID to set
-	 */
-	public void setUserID(String userID) {
-		this.userID = userID;
-	}
-	/**
 	 * @return the confID
 	 */
 	public String getConfID() {
 		return confID;
-	}
-	/**
-	 * @param confID the confID to set
-	 */
-	public void setConfID(String confID) {
-		this.confID = confID;
 	}
 	/**
 	 * @return the dates
@@ -81,27 +57,10 @@ public class QRData {
 		return dates;
 	}
 	/**
-	 * @param dates the dates to set
-	 */
-	public void setDates(String dates) {
-		this.dates = dates;
-	}
-
-	/**
 	 * @return the userName
 	 */
 	public String getUserName() {
 		return userName;
 	}
 
-	/**
-	 * @param userName the userName to set
-	 */
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-	
-	
-	
 }
