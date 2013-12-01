@@ -40,6 +40,16 @@
 
 			<table>
 				<tr>
+					<td><label id="Label1">Username</label></td>
+					<td><input type="text" name="username" id="username" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getUsername() %>"/></td>
+				</tr>
+			
+				<tr>
+					<td><label id="Label1">Email Address</label></td>
+					<td><input type="text" name="email" id="email" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getEmail() %>"/></td>
+				</tr>
+			
+				<tr>
 					<td><label id="Label1">First Name</label></td>
 					<td><input type="text" name="first_name" id="first_name" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getFirst_name()%>"/></td>
 				</tr>

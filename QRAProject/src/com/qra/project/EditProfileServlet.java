@@ -58,6 +58,8 @@ public class EditProfileServlet extends HttpServlet {
 		String oldpassword = req.getParameter("oldpassword");
 		String newpassword1 = req.getParameter("newpassword1");
 		String newpassword2 = req.getParameter("newpassword2");
+		String email = req.getParameter("email");
+		String username = req.getParameter("username");
 		
 		Map<String, List<BlobKey>> files_sent = BlobstoreServiceFactory.getBlobstoreService().getUploads(req);
 	    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
@@ -130,6 +132,19 @@ public class EditProfileServlet extends HttpServlet {
 			} 
 			else {
 				results.get(0).setProfile_img(profile_img);
+			}
+			
+			Query q3 = pm.newQuery(User.class, "username == '"  + username + "'");
+			List<User> results3 = (List<User>) q.execute();
+			Query q2 = pm.newQuery(User.class, "email == '"  + email + "'");
+			List<User> results2 = (List<User>) q2.execute();
+			//Check for username that already exists
+			if(results3.size() == 0){
+				results.get(0).setUsername(username);
+			}
+			//Check for if the email is already used
+			if(results2.size() == 0){
+				results.get(0).setEmail(email);
 			}
 			resp.sendRedirect("/index");
 		}
