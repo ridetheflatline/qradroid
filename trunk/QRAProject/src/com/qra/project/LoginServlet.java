@@ -16,7 +16,7 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 
 public class LoginServlet extends HttpServlet {
 
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    private static final Logger log = Logger.getLogger(LoginServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{

@@ -23,38 +23,41 @@ public class CreateBatchQRServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		String confID = req.getParameter("conf_id");
-		String fullName = null;
-		String userID = null;
-		Conference tempConf=null;
-		User tempUser=null;
-		ArrayList<QRData> qrData = new ArrayList<QRData>();
 		
-		
-		tempConf=pm.getObjectById(Conference.class, confID);
-		
-		Query q = pm.newQuery(ConferenceAttendee.class, "conf_code == '" +confID+ "'");
-		List<ConferenceAttendee> attResults = (List<ConferenceAttendee>) q.execute();
-		
-		
-		for(int j=0;j<attResults.size();j++){
-			userID=attResults.get(j).getUser_id();
-			tempUser=pm.getObjectById(User.class, userID);
-			fullName=tempUser.getFirst_name()+" "+tempUser.getLast_name();
-			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/YYYY");
-			String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
+		if(CookieSessionCheck.check(req, resp)!=null){
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			String confID = req.getParameter("conf_id");
+			String fullName = null;
+			String userID = null;
+			Conference tempConf=null;
+			User tempUser=null;
+			ArrayList<QRData> qrData = new ArrayList<QRData>();
 			
-			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates,null));
-		}
-		req.setAttribute("qrarray", qrData);
-		String url = "/createmyqr.jsp";
-		RequestDispatcher dispatcher=getServletContext().getRequestDispatcher(url);
-		try {
-			dispatcher.forward(req, resp);
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			tempConf=pm.getObjectById(Conference.class, confID);
+			
+			Query q = pm.newQuery(ConferenceAttendee.class, "conf_code == '" +confID+ "'");
+			List<ConferenceAttendee> attResults = (List<ConferenceAttendee>) q.execute();
+			
+			
+			for(int j=0;j<attResults.size();j++){
+				userID=attResults.get(j).getUser_id();
+				tempUser=pm.getObjectById(User.class, userID);
+				fullName=tempUser.getFirst_name()+" "+tempUser.getLast_name();
+				SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/YYYY");
+				String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
+				
+				qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates,null));
+			}
+			req.setAttribute("qrarray", qrData);
+			String url = "/createmyqr.jsp";
+			RequestDispatcher dispatcher=getServletContext().getRequestDispatcher(url);
+			try {
+				dispatcher.forward(req, resp);
+			} catch (ServletException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

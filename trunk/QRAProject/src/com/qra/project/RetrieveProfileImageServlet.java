@@ -15,7 +15,7 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class RetrieveProfileImageServlet extends HttpServlet {
 	
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    private static final Logger log = Logger.getLogger(RetrieveProfileImageServlet.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{

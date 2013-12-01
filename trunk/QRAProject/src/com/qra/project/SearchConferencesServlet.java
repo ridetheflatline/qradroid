@@ -20,85 +20,89 @@ import com.google.appengine.api.datastore.KeyFactory;
 
 public class SearchConferencesServlet extends HttpServlet {
 	
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    private static final Logger log = Logger.getLogger(SearchConferencesServlet.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		String searchString = req.getParameter("search");
-		String city = req.getParameter("city");
-		String state = req.getParameter("state");
-
-		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
-		boolean validSearchString = false;
-		boolean validCityString = false;
-		boolean validStateString = false;
-		
-		log.info("serachString: " + searchString);
-		log.info("city: " + city);
-		log.info("state: " + state);
-		
-		String jsonString = "";
-		
-		if(searchString != null && searchString != ""){
-			validSearchString=true;
-		}
-		
-		if(city != null && city != ""){
-			validCityString=true;
-		}
-		
-		if(state != null && state != ""){
-			validStateString=true;
-		}
+		if(CookieSessionCheck.check(req, res)!=null){
+			
+			String searchString = req.getParameter("search");
+			String city = req.getParameter("city");
+			String state = req.getParameter("state");
 	
-		log.info("validsearch: " + validSearchString);
-		log.info("validcity: " + validCityString);
-		log.info("validstate: " + validStateString);
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			
+			boolean validSearchString = false;
+			boolean validCityString = false;
+			boolean validStateString = false;
+			
+			log.info("serachString: " + searchString);
+			log.info("city: " + city);
+			log.info("state: " + state);
+			
+			String jsonString = "";
+			
+			if(searchString != null && searchString != ""){
+				validSearchString=true;
+			}
+			
+			if(city != null && city != ""){
+				validCityString=true;
+			}
+			
+			if(state != null && state != ""){
+				validStateString=true;
+			}
 		
-		//search by searchstring
-		//search by city
-		//search by state
-		//search by searchstring and city
-		//search by searchstring and state
-		//search by city and state
-		//serach by search string, city , and state
-		if(validSearchString && !validCityString && !validStateString){
-			//return conferences by search string
-			jsonString = getSearchStringConferences(searchString,pm);
+			log.info("validsearch: " + validSearchString);
+			log.info("validcity: " + validCityString);
+			log.info("validstate: " + validStateString);
+			
+			//search by searchstring
+			//search by city
+			//search by state
+			//search by searchstring and city
+			//search by searchstring and state
+			//search by city and state
+			//serach by search string, city , and state
+			if(validSearchString && !validCityString && !validStateString){
+				//return conferences by search string
+				jsonString = getSearchStringConferences(searchString,pm);
+			}
+			else if(!validSearchString && validCityString && !validStateString){
+				//return conferences by city
+				jsonString = getCitySearchConferences(city, pm);
+			}
+			else if(!validSearchString && !validCityString && validStateString){
+				//return conferences by state
+				jsonString = getStateSearchConferences(state, pm);
+			}
+			else if(validSearchString && validCityString && !validStateString){
+				//return conferences by search string and city
+				jsonString = getSearchAndCityConferences(searchString, city, pm);
+			}
+			else if(validSearchString && validCityString && !validStateString){
+				//return conferences by search string and state
+				jsonString = getSearchAndStateConferences(searchString, state, pm);
+			}
+			else if(!validSearchString && validCityString && validStateString){
+				//return city and state search
+				jsonString = getCityAndStateConferences(city, state, pm);
+			}
+			else if(validSearchString && validCityString && validStateString){
+				//return conferences that match all
+				jsonString = getSearchCityAndStateConferences(searchString,
+						city, state,pm);
+			}
+			else{
+				//return all conferences
+				jsonString = getAllConferences(pm);
+			}
+			
+			res.getWriter().println(jsonString);
 		}
-		else if(!validSearchString && validCityString && !validStateString){
-			//return conferences by city
-			jsonString = getCitySearchConferences(city, pm);
-		}
-		else if(!validSearchString && !validCityString && validStateString){
-			//return conferences by state
-			jsonString = getStateSearchConferences(state, pm);
-		}
-		else if(validSearchString && validCityString && !validStateString){
-			//return conferences by search string and city
-			jsonString = getSearchAndCityConferences(searchString, city, pm);
-		}
-		else if(validSearchString && validCityString && !validStateString){
-			//return conferences by search string and state
-			jsonString = getSearchAndStateConferences(searchString, state, pm);
-		}
-		else if(!validSearchString && validCityString && validStateString){
-			//return city and state search
-			jsonString = getCityAndStateConferences(city, state, pm);
-		}
-		else if(validSearchString && validCityString && validStateString){
-			//return conferences that match all
-			jsonString = getSearchCityAndStateConferences(searchString,
-					city, state,pm);
-		}
-		else{
-			//return all conferences
-			jsonString = getAllConferences(pm);
-		}
-		
-		res.getWriter().println(jsonString);
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException 
