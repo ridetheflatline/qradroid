@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 public class WebLoginServlet extends HttpServlet {
-	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+	private static final Logger log = Logger.getLogger(WebLoginServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{
@@ -56,20 +56,17 @@ public class WebLoginServlet extends HttpServlet {
 				Query q = pm.newQuery(User.class, "username == '"  + username + "'");
 				
 				List<User> results = (List<User>) q.execute(); //query for user with the same username and password
-				//log.info("password: " + password);
+				
 				if(results.size() == 0 || (results.size()>0? !passwordEncryptor.checkPassword(password, results.get(0).getPassword()):true)){//if there are no matches
 					resp.setHeader("Refresh", "5; URL=login.jsp");
 					resp.getWriter().print("The entered username or password is incorrect");
 					resp.getWriter().print("<br>You will return to Log In in 5 seconds.<br>");
 					resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
 					resp.getWriter().print("<br> <a href=\"login.jsp\">Return to Log In</a>");
-					log.info("encryptedpassword check: " + passwordEncryptor.checkPassword(password, results.get(0).getPassword()));
 				}
 				else{
 					resp.setStatus(HttpServletResponse.SC_OK);
 					resp.setContentType("application/json");
-					
-					log.info("encryptedpassword check: " + passwordEncryptor.checkPassword(password, results.get(0).getPassword()));
 					
 					//Cookie creation
 					Cookie userIDCookie = new Cookie("userIDCookie", username);
