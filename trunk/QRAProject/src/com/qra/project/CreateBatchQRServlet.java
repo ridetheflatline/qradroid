@@ -42,7 +42,7 @@ public class CreateBatchQRServlet extends HttpServlet {
 			userID=attResults.get(j).getUser_id();
 			tempUser=pm.getObjectById(User.class, userID);
 			fullName=tempUser.getFirst_name()+" "+tempUser.getLast_name();
-			SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/YYYY");
 			String dates=sdf.format(tempConf.getStartTime())+"-"+sdf.format(tempConf.getEndTime());
 			
 			qrData.add(new QRData(tempConf.getConf_name(),fullName,userID,confID,dates,null));
