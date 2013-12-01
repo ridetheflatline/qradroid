@@ -14,6 +14,7 @@ var conf_description = $("#conf_description");
 var conf_street = $("#street");
 var conf_city = $("#city");
 var conf_state = $("#state");
+var timeZoneValue = $("#timeZone");
 
 var userKeyId;
 
@@ -138,15 +139,6 @@ $(function() {
 	        	var appendingValues = $("<tr>").append("<td>" + startTime + "</td>");
 	        	appendingValues.append("<td>" + endTime+ "</td>");
 	        	appendingValues.append("<td>"+sessionsDescrip.val() + "</td>");
-	        	var editBtn = $("<button>").attr("type", "button").text("Edit").button().click(function(){
-	        		$(this).parent().parent().each(function(){
-	        			//This is kind of hard to do may have to skip this
-	        			//loop through the td's		
-	        			$(this).children().each(function(index){
-	        				//console.log($(this).text());
-	        			})
-	        		});
-	        	});
 	        	
 	        	var removeBtn = $("<button>").attr("type", "button").text("Remove").button().click(function(){
 	        		//TODO
@@ -164,7 +156,6 @@ $(function() {
 	        		});
 	        	});
 	        	
-	        	appendingValues.append($("<td>").append(editBtn));
 	        	appendingValues.append($("<td>").append(removeBtn));
 	     
 	        	if(tbodyRowsSize == 0){
@@ -189,7 +180,6 @@ $(function() {
         }
       },
       close: function() {
-       
       }
     });
 });
@@ -280,6 +270,7 @@ $("#createConferenceBtn").button().click(function(){
 				"conf_street":conf_street.val(),
 				"conf_city":conf_city.val(),
 				"conf_state":conf_state.val(),
+				"timeZoneValue": timeZoneValue.val(),
 				"sessions":sessionArray
 				};
 		var jsonAsString = JSON.stringify(jsonObject);
@@ -345,8 +336,9 @@ $(function(){
 	
 });
 
-
-function stateOptions(){
+//Add state options in select
+$(
+function(){
 	var states =
 		["AL","AK","AZ","AR","CA","CO","CT","DE","FL",
 		 "GA","HI","ID","IL","IN","IA","KS","KY","LA",
@@ -360,5 +352,18 @@ function stateOptions(){
 		stateSelectList.append(anOption);
 	}
 }
+);
 
-stateOptions();
+//Add timezone options in select
+$(function(){
+	var timeZones = ["America/Anchorage", "America/Juneau", "America/Yakutat", "America/Nome","America/Adak",
+	                 "America/Chicago","America/Indiana/Knox","America/Menominee", "America/North_Dakota/Center",
+	                 "America/New_York","America/Indiana/Marengo","America/Indiana/Indianapolis","America/Indiana/Vevay",
+	                 "America/Kentucky/Louisville","America/Kentucky/Monticello","America/Detroit", "Pacific/Honolulu",
+	                 "America/Phoenix","America/Denver","America/Boise","America/Los_Angeles"];
+	var timeZonesList = $("#timeZone");
+	for(var i = 0; i < timeZones.length; i++){
+		var anOption = $("<option>").attr("value", timeZones[i]).text(timeZones[i]);
+		timeZonesList.append(anOption);
+	}
+});

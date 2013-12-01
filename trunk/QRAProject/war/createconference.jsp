@@ -38,6 +38,15 @@
 	<br>
 	<select id="state" class="ui-widget ui-widget-content ui-corner-all">
 	</select>
+	<br>
+	<label>Time Zone</label>
+	<br>
+	<select id="timeZone" class="ui-widget ui-widget-content ui-corner-all">
+	</select>
+	<br>
+	<p>
+	Click <a href="http://www.statoids.com/tus.html">here</a> to find your conference Timezone.
+	</p>
 	
 
 	<h3>Sessions</h3>
@@ -49,7 +58,6 @@
 				<th>End Date</th>
 				<th>Description</th>
 				<th>Remove Session</th>
-				<th>Edit Session</th>
 			</tr>
 		</thead>
 		<tbody>

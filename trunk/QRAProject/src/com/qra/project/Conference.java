@@ -1,9 +1,6 @@
 package com.qra.project;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
@@ -11,8 +8,11 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+
 @PersistenceCapable
-public class Conference {
+public class Conference implements Serializable{
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key conf_code;
@@ -40,10 +40,13 @@ public class Conference {
 	
 	@Persistent
 	private String state;
+	
+	@Persistent
+	private String timeZone;
 
 	public Conference(String conf_name, String host_ID,
 			Date startTime, Date endTime, String conference_description,
-			String address,String city, String state) {
+			String address,String city, String state, String timeZone) {
 		super();
 		this.conf_name = conf_name;
 		this.host_ID = host_ID;
@@ -53,6 +56,7 @@ public class Conference {
 		this.address = address;
 		this.city = city;
 		this.state = state;
+		this.timeZone = timeZone;
 	}
 
 	public Conference(String conf_name, String host_ID, Date startTime,
@@ -142,6 +146,14 @@ public class Conference {
 
 	public void setState(String state) {
 		this.state = state;
+	}
+
+	public String getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
 	}
 	
 }
