@@ -43,8 +43,8 @@ public class CookieSessionCheck {
 			Cookie userKeyIdCookie = 
 					new Cookie("userIDCookie", userIdFromSess);
 			cookieValue=userIdFromSess;
-			//Set for 10 minutes
-			userKeyIdCookie.setMaxAge(60*10);
+			//Set for 24 hours
+			userKeyIdCookie.setMaxAge(60*60*24);
 			userKeyIdCookie.setPath("/");
 			resp.addCookie(userKeyIdCookie);
 		}

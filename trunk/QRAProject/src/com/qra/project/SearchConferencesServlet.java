@@ -180,7 +180,7 @@ public class SearchConferencesServlet extends HttpServlet {
 		q = pm.newQuery(Conference.class);
 		q.setFilter("city == cityParam");
 		q.declareParameters("String cityParam");
-		List<Conference> conferences = (List <Conference>)q.execute(cityString.toLowerCase().trim());
+		List<Conference> conferences = (List <Conference>)q.execute(cityString.trim());
 		return conferences;
 	}
 	
@@ -189,7 +189,7 @@ public class SearchConferencesServlet extends HttpServlet {
 		q = pm.newQuery(Conference.class);
 		q.setFilter("state == stateParam");
 		q.declareParameters("String stateParam");
-		List<Conference> conferences = (List <Conference>)q.execute(stateString.toLowerCase().trim());
+		List<Conference> conferences = (List <Conference>)q.execute(stateString.trim());
 		return conferences;
 	}
 	

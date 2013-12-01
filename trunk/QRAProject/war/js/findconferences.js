@@ -44,6 +44,18 @@ $("#findBtn").button().click(function(){
 	
 });
 
+$("#findBtn2").button().click(function(){
+	var urlStr = "/searchconferences?search=&state=&city=";
+	console.log("urlStr: "+urlStr);
+	
+	 $.get(urlStr,function(data,status){
+		 //console.log("data: "+data);
+		 $("#searchResultsTableBody").empty();
+		 generateHTMLResults(data);
+	 });
+	
+});
+
 function generateHTMLResults(data){
 	var dataArray = JSON.parse(data);
 	for(var i = 0; i < dataArray.length; i++){

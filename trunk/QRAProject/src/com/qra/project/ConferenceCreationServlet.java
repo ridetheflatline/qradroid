@@ -19,7 +19,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -39,8 +38,21 @@ public class ConferenceCreationServlet extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		if(CookieSessionCheck.check(req,res)!=null)
+		String userName=CookieSessionCheck.check(req,res);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		log.info("userval: "+userName);
+		if(userName!=null){
+			Query q = pm.newQuery(User.class, "username == '" + userName + "'");
+			List<User> results = (List<User>) q.execute();
+			log.info("id val: "+results.get(0).getID());
+			Cookie userKeyIdCookie = new Cookie("userKeyId", results.get(0).getID());
+			//Set for 10 minutes
+			userKeyIdCookie.setMaxAge(60*10);
+			userKeyIdCookie.setPath("/");
+			res.addCookie(userKeyIdCookie);
+			
 			res.sendRedirect("/createconference.jsp");
+		}
 //		HttpSession session = req.getSession();
 //		String userIdFromSess = (String) session.getAttribute("userSess");
 //		String userIdFromCookie = CookieSessionCheck.check(req, res);
@@ -86,6 +98,8 @@ public class ConferenceCreationServlet extends HttpServlet {
 		String conferenceState = (String)jsonObject.get("conf_state");
 		String hostId = (String)jsonObject.get("userId");
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
+
+		
 		
 		if(conferenceName != null && conferenceDescription != null 
 				&& conferenceStreet != null && conferenceCity != null &&
