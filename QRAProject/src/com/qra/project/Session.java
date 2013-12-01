@@ -1,6 +1,9 @@
 package com.qra.project;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -8,10 +11,9 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
-public class Session {
+public class Session implements Serializable{
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
     private Key sessionKey;
@@ -28,7 +30,8 @@ public class Session {
     @Persistent
     private Date endTime;
     
-    
+    @Persistent
+    private String timeZone;
 
 	public Session(String description, Date startTime, Date endTime) {
 		super();
@@ -47,6 +50,15 @@ public class Session {
 		this.endTime = endTime;
 	}
 
+	public Session(String confCode, String description, Date startTime,
+			Date endTime, String timeZone) {
+		super();
+		this.confCode = confCode;
+		this.description = description;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.timeZone = timeZone;
+	}
 	public Session(Key sessionKey, String confCode, String description,
 			Date startTime, Date endTime) {
 		super();
@@ -96,5 +108,17 @@ public class Session {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-    
+	
+	public String getStartDateAsFormattedString(){
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
+		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+		formatter.setTimeZone(ts);
+		return formatter.format(this.startTime);
+	}
+	public String getEndDateAsFormattedString(){
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
+		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+		formatter.setTimeZone(ts);
+		return formatter.format(this.endTime);
+	}
 }
