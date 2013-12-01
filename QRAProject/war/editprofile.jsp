@@ -18,9 +18,17 @@
 <%
 	User user = (User)session.getAttribute("user");
 %>
+
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreServiceFactory" %>
+<%@ page import="com.google.appengine.api.blobstore.BlobstoreService" %>
+
+<%
+  BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+%>
+
 <body>
 	<div class="ui-widget">
-		<form name="edit" method="get" action="/edit" style="text-align: left">
+		<form name="edit" method="post" action="<%= blobstoreService.createUploadUrl("/edit") %>" style="text-align: left" enctype="multipart/form-data" id="edit_profile_form">
 			<legend>
 				<h2>Edit Profile</h2>
 			</legend>
@@ -33,41 +41,41 @@
 			<table>
 				<tr>
 					<td><label id="Label1">First Name</label></td>
-					<td><input type="text" name="first_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+					<td><input type="text" name="first_name" id="first_name" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getFirst_name()%>"/></td>
 				</tr>
 
 				<tr>
 					<td><label id="Label1">Middle Name</label></td>
-					<td><input type="text" name="middle_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+					<td><input type="text" name="middle_name" id="middle_name" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getMiddle_name()%>"/></td>
 				</tr>
 
 				<tr>
 					<td><label id="Label1">Last Name</label></td>
-					<td><input type="text" name="last_name" class="ui-widget ui-widget-content ui-corner-all"/></td>
+					<td><input type="text" name="last_name" id="last_name" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getLast_name() %>"/></td>
 				</tr>
 				
 				<tr>
 						<td><label id="Label1">Old Password</label></td>
-						<td><input type="password" name="oldpassword" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="password" name="oldpassword" id="oldpassword" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
 				</tr>
 				<tr>
 						<td><label id="Label1">New Password</label></td>
-						<td><input type="password" name="newpassword1" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="password" name="newpassword1" id="newpassword1" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
 				</tr>
 				
 				<tr>
 						<td><label id="Label1">Confirm New Password</label></td>
-						<td><input type="password" name="newpassword2" class="ui-widget ui-widget-content ui-corner-all"/></td>
+						<td><input type="password" name="newpassword2" id="newpassword2" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
 				</tr>
 
 				<tr>
 					<td><label>Birthday</label></td>
-					<td><input type="text" name="birthdate" id="datepicker" class="ui-widget ui-widget-content ui-corner-all"/></td>
+					<td><input type="text" name="birthdate" id="datepicker" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getBirthdate()%>"/></td>
 				</tr>
 
 				<tr>
 					<td><label id="Label1">Profile Image</label></td>
-					<td><input type="text" name="profile_img" /></td>
+					<td><input type="file" name="profile_img" id="profile_img"/></td>
 				</tr>
 
 			</table>
