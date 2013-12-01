@@ -44,8 +44,10 @@
 	<tr>
 		<td>
 			<button type="button" id="findBtn">Find Conferences</button>
+			
 		</td>
 		<td>
+			<button type="button" id="findBtn2">Find All Conferences</button>
 		</td>
 	</tr>
 	</table>
