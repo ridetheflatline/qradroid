@@ -21,12 +21,12 @@
 				<table>
 					<tr>
 						<td><label id="Label1">Username</label></td>
-						<td><input name="username" type="text" /></td>
+						<td><input name="username" type="text" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 					<tr>
 						<td><label id="Label1">Password</label></td>
-						<td><input type="password" name="password" /></td>
+						<td><input type="password" name="password" class="ui-widget ui-widget-content ui-corner-all"/></td>
 					</tr>
 
 
