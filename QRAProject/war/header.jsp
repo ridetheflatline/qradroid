@@ -12,7 +12,7 @@
       href="favicon.png">
 	</head>
 	<header>
-	<img src="qrbanner.png">
+	<a href="index.jsp"><img src="qrbanner.png"></a>
 <ul id="nav">
 	<%
 		Cookie[] cookies = request.getCookies();
