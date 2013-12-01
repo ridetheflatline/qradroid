@@ -4,27 +4,7 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  
-  <servlet>
-    <servlet-name>exampleServlet</servlet-name>
-    <servlet-class>com.qra.project.ExampleServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>exampleServlet</servlet-name>
-    <url-pattern>/example</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
-    <servlet-name>checkinAttendentServlet</servlet-name>
-    <servlet-class>com.qra.project.CheckinAttendentServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>checkinAttendentServlet</servlet-name>
-    <url-pattern>/checkinAttentdent</url-pattern>
-  </servlet-mapping>
-  
+
   <servlet>
     <servlet-name>processQRData</servlet-name>
     <servlet-class>com.qra.project.ProcessQRDataServlet</servlet-class>

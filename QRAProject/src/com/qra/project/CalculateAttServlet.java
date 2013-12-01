@@ -17,16 +17,14 @@ public class CalculateAttServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		String confID = req.getParameter("conf_id");
-		String fullName = null;
-		String userID = null;
-		String userName=CookieCheck.check(req, resp);
 		
-		
-		if(userName!=null){
+		if(CookieSessionCheck.check(req, resp)!=null){
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			String confID = req.getParameter("conf_id");
+			String fullName = null;
+			String userID = null;
 			
-			
+	
 			List<Session> sessions=getConfSessions(pm,confID);
 			List<ConferenceAttendee> attendees=getAttendees(pm,confID);
 			
@@ -48,7 +46,7 @@ public class CalculateAttServlet extends HttpServlet {
 					Query q = pm.newQuery(Attendance_Records.class, "conf_code == '"  + confID + "' && "
 							+ "user_id == '" + userID + "'");
 					List<Attendance_Records> records=(List<Attendance_Records>) q.execute();
-
+	
 					presence[j]="Absent";
 					for(int k=0;k<records.size();k++){
 						if(isWithinRange(records.get(k).getDate(),sessions.get(j).getStartTime(),sessions.get(j).getEndTime())){
@@ -59,10 +57,6 @@ public class CalculateAttServlet extends HttpServlet {
 				}
 				attData.add(new AttCalc(fullName,presence,sessions.size()));
 			}
-			
-			
-			
-			
 			
 			req.setAttribute("attdata", attData);
 			String url = "/calcatt.jsp";

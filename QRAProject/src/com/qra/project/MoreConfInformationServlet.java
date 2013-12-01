@@ -17,59 +17,63 @@ import org.json.simple.JSONObject;
 
 public class MoreConfInformationServlet extends HttpServlet {
 	
-	private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+	private static final Logger log = Logger.getLogger(MoreConfInformationServlet.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		String conf_id = req.getParameter("conf_id");
-		String page_output = req.getParameter("page_output");
 		
-		if(conf_id != null && (page_output == null || page_output.equals("false"))){
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-			//Find all the conferences and the sessions			
-			Conference c = pm.getObjectById(Conference.class, conf_id);
-			log.info("conference name: " + c.getConf_name());
+		if(CookieSessionCheck.check(req, res)!=null){
 			
-			JSONObject results = new JSONObject();
-			results.put("conf_name", c.getConf_code());
-			results.put("conf_descrip", c.getConference_description());
-			results.put("start_time", c.getStartTime());
-			results.put("end_time", c.getEndTime());
+			String conf_id = req.getParameter("conf_id");
+			String page_output = req.getParameter("page_output");
 			
-			JSONArray jsonSessions = new JSONArray();
-			for(Session s : getConfSessions(pm,conf_id)){
-				JSONObject sess = new JSONObject();
-				//TODO add street, city, and zip code
-				sess.put("sess_descrip", s.getDescription());
-				sess.put("sess_start_time", s.getStartTime());
-				sess.put("sess_end_time", s.getEndTime());
-				jsonSessions.add(sess);
+			if(conf_id != null && (page_output == null || page_output.equals("false"))){
+				PersistenceManager pm = PMF.get().getPersistenceManager();
+				//Find all the conferences and the sessions			
+				Conference c = pm.getObjectById(Conference.class, conf_id);
+				log.info("conference name: " + c.getConf_name());
+				
+				JSONObject results = new JSONObject();
+				results.put("conf_name", c.getConf_code());
+				results.put("conf_descrip", c.getConference_description());
+				results.put("start_time", c.getStartTime());
+				results.put("end_time", c.getEndTime());
+				
+				JSONArray jsonSessions = new JSONArray();
+				for(Session s : getConfSessions(pm,conf_id)){
+					JSONObject sess = new JSONObject();
+					//TODO add street, city, and zip code
+					sess.put("sess_descrip", s.getDescription());
+					sess.put("sess_start_time", s.getStartTime());
+					sess.put("sess_end_time", s.getEndTime());
+					jsonSessions.add(sess);
+				}
+				
+				results.put("sessions", jsonSessions);
+				res.getWriter().println(results);
 			}
-			
-			results.put("sessions", jsonSessions);
-			res.getWriter().println(results);
-		}
-		else if (conf_id != null && page_output.equals("true")){
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-			//Find all the conferences and the sessions		
-			log.info("conf_id: " + conf_id);
-			Conference c = pm.getObjectById(Conference.class, conf_id);
-			req.setAttribute("conference", c);
-			req.setAttribute("sessions", getConfSessions(pm,conf_id));
-			req.setAttribute("title", "Conference Information");
-			String url = "/moreconfinfo.jsp";
-			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
-			try {
-				dispatcher.forward(req, res);
-			} catch (ServletException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				log.info("error dispatching to jsp page from MoreConfInformationServlet");
+			else if (conf_id != null && page_output.equals("true")){
+				PersistenceManager pm = PMF.get().getPersistenceManager();
+				//Find all the conferences and the sessions		
+				log.info("conf_id: " + conf_id);
+				Conference c = pm.getObjectById(Conference.class, conf_id);
+				req.setAttribute("conference", c);
+				req.setAttribute("sessions", getConfSessions(pm,conf_id));
+				req.setAttribute("title", "Conference Information");
+				String url = "/moreconfinfo.jsp";
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
+				try {
+					dispatcher.forward(req, res);
+				} catch (ServletException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					log.info("error dispatching to jsp page from MoreConfInformationServlet");
+				}
 			}
-		}
-		else{
-			res.getWriter().println("error");
+			else{
+				res.getWriter().println("error");
+			}
 		}
 		
 	}

@@ -20,11 +20,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  */
 public class CreateQRServlet extends HttpServlet {
-
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String userName=CookieSessionCheck.check(req, resp);
+
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		String userName;
-		userName=CookieCheck.check(req, resp);
+		
 		String userID = null;
 		boolean attEmpty=false;
 
@@ -86,15 +87,7 @@ public class CreateQRServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
-		} else {
-			resp.getWriter().print("<br>You're not logged in.<br>");
 		}
-		
-	
-		
-		
-		
-		
 		
 	}
 }

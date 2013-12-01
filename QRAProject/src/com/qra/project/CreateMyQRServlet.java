@@ -22,11 +22,12 @@ public class CreateMyQRServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
+		String userName=CookieSessionCheck.check(req, resp);
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		String confID = req.getParameter("conf_id");
 		String fullName = null;
 		String userID = null;
-		String userName=CookieCheck.check(req, resp);
 		Conference tempConf=null;
 		ArrayList<QRData> qrData = new ArrayList<QRData>();
 		

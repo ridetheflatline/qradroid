@@ -20,28 +20,38 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 public class EditProfileServlet extends HttpServlet {
 	private static final Logger log = Logger
-			.getLogger(CheckinAttendentServlet.class.getName());
+			.getLogger(EditProfileServlet.class.getName());
 
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-
+		String userName=CookieSessionCheck.check(req, resp);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
 		HttpSession session = req.getSession();
-		String userIdFromSess = (String) session.getAttribute("userSess");
-		String userIdFromCookie = CookieCheck.check(req, resp);
+		
+		if(userName!=null){
+			Query q = pm.newQuery(User.class, "username == '" + userName + "'");
+			List<User> results = (List<User>) q.execute();
+			session.setAttribute("user", results.get(0));
 
-
-		log.info("userIdFromCookie: " + userIdFromCookie);
-		log.info("userIdFromSess: " + userIdFromSess);
-
-		if (userIdFromSess == null && userIdFromCookie == null) {
-			resp.sendRedirect("/index");
-		} 
-		else {
-			User myUser = GetUserFromId.getUser(userIdFromSess,
-					userIdFromCookie);
-			session.setAttribute("user", myUser);
 			resp.sendRedirect("editprofile.jsp");
 		}
+//		HttpSession session = req.getSession();
+//		String userIdFromSess = (String) session.getAttribute("userSess");
+//		String userIdFromCookie = CookieCheck.check(req, resp);
+//
+//
+//		log.info("userIdFromCookie: " + userIdFromCookie);
+//		log.info("userIdFromSess: " + userIdFromSess);
+//
+//		if (userIdFromSess == null && userIdFromCookie == null) {
+//			resp.sendRedirect("/index");
+//		} 
+//		else {
+//			User myUser = GetUserFromId.getUser(userIdFromSess,
+//					userIdFromCookie);
+//			session.setAttribute("user", myUser);
+			
+//		}
 
 	}
 
@@ -65,7 +75,7 @@ public class EditProfileServlet extends HttpServlet {
 	    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
 	    profile_img = file_uploaded_key.getKeyString();
 		String cookieValue = "";
-		cookieValue = CookieCheck.check(req, resp);
+		cookieValue = CookieSessionCheck.check(req, resp);
 
 
 //		if (first_name == null || middle_name == null || last_name == null

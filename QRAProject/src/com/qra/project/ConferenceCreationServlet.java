@@ -34,37 +34,39 @@ import org.json.simple.JSONValue;
  */
 public class ConferenceCreationServlet extends HttpServlet {
 	
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    private static final Logger log = Logger.getLogger(ConferenceCreationServlet.class.getName());
     
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws IOException 
 	{
-		HttpSession session = req.getSession();
-		String userIdFromSess = (String) session.getAttribute("userSess");
-		String userIdFromCookie = CookieCheck.check(req, res);
-		
-		if(userIdFromSess != null ||
-				userIdFromCookie != null){
-			
-			String userId = "";
-			
-			if(userIdFromSess != null)
-				userId = userIdFromSess;
-			else
-				userId = userIdFromCookie;
-			
-			//log.info(getUserKeyId(userId));
-			Cookie userKeyIdCookie = 
-					new Cookie("userKeyId", getUserKeyId(userId));
-			//Set for 10 minutes
-			userKeyIdCookie.setMaxAge(60*10);
-			userKeyIdCookie.setPath("/");
-			res.addCookie(userKeyIdCookie);
+		if(CookieSessionCheck.check(req,res)!=null)
 			res.sendRedirect("/createconference.jsp");
-		}
-		else{
-			res.sendRedirect("/index.jsp");
-		}
+//		HttpSession session = req.getSession();
+//		String userIdFromSess = (String) session.getAttribute("userSess");
+//		String userIdFromCookie = CookieSessionCheck.check(req, res);
+//		
+//		if(userIdFromSess != null ||
+//				userIdFromCookie != null){
+//			
+//			String userId = "";
+//			
+//			if(userIdFromSess != null)
+//				userId = userIdFromSess;
+//			else
+//				userId = userIdFromCookie;
+//			
+//			//log.info(getUserKeyId(userId));
+//			Cookie userKeyIdCookie = 
+//					new Cookie("userKeyId", getUserKeyId(userId));
+//			//Set for 10 minutes
+//			userKeyIdCookie.setMaxAge(60*10);
+//			userKeyIdCookie.setPath("/");
+//			res.addCookie(userKeyIdCookie);
+			
+//		}
+//		else{
+//			res.sendRedirect("/index.jsp");
+//		}
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException 
@@ -114,14 +116,14 @@ public class ConferenceCreationServlet extends HttpServlet {
 		
 	}
 	
-	public static String getUserKeyId(String username){
-		String result = "";
-		
-		User myUser = GetUserFromId.getUser(username, username);
-		result = myUser.getID();
-		
-		return result;
-	}
+//	public static String getUserKeyId(String username){
+//		String result = "";
+//		
+//		User myUser = GetUserFromId.getUser(username, username);
+//		result = myUser.getID();
+//		
+//		return result;
+//	}
 	
 	public static boolean insertConference(String conferenceName,
 			String conferenceDescription, String conferenceStreet, String conferenceCity,
