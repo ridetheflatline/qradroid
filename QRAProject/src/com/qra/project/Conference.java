@@ -1,7 +1,9 @@
 package com.qra.project;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
@@ -154,6 +156,19 @@ public class Conference implements Serializable{
 
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
+	}
+	
+	public String getStartDateAsFormattedString(){
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
+		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+		formatter.setTimeZone(ts);
+		return formatter.format(this.startTime);
+	}
+	public String getEndDateAsFormattedString(){
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
+		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+		formatter.setTimeZone(ts);
+		return formatter.format(this.endTime);
 	}
 	
 }
