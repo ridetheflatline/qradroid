@@ -47,11 +47,6 @@ $("#edit_profile_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("You have entered an invalid birth date.")));
 	}
-	if(profile_img.val() == "" ||profile_img.val() == null )
-	{
-		allInputsValid = false;
-		errors.append($("<tr>").append($("<td>").html("You have not entered a profile image.")));
-	}
 	if(!allInputsValid)
 	{
 		console.log("fail");
