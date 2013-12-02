@@ -4,7 +4,6 @@ var last_name = $("#last_name");
 var email = $("#email");
 var username = $("#username");
 var password = $("#password");
-var profile_img = $("#profile_img");
 var birthdate = $("#datepicker");
 
 $("#submitBtn").button().click(function(){
@@ -18,6 +17,13 @@ $("#registration_form").submit(function(event){
 	var allInputsValid = true;
 	var errors = $("<table>");
 	
+	//var profile_img = $("#profile_img");
+	 var $profile_img = $(this).find("input[type=file]");
+	
+	if(!$profile_img.val() || $profile_img.val() == ""){
+		allInputsValid = false;
+		errors.append($("<tr>").append($("<td>").html("Must upload profile Image.")));
+	}
 	if(username.val() == "" || username.val() == null )
 	{
 		allInputsValid = false;

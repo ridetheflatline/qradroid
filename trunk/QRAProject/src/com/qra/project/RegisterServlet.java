@@ -24,7 +24,6 @@ public class RegisterServlet extends HttpServlet {
 	{	
 		resp.sendRedirect("/register.jsp");
 	}//doget
-	
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{
 				//Sample Request:
@@ -44,8 +43,6 @@ public class RegisterServlet extends HttpServlet {
 			    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
 			    String profile_img = file_uploaded_key.getKeyString();
 			    
-			    
-				
 				PersistenceManager pm = PMF.get().getPersistenceManager();
 				resp.setContentType("text/HTML");
 				
@@ -110,7 +107,7 @@ public class RegisterServlet extends HttpServlet {
 					}
 					resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
 					resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
-					resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Registration</a>");
+					resp.getWriter().print("<br> <a href=\"/register\">Return to Registration</a>");
 				}
 				else{
 					
@@ -124,7 +121,7 @@ public class RegisterServlet extends HttpServlet {
 						resp.getWriter().print("That username already exists");
 						resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
 						resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
-						resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
+						resp.getWriter().print("<br> <a href=\"/register\">Return to Register</a>");
 					}
 					//Check for if the email is already used
 					else if(!(results2.size() == 0)){
@@ -132,7 +129,7 @@ public class RegisterServlet extends HttpServlet {
 						resp.getWriter().print("That email is already used");
 						resp.getWriter().print("<br>You will return to Register in 5 seconds.<br>");
 						resp.getWriter().print("If you are not redirect, please click on the following link.<br>");
-						resp.getWriter().print("<br> <a href=\"register.jsp\">Return to Register</a>");
+						resp.getWriter().print("<br> <a href=\"/register\">Return to Register</a>");
 					}
 					else{
 					//resp.getWriter().print(results.toString());
