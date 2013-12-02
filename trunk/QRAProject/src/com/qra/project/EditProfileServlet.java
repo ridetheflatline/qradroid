@@ -18,6 +18,8 @@ import org.mortbay.log.Log;
 
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesServiceFactory;
 
 public class EditProfileServlet extends HttpServlet {
 	private static final Logger log = Logger
@@ -77,7 +79,13 @@ public class EditProfileServlet extends HttpServlet {
 		//int numImgFiles = files_sent.get("profile_img").size();
 		if(files_sent.get("profile_img") != null){
 		    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
-		    profile_img = file_uploaded_key.getKeyString();
+		    
+//		    Image myImg = ImagesServiceFactory.makeImageFromBlob(file_uploaded_key);
+//		    int myImgByteSize = myImg.getImageData().length;
+//		    if(myImgByteSize == 0)
+//		    	profile_img = "";
+//		    else
+		    	profile_img = file_uploaded_key.getKeyString();
 		}
 		else{
 			profile_img = "";
@@ -101,9 +109,9 @@ public class EditProfileServlet extends HttpServlet {
 //					"A Parameter is null.");
 //		} 
 //		else {
-			Query q = pm.newQuery(User.class, "username == '" + cookieValue
-					+ "'");
+			Query q = pm.newQuery(User.class, "username == '" + cookieValue + "'");
 			List<User> results = (List<User>) q.execute();
+			User u = results.get(0);
 			
 			log.info("first_name: " + first_name);
 			log.info("middle_name: " + middle_name);
@@ -115,32 +123,32 @@ public class EditProfileServlet extends HttpServlet {
 			if (first_name.equalsIgnoreCase("")
 					|| first_name == null) {
 			} else {
-				results.get(0).setFirst_name(first_name);
+				u.setFirst_name(first_name);
 			}
 			if (middle_name.equalsIgnoreCase("")
 					|| middle_name == null) {
 			} 
 			else {
-				results.get(0).setMiddle_name(middle_name);
+				u.setMiddle_name(middle_name);
 			}
 			if (last_name.equalsIgnoreCase("")
 					|| last_name == null) {
 			} 
 			else {
-				results.get(0).setLast_name(last_name);
+				u.setLast_name(last_name);
 			}
 			if (newpassword1.equalsIgnoreCase("")
 					|| newpassword1 == null) {
 			} 
 			else {
 				BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-				if (!passwordEncryptor.checkPassword(oldpassword, results.get(0).getPassword())) {
+				if (!passwordEncryptor.checkPassword(oldpassword, u.getPassword())) {
 				} 
 				else if (!newpassword1.equals(newpassword2)) {
 				} 
 				else {
 					String encryptedPassword = passwordEncryptor.encryptPassword(newpassword1);
-					results.get(0).setPassword(encryptedPassword);
+					u.setPassword(encryptedPassword);
 				}
 			}
 			if (birthdate.equalsIgnoreCase("")
@@ -148,13 +156,18 @@ public class EditProfileServlet extends HttpServlet {
 					|| birthdate.length() != 10) {
 			} 
 			else {
-				results.get(0).setBirthdate(birthdate);
+				u.setBirthdate(birthdate);
 			}
+			
 			if (profile_img.equalsIgnoreCase("")
 					|| profile_img == null) {
+				log.info("hit if");
+				String oldProfileImg = u.getProfile_img();
+				u.setProfile_img(oldProfileImg);
 			} 
 			else {
-				results.get(0).setProfile_img(profile_img);
+				log.info("hit else");
+				u.setProfile_img(profile_img);
 			}
 			
 //			Query q3 = pm.newQuery(User.class, "username == '"  + username + "'");
@@ -168,8 +181,21 @@ public class EditProfileServlet extends HttpServlet {
 //			}
 			//Check for if the email is already used
 			if(results2.size() == 0){
-				results.get(0).setEmail(email);
+				u.setEmail(email);
 			}
+			
+			Object o = null;
+			try {
+				o = pm.makePersistent(u);
+			} finally {
+				pm.close();
+	
+				if (o != null) {
+					resp.setStatus(HttpServletResponse.SC_OK);
+					// resp.setContentType("text/plain");
+					// resp.getWriter().println("Success");
+				}// if
+			}// finally
 			resp.sendRedirect("/index");
 		}
 //	}
