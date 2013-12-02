@@ -19,8 +19,21 @@ public class FindConferencesServlet extends HttpServlet {
 	 public void doGet(HttpServletRequest req, HttpServletResponse res)
 			 throws IOException 
 	 {
-		 if(CookieSessionCheck.check(req, res)!=null)
-			 res.sendRedirect("/findconferences.jsp");
+		 String userName=CookieSessionCheck.check(req,res);
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			log.info("userval: "+userName);
+			if(userName!=null){
+				Query q = pm.newQuery(User.class, "username == '" + userName + "'");
+				List<User> results = (List<User>) q.execute();
+				log.info("id val: "+results.get(0).getID());
+				Cookie userKeyIdCookie = new Cookie("userKeyId", results.get(0).getID());
+				//Set for 10 minutes
+				userKeyIdCookie.setMaxAge(60*10);
+				userKeyIdCookie.setPath("/");
+				res.addCookie(userKeyIdCookie);
+				
+				res.sendRedirect("/findconferences.jsp");
+			}
 //		HttpSession session = req.getSession();
 //		String userIdFromSess = (String) session.getAttribute("userSess");
 //		String userIdFromCookie = CookieSessionCheck.check(req, res);
