@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.mortbay.log.Log;
 
 import com.google.appengine.api.blobstore.BlobKey;
@@ -69,24 +70,33 @@ public class EditProfileServlet extends HttpServlet {
 		String newpassword1 = req.getParameter("newpassword1");
 		String newpassword2 = req.getParameter("newpassword2");
 		String email = req.getParameter("email");
-		String username = req.getParameter("username");
+//		String username = req.getParameter("username");
+		
 		
 		Map<String, List<BlobKey>> files_sent = BlobstoreServiceFactory.getBlobstoreService().getUploads(req);
-	    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
-	    profile_img = file_uploaded_key.getKeyString();
+		
+		if(files_sent.size() != 0){
+		    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
+		    profile_img = file_uploaded_key.getKeyString();
+		}
+		else{
+			profile_img = "";
+		}
+	    
+	    
 		String cookieValue = "";
 		cookieValue = CookieSessionCheck.check(req, resp);
 
 
 //		if (first_name == null || middle_name == null || last_name == null
 //				|| profile_img == null || birthdate == null) {
-//
-			log.info("first_name: " + first_name);
-			log.info("middle_name: " + middle_name);
-			log.info("last_name: " + last_name);
-			log.info("profile_img: " + profile_img);
-			log.info("birthdate: " + birthdate);
-//
+////
+//			log.info("first_name: " + first_name);
+//			log.info("middle_name: " + middle_name);
+//			log.info("last_name: " + last_name);
+//			log.info("profile_img: " + profile_img);
+//			log.info("birthdate: " + birthdate);
+////
 //			resp.sendError(HttpServletResponse.SC_BAD_REQUEST,
 //					"A Parameter is null.");
 //		} 
@@ -100,6 +110,7 @@ public class EditProfileServlet extends HttpServlet {
 			log.info("last_name: " + last_name);
 			log.info("profile_img: " + profile_img);
 			log.info("birthdate: " + birthdate);
+//			log.info(username);
 
 			if (first_name.equalsIgnoreCase("")
 					|| first_name == null) {
@@ -122,12 +133,14 @@ public class EditProfileServlet extends HttpServlet {
 					|| newpassword1 == null) {
 			} 
 			else {
-				if (!results.get(0).getPassword().equals(oldpassword)) {
+				BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
+				if (!passwordEncryptor.checkPassword(oldpassword, results.get(0).getPassword())) {
 				} 
 				else if (!newpassword1.equals(newpassword2)) {
 				} 
 				else {
-					results.get(0).setPassword(newpassword1);
+					String encryptedPassword = passwordEncryptor.encryptPassword(newpassword1);
+					results.get(0).setPassword(encryptedPassword);
 				}
 			}
 			if (birthdate.equalsIgnoreCase("")
@@ -144,14 +157,15 @@ public class EditProfileServlet extends HttpServlet {
 				results.get(0).setProfile_img(profile_img);
 			}
 			
-			Query q3 = pm.newQuery(User.class, "username == '"  + username + "'");
-			List<User> results3 = (List<User>) q.execute();
+//			Query q3 = pm.newQuery(User.class, "username == '"  + username + "'");
+//			List<User> results3 = (List<User>) q3.execute();
 			Query q2 = pm.newQuery(User.class, "email == '"  + email + "'");
 			List<User> results2 = (List<User>) q2.execute();
+//			log.info("results3 "+results3.size());
 			//Check for username that already exists
-			if(results3.size() == 0){
-				results.get(0).setUsername(username);
-			}
+//			if(results3.size() == 0){
+//				results.get(0).setUsername(username);
+//			}
 			//Check for if the email is already used
 			if(results2.size() == 0){
 				results.get(0).setEmail(email);
