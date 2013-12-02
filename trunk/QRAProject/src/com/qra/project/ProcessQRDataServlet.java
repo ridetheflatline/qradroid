@@ -22,7 +22,7 @@ public class ProcessQRDataServlet extends HttpServlet {
 		Date timestamp=null;
 		
 		try {
-			timestamp = new SimpleDateFormat("MM/dd/yyyyHH:mm:ssz").parse(date);
+			timestamp = new SimpleDateFormat("MM/dd/yyyyHH:mm:ss").parse(date);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

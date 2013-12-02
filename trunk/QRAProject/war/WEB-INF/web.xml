@@ -26,16 +26,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>AttendeeImageServlet</servlet-name>
-    <servlet-class>com.qra.project.AttendeeImageServlet</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>AttendeeImageServlet</servlet-name>
-    <url-pattern>/image</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
     <servlet-name>RegisterServlet</servlet-name>
     <servlet-class>com.qra.project.RegisterServlet</servlet-class>
   </servlet>
