@@ -26,7 +26,7 @@ import org.json.simple.JSONValue;
 
 public class EditConferenceServlet extends HttpServlet {
 	
-    private static final Logger log = Logger.getLogger(CheckinAttendentServlet.class.getName());
+    private static final Logger log = Logger.getLogger(EditConferenceServlet.class.getName());
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException 
 	{

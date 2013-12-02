@@ -27,7 +27,8 @@ public class MoreConfInformationServlet extends HttpServlet {
 			
 			String conf_id = req.getParameter("conf_id");
 			String page_output = req.getParameter("page_output");
-			
+			String username = CookieSessionCheck.check(req, res);
+		
 			if(conf_id != null && (page_output == null || page_output.equals("false"))){
 				PersistenceManager pm = PMF.get().getPersistenceManager();
 				//Find all the conferences and the sessions			
@@ -41,7 +42,7 @@ public class MoreConfInformationServlet extends HttpServlet {
 				results.put("end_time", c.getEndTime());
 				
 				JSONArray jsonSessions = new JSONArray();
-				for(Session s : getConfSessions(pm,conf_id)){
+				for(Session s : getConfSessions(pm,conf_id, c.getTimeZone())){
 					JSONObject sess = new JSONObject();
 					//TODO add street, city, and zip code
 					sess.put("sess_descrip", s.getDescription());
@@ -59,8 +60,11 @@ public class MoreConfInformationServlet extends HttpServlet {
 				log.info("conf_id: " + conf_id);
 				Conference c = pm.getObjectById(Conference.class, conf_id);
 				req.setAttribute("conference", c);
-				req.setAttribute("sessions", getConfSessions(pm,conf_id));
+				req.setAttribute("sessions", getConfSessions(pm,conf_id, c.getTimeZone()));
 				req.setAttribute("title", "Conference Information");
+				//This is the long string key
+				String userKeyIdString = getUserKeyId(username);
+				req.setAttribute("userKeyIdString", userKeyIdString);
 				String url = "/moreconfinfo.jsp";
 				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(url);
 				try {
@@ -83,7 +87,7 @@ public class MoreConfInformationServlet extends HttpServlet {
 		
 	}
 	
-	public static List<Session> getConfSessions(PersistenceManager pm, String conf_id){
+	public static List<Session> getConfSessions(PersistenceManager pm, String conf_id, String timeZone){
 		List<Session> result;
 		Query q = pm.newQuery(Session.class);
 		q.setFilter("confCode == confCodeParam");
@@ -92,7 +96,32 @@ public class MoreConfInformationServlet extends HttpServlet {
 		List<Session> myConferenceSessions = 
 				(List<Session>) q.execute(conf_id);
 		result = myConferenceSessions;
+		
+		if(timeZone != null){
+			for(Session s : result){
+				s.setTimeZone(timeZone);
+			}
+		}
+		
 		return result;
+	}
+	
+	 public static String getUserKeyId(String username){
+			String result = "";
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			Query q = pm.newQuery(User.class);
+			
+			q.setFilter("username == usernameParam");
+			q.declareParameters("String usernameParam");
+			
+			List<User> myUser = (List<User>)q.execute(username);
+			
+			if(myUser.size() > 0){
+				log.info("key id: " + myUser.get(0).getID());
+				result = myUser.get(0).getID();
+			}
+			
+			return result;
 	}
 
 }

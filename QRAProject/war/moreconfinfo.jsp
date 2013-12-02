@@ -4,7 +4,10 @@
 <%@ page import="com.qra.project.Conference" %>
 <%@ page import="java.util.List" %>
 <% Conference c = (Conference) request.getAttribute("conference");  %>
-<% List<Session> sessions = (List<Session>) request.getAttribute("sessions"); %>
+<% 
+	List<Session> sessions = (List<Session>) request.getAttribute("sessions"); 
+	String userKeyIdString = (String) request.getAttribute("userKeyIdString");
+%>
 
 <div class="ui-widget">
 <h2>Conference Information</h2>
@@ -39,29 +42,32 @@
 		</tr>
 	</table>
 	
+	<br>
 	<table>
 		<thead>
-		<tr>
+		<tr class="ui-widget-header ">
 			<th>Session start time</th>
 			<th>Session end time</th>
 			<th>Session Description</th>
 		</tr>
 		</thead>
-		
+			
 		<tbody>
 			<% for(Session s : sessions) {%>
 				<tr>	
-					<td><%= s.getStartTime() %></td>
-					<td><%= s.getEndTime() %></td>
+					<td><%= s.getStartDateAsFormattedString() %></td>
+					<td><%= s.getEndDateAsFormattedString() %></td>
 					<td><%= s.getDescription() %></td>
 				</tr>
 			<% } %>
 		</tbody>
 	</table>
 	
+	<br>
+	
 	<table>
 		<tr>
-			<td><a href="#" id="joinConf">Join Conference</a></td>
+			<td><a href="/joinconference?conf_code=<%=c.getConf_code()%>&user_id=<%=userKeyIdString%>&page_output=true" id="joinConf">Join Conference</a></td>
 		</tr>
 	</table>
 	
