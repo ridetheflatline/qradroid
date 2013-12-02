@@ -13,32 +13,36 @@
 <h2>Conference Information</h2>
 	<table>
 		<tr>
-			<td>Conference Name</td>
+			<td>Conference Name: </td>
 			<td><%= c.getConf_name() %></td>
 		</tr>
 		<tr>
-			<td>Conference Description</td>
+			<td>Conference Description: </td>
 			<td><%= c.getConference_description() %></td>
 		</tr>
 		<tr>
-			<td>Conference Address</td>
+			<td>Conference Address: </td>
 			<td><%= c.getAddress() %></td>
 		</tr>
 		<tr>
-			<td>Conference City</td>
+			<td>Conference City: </td>
 			<td><%= c.getCity() %></td>
 		</tr>
 		<tr>
-			<td>Conference State</td>
+			<td>Conference State: </td>
 			<td><%= c.getState() %></td>
 		</tr>
 		<tr>
-			<td>Conference Start Date </td>
-			<td><%= c.getStartTime() %></td>
+			<td>Conference Timezone: </td>
+			<td><%= c.getTimeZone() %></td>
 		</tr>
 		<tr>
-			<td>Conference End Date</td>
-			<td><%= c.getEndTime() %></td>
+			<td>Conference Start Date: </td>
+			<td><%= c.getStartDateAsFormattedString() %></td>
+		</tr>
+		<tr>
+			<td>Conference End Date: </td>
+			<td><%= c.getEndDateAsFormattedString() %></td>
 		</tr>
 	</table>
 	
