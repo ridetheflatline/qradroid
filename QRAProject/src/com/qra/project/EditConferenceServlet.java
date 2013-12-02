@@ -108,9 +108,8 @@ public class EditConferenceServlet extends HttpServlet {
 	    PersistenceManager pm = PMF.get().getPersistenceManager();
 	    
 	    //Delete all the sessions where the confCode is == confId  
-	    Query q = pm.newQuery(Session.class, "confCode");
+	    Query q = pm.newQuery(Session.class, "confCode == confCodeParam");
 	    q.declareParameters("String confCodeParam");
-	    
 	    List<Session> sessionResults = (List<Session>) q.execute(confId);
 	    pm.deletePersistentAll(sessionResults);
 	 
