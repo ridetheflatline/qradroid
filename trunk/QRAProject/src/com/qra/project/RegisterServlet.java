@@ -43,6 +43,8 @@ public class RegisterServlet extends HttpServlet {
 				Map<String, List<BlobKey>> files_sent = BlobstoreServiceFactory.getBlobstoreService().getUploads(req);
 			    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
 			    String profile_img = file_uploaded_key.getKeyString();
+			    
+			    
 				
 				PersistenceManager pm = PMF.get().getPersistenceManager();
 				resp.setContentType("text/HTML");

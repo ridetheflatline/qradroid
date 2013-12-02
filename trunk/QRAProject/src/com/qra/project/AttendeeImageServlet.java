@@ -13,13 +13,9 @@ public class AttendeeImageServlet extends HttpServlet
 	{
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
 		String id = req.getParameter("id");
-		
 		User user = pm.getObjectById(User.class, id);
-		
 		String url = "";
-		
 		resp.setContentType("text/plain");
 		resp.getWriter().print(url);
 	}

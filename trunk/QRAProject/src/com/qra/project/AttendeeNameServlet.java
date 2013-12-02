@@ -41,9 +41,10 @@ public class AttendeeNameServlet extends HttpServlet
 				"\"" + user.getProfile_img() + "\"" +"}";
 				resp.getWriter().print(contentString);
 				*/
-				
+				String url = "http://qraproject.appspot.com/profileimg?profile_img_key="
+						+ user.getProfile_img();
 				String contentString = user.getFirst_name() 
-						+ " " + user.getLast_name()  + "," + user.getProfile_img();
+						+ " " + user.getLast_name()  + "," + url;
 				resp.getWriter().print(contentString);
 				resp.getWriter().flush();
 			}
