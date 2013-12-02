@@ -17,7 +17,7 @@ public class AttendeeNameServlet extends HttpServlet
 		String id = req.getParameter("id");
 		resp.setContentType("text/plain");
 		resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
+ 
 		if(id == null){
 			resp.getWriter().print("request must contain an id parameter");
 		}
