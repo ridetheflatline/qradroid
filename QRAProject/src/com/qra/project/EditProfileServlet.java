@@ -74,8 +74,8 @@ public class EditProfileServlet extends HttpServlet {
 		
 		
 		Map<String, List<BlobKey>> files_sent = BlobstoreServiceFactory.getBlobstoreService().getUploads(req);
-		
-		if(files_sent.size() != 0){
+		//int numImgFiles = files_sent.get("profile_img").size();
+		if(files_sent.get("profile_img") != null){
 		    BlobKey file_uploaded_key = files_sent.get("profile_img").get(0);
 		    profile_img = file_uploaded_key.getKeyString();
 		}
