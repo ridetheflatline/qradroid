@@ -37,12 +37,9 @@
 				Profile Image: <br>
 				<img src="/profileimg?profile_img_key=<%= user.getProfile_img() %>">
 			</p>
-
+			<div id="errors"></div>
 			<table>
-				<tr>
-					<td><label id="Label1">Username</label></td>
-					<td><input type="text" name="username" id="username" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getUsername() %>"/></td>
-				</tr>
+				
 			
 				<tr>
 					<td><label id="Label1">Email Address</label></td>
@@ -66,16 +63,16 @@
 				
 				<tr>
 						<td><label id="Label1">Old Password</label></td>
-						<td><input type="password" name="oldpassword" id="oldpassword" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
+						<td><input type="password" name="oldpassword" id="oldpassword" class="ui-widget ui-widget-content ui-corner-all" /></td>
 				</tr>
 				<tr>
 						<td><label id="Label1">New Password</label></td>
-						<td><input type="password" name="newpassword1" id="newpassword1" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
+						<td><input type="password" name="newpassword1" id="newpassword1" class="ui-widget ui-widget-content ui-corner-all" /></td>
 				</tr>
 				
 				<tr>
 						<td><label id="Label1">Confirm New Password</label></td>
-						<td><input type="password" name="newpassword2" id="newpassword2" class="ui-widget ui-widget-content ui-corner-all" value="<%=user.getPassword() %>"/></td>
+						<td><input type="password" name="newpassword2" id="newpassword2" class="ui-widget ui-widget-content ui-corner-all"/></td>
 				</tr>
 
 				<tr>

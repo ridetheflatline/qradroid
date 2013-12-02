@@ -13,7 +13,6 @@ $("#submitBtn").button().click(function(){
 });
 
 $("#edit_profile_form").submit(function(event){
-	console.log("submit edit");
 	var allInputsValid = true;
 	var errors = $("<table>");
 	
@@ -33,17 +32,17 @@ $("#edit_profile_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("You have not entered a last name.")));
 	}
-	if(newpassword1.val() == "" || newpassword1.val() == null )
-	{
-		allInputsValid = false;
-		errors.append($("<tr>").append($("<td>").html("You have not entered a new password.")));
-	}
-	else if(!newpassword1.equals(newpassword2))
+//	if(newpassword1.val() == "" || newpassword1.val() == null )
+//	{
+//		allInputsValid = false;
+//		errors.append($("<tr>").append($("<td>").html("You have not entered a new password.")));
+//	}
+	if(!(newpassword1.val()==newpassword2.val()))
 	{
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("Your new password doesn't match with your confirmation of the new password.")));
 	}
-	if(birthdate.val() == "" ||birthdate.val() == null ||birthdate.length()!=10)
+	if(birthdate.val() == "" ||birthdate.val() == null ||birthdate.val().length!=10)
 	{
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("You have entered an invalid birth date.")));
