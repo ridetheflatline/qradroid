@@ -97,6 +97,7 @@ public class ConferenceCreationServlet extends HttpServlet {
 		String conferenceCity = (String)jsonObject.get("conf_city");
 		String conferenceState = (String)jsonObject.get("conf_state");
 		String hostId = (String)jsonObject.get("userId");
+		String timeZoneValue=(String)jsonObject.get("timeZoneValue");
 		JSONArray sessions = (JSONArray) jsonObject.get("sessions");
 
 		
@@ -104,10 +105,11 @@ public class ConferenceCreationServlet extends HttpServlet {
 		if(conferenceName != null && conferenceDescription != null 
 				&& conferenceStreet != null && conferenceCity != null &&
 				conferenceState != null && hostId != null && sessions != null &&
+				timeZoneValue != null &&
 				sessions.size() > 0){
 			
 			if(insertConference(conferenceName,conferenceDescription,conferenceStreet,
-					conferenceCity,conferenceState, hostId, sessions))
+					conferenceCity,conferenceState, hostId, timeZoneValue, sessions))
 			{
 				//return successful code
 				res.setStatus(HttpServletResponse.SC_OK);
@@ -141,7 +143,7 @@ public class ConferenceCreationServlet extends HttpServlet {
 	
 	public static boolean insertConference(String conferenceName,
 			String conferenceDescription, String conferenceStreet, String conferenceCity,
-			String conferenceState, String hostId, JSONArray sessions){
+			String conferenceState, String hostId, String timeZoneValue,JSONArray sessions){
 		
 		boolean insertSuccess = true;
 		
@@ -199,7 +201,7 @@ public class ConferenceCreationServlet extends HttpServlet {
 		
 		Conference c = new Conference(conferenceName,
 				hostId, conf_start_time, conf_end_time, conferenceDescription,
-				conferenceStreet, conferenceCity,conferenceState);
+				conferenceStreet, conferenceCity,conferenceState, timeZoneValue);
 		
 		String confCodeString = "";
 		try{

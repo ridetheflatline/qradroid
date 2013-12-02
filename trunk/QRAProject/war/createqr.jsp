@@ -31,6 +31,7 @@
 		out.println("<h2>Look at conferences that you are hosting:</h2></br>");
 		for (int i=0;i<hostData.size();i++){
 				out.println("<h3>"+hostData.get(i).getConf_name()+"</h3>");
+				out.println("<li><a href='/editconference?confId="+hostData.get(i).getConf_code()+"'>"+"Edit Conference"+"</a></li>");
 			   out.println("<li><a href='/createbatchqr?conf_id="+hostData.get(i).getConf_code()+"'>"+"Batch Create QR Codes"+"</a></li>");
 			   
 			   out.print("<li><form method=\"get\" action=\"/createblankqr\" style=\"text-align: left\" enctype=\"multipart/form-data\">");
@@ -39,6 +40,7 @@
 			   out.print("<input type=\"submit\" value=\"Create Blank QR ID Cards\" id=\"submitBtn\" /></form></li>");
 			   
 			   out.println("<li><a href='/calcattendance?conf_id="+hostData.get(i).getConf_code()+"'>"+"View Attendance Records"+"</a></li>");
+			   
 		   }
 	}
 	

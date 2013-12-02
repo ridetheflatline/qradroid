@@ -20,7 +20,6 @@ public class JoinConferenceServlet extends HttpServlet {
 			
 			String conf_code = req.getParameter("conf_code");
 			String user_id = req.getParameter("user_id");
-			
 			String page_output = req.getParameter("page_output");
 			
 			//The generated key string

@@ -219,4 +219,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
   	<url-pattern>/latestConferences</url-pattern>
   </servlet-mapping>
   
+   <servlet>
+  	<servlet-name>EditConferenceServlet</servlet-name>
+  	<servlet-class>com.qra.project.EditConferenceServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>EditConferenceServlet</servlet-name>
+  	<url-pattern>/editconference</url-pattern>
+  </servlet-mapping>
+  
 </web-app>
