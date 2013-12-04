@@ -36,17 +36,15 @@
 					<li>You must fill in all the specified information.</li>
 					<li>Create at least one session.
 						<ol type="i">
-							<li>You must fill in all the specified information. You must
-								upload an image. You must have a password at least five
-								characters long.</li>
+							<li>You must fill in all the specified information.</li>
 							<li>Your Start Date must be before your End Date</li>
 						</ol>
 					</li>
 					<li>After the session is created, if you wish to delete a
 						session, click on remove.</li>
-					<li>When you finished with setting up your conference, click
+					<li>When you're finished with setting up your conference, click
 						on Create Conference</li>
-					<li>There should be message popping up, indicating it was a
+					<li>A message should pop up, indicating it was a
 						successfully added.</li>
 				</ol>
 			</li>
@@ -75,7 +73,7 @@
 						</ol>
 					</li>
 					<li>To join the conference, click on Join Conference</li>
-					<li>There should a message indicating that you have
+					<li>A message will display, indicating that you have
 						successfully joined the conference.</li>
 				</ol>
 			</li>
@@ -98,15 +96,12 @@
 								conference you want to edit.</li>
 							<li>To create ID cards for all of the people who are
 								planning to attend your conference, click on Batch Create QR
-								Codes under the conference you want to create the QR codes for.</li>
+								Codes.</li>
 							<li>To create blank ID's for people who are not registered
 								onto QR Attendance, enter the number of blank IDs you want to
 								create. Then click on Create Blank QR ID Cards.</li>
-							<li>To see all the people who have planned to attend the
-								conference, click on View Attendance Records under the
-								conference you want to check the attendance for.</li>
-							<li>You will see whether the person was absent or present in
-								the conference.</li>
+							<li>To check attendance records for your conference,
+								click View Attendance Records.</li>
 						</ol>
 					</li>
 				</ol>
@@ -121,14 +116,14 @@
 			<li>You must be logged in, in order to check people in with the
 				scanner.</li>
 			<li>Press on on Log In on the top right hand corner</li>
-			<li>Enter your the email you used to register onto the website.</li>
-			<li>Enter the password you used to enter the website. Note you
+			<li>Enter the email you used to register on the website.</li>
+			<li>Enter the password you used to register on the website. Note: you
 				must input at least four characters.</li>
 			<li>After entering your email and password properly, click on
 				Sign in.</li>
-			<li>You can then scan in the QR codes of the people who attend.</li>
-			<li>If the person has a picture, the application will up an
-				image of the attendee.</li>
+			<li>You can then scan in the QR codes of the people who attend the conference.</li>
+			<li>If the person has a picture, the application will show an
+				image of the attendee as well as their full name.</li>
 			<li>You can choose whether this person is the attendee, by
 				clicking Valid ID or Invalid ID.
 				<ol type="a">
@@ -147,13 +142,13 @@
 			<li>you must be logged in, in order to check people in with the
 				scanner.</li>
 			<li>Press Log In</li>
-			<li>Enter your the email you used to register onto the website.</li>
-			<li>Enter the password you used to enter the website.</li>
+			<li>Enter the email you used to register on the website.</li>
+			<li>Enter the password you used to register on the website.</li>
 			<li>After entering your email and password properly, click on
 				submit.</li>
 			<li>You can then scan in the QR codes of the people who attend.</li>
 			<li>If the person has a picture, the application will up an
-				image of the attendee.</li>
+				image of the attendee as well as their full name.</li>
 			<li>You can choose whether this person is the attendee, by
 				clicking Valid ID or Invalid ID.
 				<ol type="a">
