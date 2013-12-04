@@ -34,6 +34,7 @@
 						out.println("<li><a href=\"/createconference\">Create Conference</a></li>");
 						out.println("<li><a href=\"/findconferences\">Search Conference</a></li>");
 						out.println("<li><a href=\"/createqr\">My Conferences</a></li>");
+						out.println("<li><a href=\"about.jsp\">About</a></li>");
 						out.println("<li><a href=\"/logout\">Log Out</a></li>");
 						break;
 					} 
@@ -44,6 +45,7 @@
 					{
 					 out.println("<li><a href=\"register.jsp\">Register</a></li>");
 			  		 out.println("<li><a href=\"login.jsp\">Log In</a></li>");
+			  		 out.println("<li><a href=\"about.jsp\">About</a></li>");
 					}
 				}
 			}
