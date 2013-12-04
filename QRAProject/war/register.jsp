@@ -64,7 +64,7 @@
 
 					<tr>
 						<td><label id="Label1">Profile Image</label></td>
-						<td><input type="file" name="profile_img" ></td>
+						<td><input type="file" name="profile_img" id="profileImgInput" ></td>
 					</tr>
 
 				</table>
@@ -80,9 +80,9 @@
 
 <link rel="stylesheet" type="text/css"
 	href="<c:url value='/css/redmond/jquery-ui-1.10.3.custom.min.css'/>" />
-<script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>">	
-</script>
+<script type="text/javascript" src="<c:url value='/js/jquery-1.9.1.js'/>">	</script>
 <script type="text/javascript" src="<c:url value='/js/jquery-ui-1.10.3.custom.min.js'/>"></script>
+<script type="text/javascript" src="<c:url value='/js/moment.min.js'/>"> </script>
 <script type="text/javascript" src="<c:url value='/js/register.js'/>">	</script>
 
 </html>
