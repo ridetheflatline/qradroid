@@ -16,6 +16,8 @@ import javax.servlet.http.HttpSession;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 import org.mortbay.log.Log;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.images.Image;
@@ -85,7 +87,16 @@ public class EditProfileServlet extends HttpServlet {
 //		    if(myImgByteSize == 0)
 //		    	profile_img = "";
 //		    else
+		    BlobInfoFactory blobif=new BlobInfoFactory();
+		    BlobInfo file = blobif.loadBlobInfo(file_uploaded_key);
+		    String fileName=file.getFilename();
+		    
+//		    resp.getWriter().print("Filename? "+fileName);
+		    if(fileName!=null&&!fileName.equals(""))
 		    	profile_img = file_uploaded_key.getKeyString();
+		    else
+		    	profile_img = "";
+//		    resp.getWriter().print("profile? "+profile_img);
 		}
 		else{
 			profile_img = "";
