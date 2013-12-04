@@ -16,9 +16,6 @@
 <body>
 	<div class="ui-widget">
 		<h2>Welcome to QR attendance.</h2>
-		<h3>Latest Conferences</h3>
-		<table id="latestConferencesTable">
-		</table>
 	</div>
 
 </body>
