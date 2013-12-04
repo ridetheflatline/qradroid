@@ -75,14 +75,14 @@ $("#registration_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("Please enter a valid date in the correct format.")));
 	}else{
-		//Check that the user is over 18
+		//Check that the user is over 13
 		var birthDay = moment(birthdate.val(), "MM/DD/YYYY");	
 		//current time
 		var now = moment();
 		var diff = now.year() - birthDay.year();
-		if( parseInt(diff) < 18){
+		if( parseInt(diff) < 13){
 			allInputsValid = false;
-			errors.append($("<tr>").append($("<td>").html("Must be 18 or over to register.")));
+			errors.append($("<tr>").append($("<td>").html("Must be 13 or over to register.")));
 		}
 	}
 	
