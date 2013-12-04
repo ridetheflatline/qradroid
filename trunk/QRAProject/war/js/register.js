@@ -6,6 +6,11 @@ var username = $("#username");
 var password = $("#password");
 var birthdate = $("#datepicker");
 
+//empty the browse file
+$(function(){
+	$("#profileImgInput").val("");
+});
+
 $("#submitBtn").button().click(function(){
 });
 
@@ -64,11 +69,23 @@ $("#registration_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("Please enter a password at least 5 characters long.")));
 	}
+	
 	if(birthdate.val().length!=10)
 	{
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("Please enter a valid date in the correct format.")));
+	}else{
+		//Check that the user is over 18
+		var birthDay = moment(birthdate.val(), "MM/DD/YYYY");	
+		//current time
+		var now = moment();
+		var diff = now.year() - birthDay.year();
+		if( parseInt(diff) < 18){
+			allInputsValid = false;
+			errors.append($("<tr>").append($("<td>").html("Must be 18 or over to register.")));
+		}
 	}
+	
 	if(!allInputsValid)
 	{
 		$("#errors").html(errors);
@@ -77,8 +94,8 @@ $("#registration_form").submit(function(event){
 		$("#errors").html(errors);
 	}
 	else
-		{
+	{
 		allInputsValid = true;
 		console.log("success");
-		}
+	}
 });
