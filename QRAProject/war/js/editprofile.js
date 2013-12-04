@@ -47,6 +47,17 @@ $("#edit_profile_form").submit(function(event){
 		allInputsValid = false;
 		errors.append($("<tr>").append($("<td>").html("You have entered an invalid birth date.")));
 	}
+	else{
+		//Check that the user is over 13
+		var birthDay = moment(birthdate.val(), "MM/DD/YYYY");	
+		//current time
+		var now = moment();
+		var diff = now.year() - birthDay.year();
+		if( parseInt(diff) < 13){
+			allInputsValid = false;
+			errors.append($("<tr>").append($("<td>").html("Must be 13 or over to register.")));
+		}
+	}
 	if(!allInputsValid)
 	{
 		console.log("fail");
