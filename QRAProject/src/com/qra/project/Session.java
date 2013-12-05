@@ -119,14 +119,14 @@ public class Session implements Serializable{
 
 	public String getStartDateAsFormattedString(){
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
-		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
-		formatter.setTimeZone(ts);
+//		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+//		formatter.setTimeZone(ts);
 		return formatter.format(this.startTime);
 	}
 	public String getEndDateAsFormattedString(){
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
-		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
-		formatter.setTimeZone(ts);
+//		TimeZone ts = TimeZone.getTimeZone(this.timeZone);
+//		formatter.setTimeZone(ts);
 		return formatter.format(this.endTime);
 	}
 }
