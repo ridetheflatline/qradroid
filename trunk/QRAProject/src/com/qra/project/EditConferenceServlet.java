@@ -44,7 +44,7 @@ public class EditConferenceServlet extends HttpServlet {
 			
 			for(int i =0; i < sessionResults.size(); i++){
 				Session s = sessionResults.get(i);
-				mySessions.add(new Session(confId, s.getDescription(), s.getStartTime(), s.getEndTime(), c.getTimeZone()));
+				mySessions.add(new Session(confId, s.getDescription(), s.getStartTime(), s.getEndTime()));
 			}
 			req.getSession().setAttribute("mySessions", mySessions);
 			resp.sendRedirect("/editconferences.jsp");
@@ -118,11 +118,11 @@ public class EditConferenceServlet extends HttpServlet {
 		ArrayList<Date> myDates = new ArrayList<Date>();
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yy h:m a");
-		TimeZone ts = TimeZone.getTimeZone(timeZoneValue);
-		log.info("ts: " + ts);
-		formatter.setTimeZone(ts);
+//		TimeZone ts = TimeZone.getTimeZone(timeZoneValue);
+//		log.info("ts: " + ts);
+//		formatter.setTimeZone(ts);
 		
-		SimpleDateFormat timeZoneFormat = new SimpleDateFormat("MM/dd/yy h:m Z"); 
+//		SimpleDateFormat timeZoneFormat = new SimpleDateFormat("MM/dd/yy h:m Z"); 
 		
 		for(int i = 0; i < sessions.size(); i++){
 			//log.info("session " + i + ": ");
@@ -139,7 +139,7 @@ public class EditConferenceServlet extends HttpServlet {
 			log.info("\tsession_description: " + sesDescription);
 			try {
 				Date startDtFormatted = formatter.parse(sesStartTime);
-				log.info("old Timezone: " +startDtFormatted);
+//				log.info("old Timezone: " +startDtFormatted);
 				
 				//String newDateFormmated = timeZoneFormat.format(startDtFormatted);
 				//log.info("newDateFormmated: "+newDateFormmated);
