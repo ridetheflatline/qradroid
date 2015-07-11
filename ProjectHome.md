@@ -1,0 +1,1 @@
+Track conference attendance using mobile devices and scanning QR code nametags.
